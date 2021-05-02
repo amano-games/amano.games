@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-const description = `Games made by hand`;
+const description = `Games by hand`;
 const title = `AMANO`;
 const url = `https://amano.games`;
 const image = `https://amano.games/preview.png`;
