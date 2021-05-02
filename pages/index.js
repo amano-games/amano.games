@@ -21,6 +21,7 @@ export default function Home() {
             height={1898}
             className={styles.logo}
           />
+          <p>Coming soon</p>
         </div>
       </main>
     </>

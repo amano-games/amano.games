@@ -10,7 +10,7 @@
 
 .home-sub-wrapper {
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   align-items: center;
   justify-content: center;
 }
