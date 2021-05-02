@@ -1,0 +1,53 @@
+:root {
+  --white: #fff;
+  --bg: #ffbc2f;
+  --bg-alt: #f7f7f7;
+  --fg: #252323;
+  --fg-alt: #35363c;
+  --hl-01: #f33bb6;
+  --hl-02: #aee73c;
+  --border: var(--bg-alt);
+
+  --font-sans: sans-serif;
+  --font-mono: mono;
+  --font-serif: serif;
+
+  --max-width: 800px;
+
+  --margin-q: calc(var(--margin-01) / 4);
+  --margin-h: calc(var(--margin-01) / 2);
+  --margin-01: 8px;
+  --margin-02: calc(var(--margin-01) * 2);
+  --margin-03: calc(var(--margin-01) * 3);
+  --margin-04: calc(var(--margin-01) * 4);
+  --margin-05: calc(var(--margin-01) * 5);
+  --margin-06: calc(var(--margin-01) * 6);
+  --margin-07: calc(var(--margin-01) * 7);
+  --margin-08: calc(var(--margin-01) * 8);
+  --margin-09: calc(var(--margin-01) * 9);
+  --margin-10: calc(var(--margin-01) * 10);
+
+  --max-width-wraper: 100em;
+
+  --size-300: 0.75rem;
+  --size-400: 1rem;
+  --size-500: 1.33rem;
+  --size-600: 1.77rem;
+  --size-700: 2.36rem;
+  --size-800: 3.15rem;
+  --size-900: 4.2rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000;
+    --bg-alt: #1d1f21;
+
+    --fg: #fff;
+    --fg-alt: #f7f7f7;
+
+    --hl-01: #ec008c;
+    --hl-02: #fdd000;
+    --border: var(--bg-alt);
+  }
+}
