@@ -16,7 +16,7 @@ function Seo() {
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="alternate icon" href="/favicon.ico" />
 
-      <meta name=" theme-color" content="ffbc2f" />
+      <meta name="theme-color" content="#ffbc2f" />
 
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
