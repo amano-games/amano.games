@@ -24,4 +24,4 @@ Run the dev server
 yarn dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) con tu navegador.
+Open [http://localhost:3000](http://localhost:3000) on your browser.
