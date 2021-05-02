@@ -13,6 +13,10 @@ function Seo() {
       <meta name="description" content={description} />
 
       <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <link rel="alternate icon" href="/favicon.ico" />
+
+      <meta name=" theme-color" content="ffbc2f" />
 
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
