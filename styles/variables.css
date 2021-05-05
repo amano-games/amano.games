@@ -37,17 +37,3 @@
   --size-800: 3.15rem;
   --size-900: 4.2rem;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #000;
-    --bg-alt: #1d1f21;
-
-    --fg: #fff;
-    --fg-alt: #f7f7f7;
-
-    --hl-01: #ec008c;
-    --hl-02: #fdd000;
-    --border: var(--bg-alt);
-  }
-}
