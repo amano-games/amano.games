@@ -17,7 +17,7 @@ function GameCard({ name, image, description, links, trailer }) {
           <ul className={style['game-links']}>
             {links.map((link) => {
               return (
-                <li>
+                <li key={link.url}>
                   <a href={link.url}>{link.type}</a>
                 </li>
               );

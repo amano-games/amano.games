@@ -23,11 +23,11 @@ function Header() {
     <header id="header" className={`${style.header} wrapper -inverted`}>
       <div className={`${style['header-wrapper']} wrapper`}>
         <Eye className={style['header-eye']} />
-        <nav>
+        <nav className={style['header-navigation']}>
           <ul className={style.routes}>
             {routes.map(({ path, label }) => {
               return (
-                <li>
+                <li key={path}>
                   <NavLink href={path}>
                     <a>{label}</a>
                   </NavLink>

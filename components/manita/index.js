@@ -19,7 +19,7 @@ function Manita({ name, title, image, description, links }) {
             <ul className={style['manita-links']}>
               {links.map((link) => {
                 return (
-                  <li>
+                  <li key={link.url}>
                     <a href={link.url}>{link.type}</a>
                   </li>
                 );

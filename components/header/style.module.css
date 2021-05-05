@@ -15,12 +15,23 @@
   padding-bottom: var(--margin-02);
 }
 
-.routes {
-  list-style: none;
-  display: flex wrap;
+.header-navigation {
+  flex: 1 1 auto;
+  display: flex;
   flex-flow: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+}
+
+.routes {
+  margin: 0;
+  padding: 0;
+  flex: 1 1 auto;
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-end;
   gap: var(--margin-02);
   text-transform: uppercase;
 }
