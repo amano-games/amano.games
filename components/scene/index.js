@@ -1,6 +1,5 @@
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 import { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
 
 import Logo3D from 'components/logo-3d';
 import styles from './style.module.css';
@@ -8,8 +7,7 @@ import styles from './style.module.css';
 function Scene() {
   return (
     <div className={`${styles['scene-wrapper']}`}>
-      <Canvas>
-        <OrbitControls enableRotate enableZoom={false} enablePan={false} />
+      <Canvas linear dpr={[1, 2]}>
         <Suspense fallback={null}>
           <Logo3D position={[0, -2.8, 0]} />
         </Suspense>
