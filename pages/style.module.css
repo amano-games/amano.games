@@ -17,7 +17,7 @@
 
 .logo {
   width: 100%;
-  max-width: 600px;
+  max-width: 300px;
   height: auto;
-  background: var(--bg);
+  margin-bottom: var(--margin-02);
 }
