@@ -1,0 +1,17 @@
+.contact {
+  font-size: 3em;
+  text-align: center;
+  min-height: 50vh;
+  width: 100%;
+  padding-top: var(--margin-10);
+  padding-bottom: var(--margin-10);
+}
+
+.contact-message {
+  color: var(--bg);
+}
+
+a.contact-email {
+  text-decoration: none;
+  color: var(--white);
+}

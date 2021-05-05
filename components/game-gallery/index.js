@@ -1,5 +1,5 @@
 import GameCard from 'components/game-card';
-import Fire from 'svg/fire.svg';
+import Fire from 'components/fire';
 
 import style from './style.module.css';
 
