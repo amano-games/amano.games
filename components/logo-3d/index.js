@@ -17,12 +17,27 @@ const pupilPosition = {
 export default function Logo3D(props) {
   const group = useRef();
   const pupil = useRef();
+  const pupilEnabled = useRef();
+
   const { nodes, animations, materials } = useGLTF('/logo-alt.gltf');
   const { actions, mixer } = useAnimations(animations, group);
 
   useEffect(() => {
-    mixer.addEventListener('finished', () => {
-      actions.idle.play();
+    mixer.addEventListener('finished', (e) => {
+      const { name } = e.action.getClip();
+      console.log(name);
+      switch (name) {
+        case 'Opening':
+          actions.Text.play();
+          break;
+        case 'Text':
+          actions.idle.play();
+          break;
+        case 'idle':
+          break;
+        default:
+          break;
+      }
     });
     actions.Opening.setLoop(THREE.LoopOnce);
     actions.Text.setLoop(THREE.LoopOnce);
@@ -30,11 +45,12 @@ export default function Logo3D(props) {
   });
 
   const onHover = () => {
-    actions.Text.reset();
-    actions.Text.play();
+    // actions.Text.reset();
+    // actions.Text.play();
   };
 
   useFrame((state) => {
+    if (!pupilEnabled.current) return;
     // const ogPosition = pupilPosition.current;
     const { x: mx, y: my } = state.mouse;
     const { x, y } = pupilPosition;
