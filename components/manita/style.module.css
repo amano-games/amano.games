@@ -1,0 +1,66 @@
+.manita-item {
+  display: flex;
+  flex-flow: row;
+}
+
+.manita-item:not(:last-child) {
+  margin-bottom: var(--margin-06);
+}
+
+.manita-item:nth-child(even) {
+  flex-flow: row-reverse;
+}
+
+.manita-item > *:not(:last-child) {
+  margin-right: var(--margin-04);
+}
+
+.manita-item:nth-child(even) > *:not(:last-child) {
+  margin-right: 0;
+  margin-left: var(--margin-04);
+}
+
+.manita-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row;
+}
+
+.manita-header h3 {
+  color: var(--white);
+}
+
+.manita-media {
+  width: 300px;
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.manita-media img {
+  width: 100%;
+  clip-path: polygon(
+    50% 0%,
+    90% 20%,
+    100% 60%,
+    75% 100%,
+    25% 100%,
+    0% 60%,
+    10% 20%
+  );
+  transition: all 1s ease;
+}
+
+.manita-media img:hover {
+  clip-path: polygon(
+    0 0,
+    50% 0,
+    100% 0,
+    100% 50%,
+    100% 100%,
+    50% 100%,
+    0 100%,
+    0 50%
+  );
+}

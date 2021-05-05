@@ -5,12 +5,14 @@ import * as THREE from 'three';
 import Logo3D from 'components/logo-3d';
 import styles from './style.module.css';
 
+const bgColor = new THREE.Color('#ffbc2f');
+
 function Scene() {
   return (
     <div className={`${styles['scene-wrapper']}`}>
       <Canvas
         onCreated={({ gl }) => {
-          gl.setClearColor(new THREE.Color('#ffbc2f'));
+          gl.setClearColor(bgColor);
         }}
       >
         <Suspense fallback={null}>

@@ -40,8 +40,7 @@ h3 {
   font-size: var(--size-600);
 }
 
-a,
-.leaflet-container a {
+a {
   color: var(--fg);
   transition: 0.2s ease all;
 }
@@ -68,7 +67,7 @@ blockquote {
 }
 
 ::selection {
-  color: var(--bg);
+  color: var(--fg);
   background: var(--fg);
 }
 
@@ -112,4 +111,18 @@ ol:not([class]) ol {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   position: relative;
+}
+
+.-inverted {
+  background: var(--fg);
+  color: var(--white);
+}
+
+.-inverted a {
+  color: var(--bg);
+}
+
+.-inverted a:hover,
+.-inverted a.-active {
+  color: var(--white);
 }

@@ -1,0 +1,36 @@
+.header {
+  width: 100%;
+  align-self: flex-start;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-wrapper {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--margin-02);
+  padding-bottom: var(--margin-02);
+}
+
+.routes {
+  list-style: none;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--margin-02);
+  text-transform: uppercase;
+}
+
+.header-eye {
+  width: auto;
+  height: 40px;
+}
+
+.header a {
+  font-size: 1.2em;
+  text-decoration: none;
+}

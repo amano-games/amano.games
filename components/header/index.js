@@ -1,4 +1,7 @@
 import NavLink from 'components/nav-link';
+import Eye from 'svg/eye.svg';
+
+import style from './style.module.css';
 
 const routes = [
   {
@@ -17,21 +20,23 @@ const routes = [
 
 function Header() {
   return (
-    <header id="header">
-      <img src="" alt="" />
-      <nav>
-        <ul>
-          {routes.map(({ path, label }) => {
-            return (
-              <li>
-                <NavLink href={path}>
-                  <a>{label}</a>
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+    <header id="header" className={`${style.header} wrapper -inverted`}>
+      <div className={`${style['header-wrapper']} wrapper`}>
+        <Eye className={style['header-eye']} />
+        <nav>
+          <ul className={style.routes}>
+            {routes.map(({ path, label }) => {
+              return (
+                <li>
+                  <NavLink href={path}>
+                    <a>{label}</a>
+                  </NavLink>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 }
