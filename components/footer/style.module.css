@@ -1,0 +1,22 @@
+.footer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  font-size: 2em;
+}
+
+.footer-hand {
+  width: 400px;
+  position: absolute;
+  top: var(--margin-02);
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.footer-wrapper {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-end;
+  height: 200px;
+}

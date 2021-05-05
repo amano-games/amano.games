@@ -3,6 +3,7 @@
 import Seo from 'components/seo';
 import Scene from 'components/scene';
 import Header from 'components/header';
+import Footer from 'components/footer';
 
 import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
@@ -23,6 +24,7 @@ export default function Home() {
         <AboutUs />
         <Contact />
       </main>
+      <Footer />
     </>
   );
 }
