@@ -13,8 +13,8 @@ export default function Logo3D(props) {
     if (ref.current) {
       ref.current.rotation.z = THREE.MathUtils.lerp(
         ref.current.rotation.z,
-        state.mouse.x / 2,
-        0.1
+        state.mouse.x,
+        0.08
       );
 
       ref.current.rotation.y = 0;
