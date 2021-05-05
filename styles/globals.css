@@ -68,8 +68,8 @@ blockquote {
 }
 
 ::selection {
-  color: var(--fg);
-  background: var(--hl-02);
+  color: var(--bg);
+  background: var(--fg);
 }
 
 p,
