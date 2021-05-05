@@ -11,7 +11,7 @@ function Scene() {
       <Canvas>
         <OrbitControls enableRotate enableZoom={false} enablePan={false} />
         <Suspense fallback={null}>
-          <Logo3D position={[0, 0, 0]} />
+          <Logo3D position={[0, -2.8, 0]} />
         </Suspense>
       </Canvas>
     </div>
