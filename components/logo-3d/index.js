@@ -30,8 +30,8 @@ export default function Logo3D(props) {
   });
 
   const onHover = () => {
-    // actions.Text.reset();
-    // actions.Text.play();
+    actions.Text.reset();
+    actions.Text.play();
   };
 
   useFrame((state) => {
