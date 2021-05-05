@@ -64,3 +64,10 @@
     0 50%
   );
 }
+
+@media screen and (max-width: 900px) {
+  .manita-item {
+    display: flex;
+    flex-flow: column;
+  }
+}

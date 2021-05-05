@@ -1,7 +1,6 @@
 .contact {
   font-size: 3em;
   text-align: center;
-  min-height: 50vh;
   width: 100%;
   padding-top: var(--margin-10);
   padding-bottom: var(--margin-10);
@@ -14,4 +13,10 @@
 a.contact-email {
   text-decoration: none;
   color: var(--white);
+}
+
+@media screen and (max-width: 900px) {
+  .contact {
+    font-size: 1.2em;
+  }
 }
