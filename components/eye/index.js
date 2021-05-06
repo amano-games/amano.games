@@ -12,7 +12,7 @@ import animation from './eye.json';
 const sfx = '/sfx/eye.mp3';
 
 const openSegments = [0, 10];
-const closeSegments = [10, 22];
+const closeSegments = [12, 22];
 
 function CustomLink({ href, children, ...rest }) {
   return (
