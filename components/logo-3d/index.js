@@ -47,7 +47,7 @@ export default function Logo3D(props) {
         nextAction = actions.Text;
         break;
       case 'Text':
-        // nextAction = actions.idle;
+        nextAction = actions.idle;
         break;
       case 'idle':
         break;
