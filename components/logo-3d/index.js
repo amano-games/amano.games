@@ -12,7 +12,7 @@ import lerp from 'lerp';
 
 import { clamp } from 'utils/animation';
 
-const damp = 0.8;
+const damp = 0.2;
 const limit = 0.4;
 const sensibility = 1;
 
@@ -39,15 +39,15 @@ export default function Logo3D(props) {
     const { name } = e.action.getClip();
     const previousAction = e.action;
     const duration = 0.02;
-    let activeAction = null;
+    let nextAction = null;
 
     switch (name) {
       case 'Opening':
         previousAction.fadeOut(duration);
-        activeAction = actions.Text;
+        nextAction = actions.Text;
         break;
       case 'Text':
-        activeAction = actions.idle;
+        // nextAction = actions.idle;
         break;
       case 'idle':
         break;
@@ -55,12 +55,14 @@ export default function Logo3D(props) {
         break;
     }
 
-    activeAction
-      .reset()
-      .setEffectiveTimeScale(1)
-      .setEffectiveWeight(1)
-      .fadeIn(duration)
-      .play();
+    if (nextAction) {
+      nextAction
+        .reset()
+        .setEffectiveTimeScale(1)
+        .setEffectiveWeight(1)
+        .fadeIn(duration)
+        .play();
+    }
   });
 
   useEffect(() => {
@@ -80,7 +82,6 @@ export default function Logo3D(props) {
 
   useFrame((state) => {
     if (!pupilEnabled.current) return;
-    // const ogPosition = pupilPosition.current;
     const { x: mx, y: my } = state.mouse;
     const { x: px, y: py } = pupilPosition;
     const { x, y } = pupil.current.position;

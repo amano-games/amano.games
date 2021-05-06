@@ -1,5 +1,5 @@
 import NavLink from 'components/nav-link';
-import Eye from 'svg/eye.svg';
+import Eye from 'components/eye';
 
 import style from './style.module.css';
 
