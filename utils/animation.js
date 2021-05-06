@@ -18,3 +18,7 @@ export function range(_start, _end, step = 1) {
 
   return output;
 }
+
+export function clamp(number, min, max) {
+  return Math.max(min, Math.min(number, max));
+}
