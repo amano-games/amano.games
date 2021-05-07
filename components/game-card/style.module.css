@@ -1,9 +1,5 @@
 .game-card {
   --border-color: #717171;
-
-  padding: var(--margin-02);
-  border-radius: var(--margin-02);
-  border: 2px dashed var(--border-color);
 }
 
 .game-header {

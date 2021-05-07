@@ -9,7 +9,7 @@ import style from './style.module.css';
 
 import animation from './eye.json';
 
-const sfx = '/sfx/eye.mp3';
+const sfx = '/sfx/plop.mp3';
 
 const openSegments = [0, 10];
 const closeSegments = [12, 22];
@@ -23,8 +23,8 @@ function CustomLink({ href, children, ...rest }) {
 }
 
 CustomLink.propTypes = {
-  href: PropTypes.isRequired,
-  children: PropTypes.isRequired,
+  href: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 function getWrapper(href) {
