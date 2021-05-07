@@ -7,7 +7,7 @@ import styles from './style.module.css';
 function Scene() {
   return (
     <div className={`${styles['scene-wrapper']}`}>
-      <Canvas>
+      <Canvas flat>
         <Suspense fallback={null}>
           <Logo3D position={[0, -1, 0]} />
         </Suspense>
