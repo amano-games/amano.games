@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 
+import Box from 'components/box';
+
 import style from './style.module.css';
 
 function GameCard({ name, image, description, links, trailer }) {
   return (
-    <article className={style['game-card']}>
+    <Box className={style['game-card']}>
       <header className={style['game-header']}>
         <h2>{name}</h2>
       </header>
@@ -31,7 +33,7 @@ function GameCard({ name, image, description, links, trailer }) {
         ) : null}
       </div>
       <div className={style['game-description']}>{description}</div>
-    </article>
+    </Box>
   );
 }
 

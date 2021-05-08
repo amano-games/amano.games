@@ -2,6 +2,7 @@
   width: 100%;
   padding-top: var(--margin-10);
   padding-bottom: var(--margin-10);
+  background: var(--bg);
 }
 
 .about-us-header {

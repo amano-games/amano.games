@@ -5,8 +5,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: var(--font-serif);
-  background: var(--bg);
   color: var(--fg);
+  background: var(--fg);
 }
 
 h1,

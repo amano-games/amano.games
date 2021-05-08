@@ -19,7 +19,7 @@ export default function Home() {
       <Header />
       <div className={styles['hero-wrapper']}>
         <Scene />
-        <Box>
+        <Box className={styles['home-info']}>
           <p>Two friends</p>
           <p>Making games</p>
           <p>Remotly</p>
