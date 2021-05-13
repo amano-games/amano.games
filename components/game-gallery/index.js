@@ -49,20 +49,18 @@ const games = [
 
 function GameGallery() {
   return (
-    <EyesWrap>
-      <section className={`${style['game-gallery']} -inverted`}>
-        <div className="wrapper">
-          <header className={style['game-gallery-header']}>
-            <h1>Our Games</h1>
-            <Fire className={style['game-gallery-fire']} />
-          </header>
-          <div className={style['game-gallery-grid']}>
-            {games.map((game) => {
-              return <GameCard {...game} key={game.name} />;
-            })}
-          </div>
+    <EyesWrap className={`${style['game-gallery']} -inverted`}>
+      <div className="wrapper">
+        <header className={style['game-gallery-header']}>
+          <h1>Our Games</h1>
+          <Fire className={style['game-gallery-fire']} />
+        </header>
+        <div className={style['game-gallery-grid']}>
+          {games.map((game) => {
+            return <GameCard {...game} key={game.name} />;
+          })}
         </div>
-      </section>
+      </div>
     </EyesWrap>
   );
 }

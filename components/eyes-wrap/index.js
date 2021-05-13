@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { random, range, randomPointNearRect } from 'utils/animation';
 
@@ -36,27 +37,35 @@ const generateEye = () => {
   return eye;
 };
 
-const eyes = range(random(4, 10)).map(() => generateEye());
-
-function EyesWrap({ color, children, ...rest }) {
+function EyesWrap({ className, color, children, count, ...rest }) {
+  const customClassName = classNames(
+    styles['eyes-wrap'],
+    'eyes-wrap',
+    className
+  );
+  const eyes = range(count).map(() => generateEye());
   return (
-    <div {...rest} className={styles['eyes-wrap']}>
+    <div {...rest} className={customClassName}>
       {eyes.map((item) => (
         <Eye key={item.id} style={item.style} />
       ))}
-      <div className={styles['eyes-child-wrapper']}>{children}</div>
+      {children}
     </div>
   );
 }
 
 EyesWrap.propTypes = {
+  className: PropTypes.string,
   color: PropTypes.string,
   children: PropTypes.node,
+  count: PropTypes.number,
 };
 
 EyesWrap.defaultProps = {
+  className: null,
   color: DEFAULT_COLOR,
   children: null,
+  count: random(4, 10),
 };
 
 export default EyesWrap;
