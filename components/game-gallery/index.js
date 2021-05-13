@@ -1,3 +1,4 @@
+import EyesWrap from 'components/eyes-wrap';
 import GameCard from 'components/game-card';
 import Fire from 'components/fire';
 
@@ -48,19 +49,21 @@ const games = [
 
 function GameGallery() {
   return (
-    <section className={`${style['game-gallery']} -inverted`}>
-      <div className="wrapper">
-        <header className={style['game-gallery-header']}>
-          <h1>Our Games</h1>
-          <Fire className={style['game-gallery-fire']} />
-        </header>
-        <div className={style['game-gallery-grid']}>
-          {games.map((game) => {
-            return <GameCard {...game} key={game.name} />;
-          })}
+    <EyesWrap>
+      <section className={`${style['game-gallery']} -inverted`}>
+        <div className="wrapper">
+          <header className={style['game-gallery-header']}>
+            <h1>Our Games</h1>
+            <Fire className={style['game-gallery-fire']} />
+          </header>
+          <div className={style['game-gallery-grid']}>
+            {games.map((game) => {
+              return <GameCard {...game} key={game.name} />;
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </EyesWrap>
   );
 }
 

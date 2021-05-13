@@ -33,7 +33,7 @@ function getWrapper(href) {
   return (props) => <button {...props} type="button" />;
 }
 
-function Eye({ className, href, onClick, ...rest }) {
+function Eye({ className, href, onClick, options, ...rest }) {
   const [play] = useSound(sfx);
   const [anim, setAnim] = useState(openSegments);
   const customClassName = classNames(style.eye, 'eye', className);
@@ -42,6 +42,7 @@ function Eye({ className, href, onClick, ...rest }) {
 
   return (
     <Wrapper
+      {...rest}
       href={href}
       className={customClassName}
       onClick={() => {
@@ -51,7 +52,7 @@ function Eye({ className, href, onClick, ...rest }) {
       }}
     >
       <Lottie
-        {...rest}
+        {...options}
         animationData={animation}
         segments={anim}
         onComplete={() => {
@@ -67,12 +68,14 @@ function Eye({ className, href, onClick, ...rest }) {
 }
 
 Eye.propTypes = {
+  options: PropTypes.shape({}),
   className: PropTypes.string,
   onClick: PropTypes.func,
   href: PropTypes.string,
 };
 
 Eye.defaultProps = {
+  options: null,
   className: null,
   onClick: () => {},
   href: null,
