@@ -35,7 +35,7 @@ Lle rangwa amin Nadorhuanrim Tarion amin naa tualle. Bragollach tel'llach quanta
 
 function AboutUs() {
   return (
-    <section className={`${style['about-us']}`}>
+    <section className={`${style['about-us']}`} id="about">
       <div className="wrapper">
         <header className={style['about-us-header']}>
           <h1>About Us</h1>

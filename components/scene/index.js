@@ -9,7 +9,7 @@ function Scene() {
     <div className={`${styles['scene-wrapper']}`}>
       <Canvas flat>
         <Suspense fallback={null}>
-          <Logo3D position={[0, -1, 0]} />
+          <Logo3D position={[0, -2.5, 0]} />
         </Suspense>
       </Canvas>
     </div>

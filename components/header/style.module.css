@@ -1,26 +1,22 @@
 .header {
-  width: 100%;
   align-self: flex-start;
+  width: 100%;
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .header-wrapper {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: var(--margin-02);
-  padding-bottom: var(--margin-02);
+  display: grid;
+  grid-template-columns: min-content 1fr;
 }
 
 .header-navigation {
-  flex: 1 1 auto;
   display: flex;
   flex-flow: row;
   align-items: center;
   justify-content: flex-end;
+  height: 100%;
 }
 
 .routes {
@@ -32,8 +28,12 @@
   flex-flow: row wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--margin-02);
   text-transform: uppercase;
+  height: 100%;
+}
+
+.route-wrapper {
+  height: 100%;
 }
 
 .header-eye {

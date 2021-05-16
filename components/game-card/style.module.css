@@ -1,5 +1,7 @@
 .game-card {
   --border-color: #717171;
+
+  background: var(--fg);
 }
 
 .game-header {

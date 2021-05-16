@@ -47,7 +47,7 @@ a {
 
 a:hover,
 a.-active {
-  color: var(--hl-01);
+  color: var(--white);
 }
 
 img {
@@ -67,7 +67,7 @@ blockquote {
 }
 
 ::selection {
-  color: var(--fg);
+  color: var(--bg);
   background: var(--fg);
 }
 
@@ -125,4 +125,9 @@ ol:not([class]) ol {
 .-inverted a:hover,
 .-inverted a.-active {
   color: var(--white);
+}
+
+.-inverted *::selection {
+  color: var(--fg);
+  background: var(--bg);
 }

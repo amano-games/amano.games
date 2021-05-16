@@ -1,20 +1,23 @@
-import NavLink from 'components/nav-link';
+import Route from 'components/route';
 import Eye from 'components/eye';
 
 import style from './style.module.css';
 
 const routes = [
   {
-    path: '/#about',
-    label: 'About',
-  },
-  {
     path: '/#games',
     label: 'Games',
+    refId: 'games',
+  },
+  {
+    path: '/#about',
+    label: 'About',
+    refId: 'about',
   },
   {
     path: '/#contact',
     label: 'Contact',
+    refId: 'contact',
   },
 ];
 
@@ -25,12 +28,12 @@ function Header() {
         <Eye href="/#" className={style['header-eye']} />
         <nav className={style['header-navigation']}>
           <ul className={style.routes}>
-            {routes.map(({ path, label }) => {
+            {routes.map(({ path, label, refId }) => {
               return (
-                <li key={path}>
-                  <NavLink href={path}>
-                    <a>{label}</a>
-                  </NavLink>
+                <li key={path} className={style['route-wrapper']}>
+                  <Route href={path} refId={refId}>
+                    {label}
+                  </Route>
                 </li>
               );
             })}

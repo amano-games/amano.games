@@ -47,10 +47,10 @@ const games = [
   },
 ];
 
-function GameGallery() {
+function GameGallery(props) {
   return (
-    <EyesWrap className={`${style['game-gallery']} -inverted`}>
-      <div className="wrapper">
+    <EyesWrap className={`${style['game-gallery']} -inverted`} {...props}>
+      <div className="wrapper" id="games">
         <header className={style['game-gallery-header']}>
           <h1>Our Games</h1>
           <Fire className={style['game-gallery-fire']} />

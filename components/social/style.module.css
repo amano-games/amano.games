@@ -1,0 +1,15 @@
+.social {
+  list-style: none;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--margin-02);
+  padding: 0;
+  margin: 0;
+}
+
+.social svg {
+  width: 32px;
+  height: 32px;
+}

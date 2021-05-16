@@ -2,6 +2,6 @@
   --border-color: var(--fg);
 
   padding: var(--margin-02);
-  border-radius: var(--margin-02);
+  border-radius: var(--margin-03);
   border: 2px dashed var(--border-color);
 }

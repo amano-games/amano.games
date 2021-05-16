@@ -1,0 +1,39 @@
+.route {
+  display: block;
+  height: 100%;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.route > span {
+  padding-right: var(--margin-02);
+  padding-left: var(--margin-02);
+}
+
+.route::marker {
+  display: none;
+}
+
+.route::before {
+  display: flex;
+  content: '';
+  height: var(--margin-01);
+  width: 100%;
+  transform: scaleY(0);
+  transition: all 250ms ease-in-out;
+  background: var(--white);
+  transform-origin: 0% 0%;
+}
+
+.route:hover,
+.route.-active {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.route:hover::before,
+.route.-active::before {
+  height: var(--margin-02);
+  transform: scaleY(1);
+}
