@@ -52,7 +52,12 @@ function GameCard({
           </span>
           {links.map((link) => {
             return (
-              <a rel="noopener noreferrer" target="_blank" href={link.url}>
+              <a
+                key={link.url}
+                rel="noopener noreferrer"
+                target="_blank"
+                href={link.url}
+              >
                 {link.icon ? link.icon : link.label}
               </a>
             );
