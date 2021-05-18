@@ -5,6 +5,7 @@ import Box from 'components/box';
 import Itch from 'svg/itch.svg';
 import Newgrounds from 'svg/ng.svg';
 import Pico from 'svg/pico.svg';
+import Arrow from 'svg/arrow.svg';
 
 import style from './style.module.css';
 
@@ -45,7 +46,10 @@ function GameCard({
       </div>
       <div className={style['game-actions']}>
         <div className={style['game-where-to-play']}>
-          <span className={style['game-play-it']}>Play it here</span>
+          <span className={style['game-play-it']}>
+            <span className={style['game-play-it-text']}>Play it here</span>
+            <Arrow />
+          </span>
           {links.map((link) => {
             return (
               <a rel="noopener noreferrer" target="_blank" href={link.url}>

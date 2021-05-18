@@ -44,14 +44,27 @@
 }
 
 .game-play-it {
-  background: var(--bg);
-  color: var(--fg);
-  padding: var(--margin-q) var(--margin-02);
-  border-radius: var(--margin-01) 0 0 var(--margin-01);
   margin-right: var(--margin-02);
   margin-bottom: auto;
   white-space: nowrap;
   position: relative;
+  display: grid;
+  grid-template-columns: min-content min-content;
+}
+
+.game-play-it-text {
+  background: var(--bg);
+  color: var(--fg);
+  padding: var(--margin-q) var(--margin-02);
+  border-radius: var(--margin-01) 0 0 var(--margin-01);
+  white-space: nowrap;
+  position: relative;
+}
+
+.game-play-it svg {
+  width: auto;
+  color: var(--bg);
+  height: 100%;
 }
 
 a.game-trailer {
