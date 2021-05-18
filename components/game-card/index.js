@@ -2,9 +2,39 @@ import PropTypes from 'prop-types';
 
 import Box from 'components/box';
 
+import Itch from 'svg/itch.svg';
+import Newgrounds from 'svg/ng.svg';
+import Pico from 'svg/pico.svg';
+
 import style from './style.module.css';
 
-function GameCard({ name, image, description, links, trailer }) {
+function GameCard({
+  name,
+  image,
+  description,
+  trailer,
+  itch,
+  newgrounds,
+  lexaloffle,
+}) {
+  const links = [
+    {
+      label: 'itch.io',
+      url: itch,
+      icon: <Itch />,
+    },
+    {
+      label: 'newgrounds',
+      url: newgrounds,
+      icon: <Newgrounds />,
+    },
+    {
+      label: 'lexaloffle',
+      url: lexaloffle,
+      icon: <Pico />,
+    },
+  ].filter(({ url }) => url != null);
+
   return (
     <Box className={style['game-card']}>
       <header className={style['game-header']}>
@@ -16,15 +46,13 @@ function GameCard({ name, image, description, links, trailer }) {
       <div className={style['game-actions']}>
         <div className={style['game-where-to-play']}>
           <span className={style['game-play-it']}>Play it here</span>
-          <ul className={style['game-links']}>
-            {links.map((link) => {
-              return (
-                <li key={link.url}>
-                  <a href={link.url}>{link.type}</a>
-                </li>
-              );
-            })}
-          </ul>
+          {links.map((link) => {
+            return (
+              <a rel="noopener noreferrer" target="_blank" href={link.url}>
+                {link.icon ? link.icon : link.label}
+              </a>
+            );
+          })}
         </div>
         {trailer ? (
           <a className={style['game-trailer']} href={trailer}>
@@ -42,17 +70,16 @@ GameCard.propTypes = {
   image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   trailer: PropTypes.string,
-  links: PropTypes.arrayOf(
-    PropTypes.shape({
-      url: PropTypes.string,
-      type: PropTypes.string,
-    })
-  ),
+  itch: PropTypes.string,
+  newgrounds: PropTypes.string,
+  lexaloffle: PropTypes.string,
 };
 
 GameCard.defaultProps = {
-  links: [],
   trailer: null,
+  itch: null,
+  newgrounds: null,
+  lexaloffle: null,
 };
 
 export default GameCard;

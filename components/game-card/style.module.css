@@ -30,24 +30,28 @@
 
 .game-where-to-play {
   display: flex;
+  list-style: none;
+  flex-flow: row wrap;
+  gap: var(--margin-02);
+  padding: 0;
+  margin: 0;
   margin-bottom: var(--margin-01);
 }
 
-.game-links {
-  list-style: none;
-  display: flex;
-  flex-flow: row wrap;
-  gap: var(--margin-02);
-  margin: 0;
-  padding: 0;
+.game-where-to-play svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 .game-play-it {
   background: var(--bg);
   color: var(--fg);
-  padding: var(--margin-q) var(--margin-04);
-  border-radius: var(--margin-01);
+  padding: var(--margin-q) var(--margin-02);
+  border-radius: var(--margin-01) 0 0 var(--margin-01);
   margin-right: var(--margin-02);
+  margin-bottom: auto;
+  white-space: nowrap;
+  position: relative;
 }
 
 a.game-trailer {

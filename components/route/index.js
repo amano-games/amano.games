@@ -17,7 +17,6 @@ function Route({ className, children, href, refId }) {
     ref(el);
   }, []);
 
-  console.log(refId, inView);
   const customClassName = classNames(style.route, 'route', className, {
     [style['-active']]: inView,
   });

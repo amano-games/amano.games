@@ -1,9 +1,10 @@
 import Sparkles from 'components/sparkles';
 import Social from 'components/social';
 
+import { email } from 'constants/site';
+
 import style from './style.module.css';
 
-const email = 'hola@amano.games';
 function Contact() {
   return (
     <section className={`${style.contact} -inverted`} id="contact">

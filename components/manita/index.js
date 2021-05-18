@@ -1,26 +1,68 @@
 import PropTypes from 'prop-types';
 
+import Itch from 'svg/itch.svg';
+import Twitter from 'svg/twitter.svg';
+import Instagram from 'svg/insta.svg';
+import Web from 'svg/web.svg';
+
 import style from './style.module.css';
 
-function Manita({ name, title, image, description, links }) {
+function Manita({
+  title,
+  subtitle,
+  avatar,
+  description,
+  itchio,
+  twitter,
+  web,
+  instagram,
+}) {
+  const links = [
+    {
+      label: `@${twitter}`,
+      url: `https://twitter.com/${twitter}`,
+      icon: <Twitter />,
+    },
+    {
+      label: instagram,
+      url: `https://instagram.com/${instagram}`,
+      icon: <Instagram />,
+    },
+    {
+      label: 'web',
+      url: web,
+      icon: <Web />,
+    },
+    {
+      label: 'itchio',
+      url: itchio,
+      icon: <Itch />,
+    },
+  ];
+
   return (
     <article className={style['manita-item']}>
       <div className={style['manita-media']}>
-        <img src={image} alt={name} />
+        <img src={avatar} alt={title} />
       </div>
       <div className={style['manita-info']}>
         <header className={style['manita-header']}>
-          <h2>{name}</h2>
-          <h3>{title}</h3>
+          <h2>{title}</h2>
+          <h3>{subtitle}</h3>
         </header>
         <div className={style['manita-actions']}>
           <div className={style['manita-where-to-play']}>
-            <span className={style['manita-play-it']}>Play it here</span>
             <ul className={style['manita-links']}>
               {links.map((link) => {
                 return (
                   <li key={link.url}>
-                    <a href={link.url}>{link.type}</a>
+                    <a
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      href={link.url}
+                    >
+                      {link.icon ? link.icon : link.label}
+                    </a>
                   </li>
                 );
               })}
@@ -34,20 +76,16 @@ function Manita({ name, title, image, description, links }) {
 }
 
 Manita.propTypes = {
-  name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  subtitle: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  links: PropTypes.arrayOf(
-    PropTypes.shape({
-      url: PropTypes.string,
-      type: PropTypes.string,
-    })
-  ),
+  itchio: PropTypes.string.isRequired,
+  twitter: PropTypes.string.isRequired,
+  web: PropTypes.string.isRequired,
+  instagram: PropTypes.string.isRequired,
 };
 
-Manita.defaultProps = {
-  links: [],
-};
+Manita.defaultProps = {};
 
 export default Manita;
