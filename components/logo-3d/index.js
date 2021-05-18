@@ -15,7 +15,7 @@ import { clamp } from 'utils/animation';
 
 const damp = 0.2;
 const limit = 0.4;
-const sensibility = 0.1;
+const sensibility = 0.2;
 
 const pupilPosition = {
   x: 0.02457561157643795,

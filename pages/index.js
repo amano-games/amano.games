@@ -6,7 +6,6 @@ import Seo from 'components/seo';
 import Scene from 'components/scene';
 import Header from 'components/header';
 import Footer from 'components/footer';
-import Box from 'components/box';
 import Social from 'components/social';
 
 import GameGallery from 'components/game-gallery';
@@ -25,11 +24,11 @@ export default function Home({ manitas, games }) {
       <div className={styles['hero-wrapper']}>
         <Scene />
         <div className={styles['home-info-wrapper']}>
-          <Box className={styles['home-info']}>
+          <div className={styles['home-info']}>
             <p>Two friends</p>
             <p>Making games</p>
             <p>By Hand</p>
-          </Box>
+          </div>
 
           <Social className={styles['home-social']} />
         </div>
