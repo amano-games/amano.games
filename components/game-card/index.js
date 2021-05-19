@@ -50,18 +50,20 @@ function GameCard({
             <span className={style['game-play-it-text']}>Play it here</span>
             <Arrow />
           </span>
-          {links.map((link) => {
-            return (
-              <a
-                key={link.url}
-                rel="noopener noreferrer"
-                target="_blank"
-                href={link.url}
-              >
-                {link.icon ? link.icon : link.label}
-              </a>
-            );
-          })}
+          <div className={style['game-play-it-links']}>
+            {links.map((link) => {
+              return (
+                <a
+                  key={link.url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={link.url}
+                >
+                  {link.icon ? link.icon : link.label}
+                </a>
+              );
+            })}
+          </div>
         </div>
         {trailer ? (
           <a className={style['game-trailer']} href={trailer}>

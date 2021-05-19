@@ -31,7 +31,7 @@
 .game-where-to-play {
   display: flex;
   list-style: none;
-  flex-flow: row wrap;
+  flex-flow: row;
   gap: var(--margin-02);
   padding: 0;
   margin: 0;
@@ -59,6 +59,16 @@
   border-radius: var(--margin-01) 0 0 var(--margin-01);
   white-space: nowrap;
   position: relative;
+}
+
+.game-play-it-links {
+  display: flex;
+  list-style: none;
+  flex-flow: row wrap;
+  gap: var(--margin-01);
+  padding: 0;
+  margin: 0;
+  margin-bottom: var(--margin-01);
 }
 
 .game-play-it svg {

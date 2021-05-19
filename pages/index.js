@@ -21,7 +21,7 @@ export default function Home({ manitas, games }) {
     <>
       <Seo />
       <Header />
-      <div className={styles['hero-wrapper']}>
+      <div className={styles['hero-wrapper']} id="home">
         <Scene />
         <div className={styles['home-info-wrapper']}>
           <div className={styles['home-info']}>
@@ -35,6 +35,7 @@ export default function Home({ manitas, games }) {
       </div>
       <main className={styles['home-wrapper']}>
         <GameGallery
+          id="games"
           games={parseGames(games)}
           className={`${styles['home-section']} ${styles['games-section']} -inverted`}
         />

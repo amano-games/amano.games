@@ -45,7 +45,7 @@ function EyesWrap({ className, color, children, count, ...rest }) {
   );
   const eyes = range(count).map(() => generateEye());
   return (
-    <div {...rest} className={customClassName}>
+    <div className={customClassName} {...rest}>
       <div className={styles['eyes-container']}>
         {eyes.map((item) => (
           <Eye key={item.id} style={item.style} />

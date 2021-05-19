@@ -9,7 +9,7 @@ import style from './style.module.css';
 function GameGallery({ games, ...rest }) {
   return (
     <EyesWrap className={`${style['game-gallery']} -inverted`} {...rest}>
-      <div className="wrapper" id="games">
+      <div className="wrapper">
         <header className={style['game-gallery-header']}>
           <h1>Our Games</h1>
           <Fire className={style['game-gallery-fire']} />

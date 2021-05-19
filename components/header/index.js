@@ -1,5 +1,6 @@
 import Route from 'components/route';
 import Eye from 'components/eye';
+import Link from 'next/link';
 
 import style from './style.module.css';
 
@@ -25,7 +26,11 @@ function Header() {
   return (
     <header id="header" className={`${style.header} wrapper -inverted`}>
       <div className={`${style['header-wrapper']} wrapper`}>
-        <Eye href="/#" className={style['header-eye']} />
+        <Link href="/#">
+          <a>
+            <Eye className={style['header-eye']} />
+          </a>
+        </Link>
         <nav className={style['header-navigation']}>
           <ul className={style.routes}>
             {routes.map(({ path, label, refId }) => {
