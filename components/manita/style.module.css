@@ -63,13 +63,9 @@
   display: flex;
   flex-flow: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: var(--margin-01);
   width: 100%;
-}
-
-.manita.-flipped .manita-links {
-  justify-content: flex-end;
 }
 
 .manita-links svg {

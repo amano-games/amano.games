@@ -1,0 +1,8 @@
+- Play it here icons wrap within themselves
+- Mobile navigation menu
+- Better Games images dimensions
+- Eyes wrapper layouts
+- Particles
+- Polish overall mobile
+- Eye flickering
+- Anchor tags improve jumps
