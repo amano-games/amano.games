@@ -1,0 +1,33 @@
+.avatar {
+  display: block;
+  position: relative;
+}
+
+.avatar-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transform: translate(-10%, 3%);
+  color: var(--white);
+}
+
+.avatar.-flipped .avatar-background {
+  transform: translate(10%, 3%);
+}
+
+.avatar-image {
+  position: relative;
+  z-index: 2;
+  clip-path: polygon(
+    0% 43%,
+    12% 17%,
+    39% 3%,
+    79% 14%,
+    86% 38%,
+    81% 77%,
+    45% 92%,
+    8% 69%
+  );
+  clip-path: url('#svgClip');
+}

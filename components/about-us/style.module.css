@@ -3,6 +3,16 @@
   padding-top: var(--margin-10);
   padding-bottom: var(--margin-10);
   background: var(--bg);
+  overflow: hidden;
+  position: relative;
+}
+
+.about-us-fingers {
+  top: -20%;
+  right: 10%;
+  width: 25%;
+  max-width: 600px;
+  position: absolute;
 }
 
 .about-us-header {

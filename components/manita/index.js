@@ -1,4 +1,8 @@
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import Avatar from 'components/avatar';
+import Markdown from 'components/markdown';
 
 import Itch from 'svg/itch.svg';
 import Twitter from 'svg/twitter.svg';
@@ -16,7 +20,13 @@ function Manita({
   twitter,
   web,
   instagram,
+  className,
+  flipped,
 }) {
+  const customClassName = classNames(style.manita, 'manita', className, {
+    [style['-flipped']]: flipped,
+  });
+
   const links = [
     {
       label: `@${twitter}`,
@@ -41,41 +51,39 @@ function Manita({
   ];
 
   return (
-    <article className={style['manita-item']}>
-      <div className={style['manita-media']}>
-        <img src={avatar} alt={title} />
-      </div>
+    <article className={customClassName}>
+      <Avatar
+        className={style['manita-media']}
+        flipped={flipped}
+        src={avatar}
+        alt={title}
+      />
       <div className={style['manita-info']}>
         <header className={style['manita-header']}>
           <h2>{title}</h2>
           <h3>{subtitle}</h3>
         </header>
-        <div className={style['manita-actions']}>
-          <div className={style['manita-where-to-play']}>
-            <ul className={style['manita-links']}>
-              {links.map((link) => {
-                return (
-                  <li key={link.url}>
-                    <a
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={link.url}
-                    >
-                      {link.icon ? link.icon : link.label}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-        <div className={style['manita-description']}>{description}</div>
+        <Markdown className={style['manita-description']}>
+          {description}
+        </Markdown>
+        <ul className={style['manita-links']}>
+          {links.map((link) => {
+            return (
+              <li key={link.url}>
+                <a rel="noopener noreferrer" target="_blank" href={link.url}>
+                  {link.icon ? link.icon : link.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </article>
   );
 }
 
 Manita.propTypes = {
+  className: PropTypes.string,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
@@ -84,8 +92,12 @@ Manita.propTypes = {
   twitter: PropTypes.string.isRequired,
   web: PropTypes.string.isRequired,
   instagram: PropTypes.string.isRequired,
+  flipped: PropTypes.bool,
 };
 
-Manita.defaultProps = {};
+Manita.defaultProps = {
+  className: null,
+  flipped: false,
+};
 
 export default Manita;

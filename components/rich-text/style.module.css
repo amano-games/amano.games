@@ -1,0 +1,34 @@
+.rich-text-container {
+  --flow-space: var(--size-500);
+
+  font-family: var(--font-serif);
+  line-height: 2em;
+}
+
+.rich-text-container > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+@media (min-width: 45em) {
+  .rich-text-container h1 {
+    font-size: var(--size-800);
+  }
+
+  .rich-text-container h2 {
+    font-size: var(--size-600);
+  }
+
+  .rich-text-container p,
+  .rich-text-container ul {
+    font-size: var(--size-500);
+  }
+
+  .rich-text-container figcaption {
+    font-size: var(--size-400);
+  }
+
+  .rich-text-container blockquote p {
+    font-size: var(--size-600);
+    max-width: 40ch;
+  }
+}
