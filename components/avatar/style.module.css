@@ -7,7 +7,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
   transform: translate(-10%, 3%);
   color: var(--white);
 }
@@ -17,7 +16,6 @@
 }
 
 .avatar-image {
-  position: relative;
   z-index: 2;
   clip-path: url('#svgClip');
 }

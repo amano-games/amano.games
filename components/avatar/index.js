@@ -11,8 +11,8 @@ function Avatar({ className, flipped, src, alt }) {
   });
   return (
     <div className={customClassName}>
-      <img src={src} alt={alt} className={style['avatar-image']} />
       <Mask className={style['avatar-background']} />
+      <img src={src} alt={alt} className={style['avatar-image']} />
       <svg width="0" height="0">
         <defs>
           <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
