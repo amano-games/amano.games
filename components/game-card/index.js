@@ -67,7 +67,12 @@ function GameCard({
           </div>
         </div>
         {trailer ? (
-          <a className={style['game-trailer']} href={trailer}>
+          <a
+            className={style['game-trailer']}
+            href={trailer}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             Trailer
           </a>
         ) : null}
