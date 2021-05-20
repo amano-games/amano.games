@@ -49,6 +49,7 @@
   white-space: nowrap;
   position: relative;
   display: grid;
+  height: 16px;
   grid-template-columns: min-content min-content;
 }
 
