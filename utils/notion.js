@@ -83,7 +83,6 @@ export function parseGames(games) {
       const {
         name: nameProp,
         description: descriptionProp,
-        image: imageProp,
         trailer: trailerProp,
         itch: itchProp,
         newgrounds: newgroundsProp,
@@ -96,7 +95,6 @@ export function parseGames(games) {
       return {
         name: nameProp.title[0].plain_text,
         description: richTextToMarkdown(descriptionProp),
-        image: imageProp.url,
         trailer: trailerProp?.url,
         itch: itchProp?.url,
         newgrounds: newgroundsProp?.url,
