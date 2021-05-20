@@ -14,9 +14,11 @@ function Avatar({ className, flipped, src, alt }) {
       <img src={src} alt={alt} className={style['avatar-image']} />
       <Mask className={style['avatar-background']} />
       <svg width="0" height="0">
-        <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
-          <path d="M.4 0L.1.2 0 .5l.1.3.4.2.4-.2.1-.4L.9.1z" />
-        </clipPath>
+        <defs>
+          <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
+            <path d="M.4 0L.1.2 0 .5l.1.3.4.2.4-.2.1-.4L.9.1z" />
+          </clipPath>
+        </defs>
       </svg>
     </div>
   );
