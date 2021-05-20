@@ -14,8 +14,6 @@ function Route({ className, children, href, refId }) {
     threshold: width > 900 ? 0.8 : 0.2,
   });
 
-  console.log(width);
-
   useEffect(() => {
     const el = document.getElementById(refId);
     ref(el);
