@@ -19,15 +19,5 @@
 .avatar-image {
   position: relative;
   z-index: 2;
-  clip-path: polygon(
-    0% 43%,
-    12% 17%,
-    39% 3%,
-    79% 14%,
-    86% 38%,
-    81% 77%,
-    45% 92%,
-    8% 69%
-  );
   clip-path: url('#svgClip');
 }

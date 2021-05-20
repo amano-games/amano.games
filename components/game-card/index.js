@@ -12,7 +12,6 @@ import style from './style.module.css';
 
 function GameCard({
   name,
-  image,
   description,
   trailer,
   itch,
@@ -37,13 +36,15 @@ function GameCard({
     },
   ].filter(({ url }) => url != null);
 
+  const slug = name.replace(/\s+/g, '-').toLowerCase();
+
   return (
     <Box className={style['game-card']}>
       <header className={style['game-header']}>
         <h2>{name}</h2>
       </header>
       <div className={style['game-media']}>
-        <img src={image} alt={name} />
+        <img src={`/games/${slug}.png`} alt={name} />
       </div>
       <div className={style['game-actions']}>
         <div className={style['game-where-to-play']}>
@@ -84,7 +85,6 @@ function GameCard({
 
 GameCard.propTypes = {
   name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   trailer: PropTypes.string,
   itch: PropTypes.string,
