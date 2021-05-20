@@ -37,3 +37,10 @@
   height: var(--margin-02);
   transform: scaleY(1);
 }
+
+@media screen and (max-width: 900px) {
+  .route > span {
+    padding-right: var(--margin-h);
+    padding-left: var(--margin-h);
+  }
+}

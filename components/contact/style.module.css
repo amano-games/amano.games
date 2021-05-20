@@ -10,8 +10,12 @@
   color: var(--bg);
 }
 
-a.contact-email {
+.contact a {
   color: var(--white);
+}
+
+.contact a:hover {
+  color: var(--bg);
 }
 
 @media screen and (max-width: 900px) {

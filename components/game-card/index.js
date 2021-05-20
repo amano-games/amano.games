@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import Box from 'components/box';
+import Markdown from 'components/markdown';
 
 import Itch from 'svg/itch.svg';
 import Newgrounds from 'svg/ng.svg';
@@ -71,7 +72,7 @@ function GameCard({
           </a>
         ) : null}
       </div>
-      <div className={style['game-description']}>{description}</div>
+      <Markdown className={style['game-description']}>{description}</Markdown>
     </Box>
   );
 }

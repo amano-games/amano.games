@@ -71,6 +71,14 @@
   margin-bottom: var(--margin-01);
 }
 
+.game-play-it-links a {
+  color: var(--white);
+}
+
+.game-play-it-links a:hover {
+  color: var(--bg);
+}
+
 .game-play-it svg {
   width: auto;
   color: var(--bg);

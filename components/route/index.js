@@ -2,15 +2,19 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useWindowSize } from '@reach/window-size';
 
 import NavLink from 'components/nav-link';
 
 import style from './style.module.css';
 
 function Route({ className, children, href, refId }) {
+  const { width } = useWindowSize();
   const { ref, inView } = useInView({
-    threshold: 0.6,
+    threshold: width > 900 ? 0.8 : 0.2,
   });
+
+  console.log(width);
 
   useEffect(() => {
     const el = document.getElementById(refId);

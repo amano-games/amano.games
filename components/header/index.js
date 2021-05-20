@@ -24,7 +24,7 @@ const routes = [
 
 function Header() {
   return (
-    <header id="header" className={`${style.header} wrapper -inverted`}>
+    <header id="header" className={`${style.header} -inverted`}>
       <div className={`${style['header-wrapper']} wrapper`}>
         <Link href="/#">
           <a>
