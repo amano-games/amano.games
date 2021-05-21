@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Draggable from 'react-draggable';
 import DownloadLink from 'react-download-link';
+import useDimensions from 'react-use-dimensions';
 
 import { random, range } from 'utils/animation';
 
@@ -30,6 +31,7 @@ const generateEye = () => {
 };
 
 function EyesWrap({ className, color, children, count, ...rest }) {
+  const [ref, { width, height }] = useDimensions();
   const customClassName = classNames(
     styles['eyes-wrap'],
     'eyes-wrap',
@@ -51,13 +53,15 @@ function EyesWrap({ className, color, children, count, ...rest }) {
           ...item,
           x,
           y,
+          xP: (x / width) * 100,
+          yP: (y / height) * 100,
         };
       })
     );
   });
 
   return (
-    <div className={customClassName} {...rest}>
+    <div className={customClassName} {...rest} ref={ref}>
       <div className={styles['add-eye']}>
         <button type="button" onClick={addEye}>
           Add Eye
@@ -66,7 +70,18 @@ function EyesWrap({ className, color, children, count, ...rest }) {
           style={{ color: 'var(--black)', background: 'var(--yellow)' }}
           label="Save"
           filename="eyes.json"
-          exportFile={() => JSON.stringify(eyes)}
+          exportFile={() =>
+            JSON.stringify(
+              eyes.map(({ xP, yP }) => {
+                return {
+                  x: xP,
+                  y: yP,
+                };
+              }),
+              null,
+              2
+            )
+          }
         />
       </div>
       <div className={styles['eyes-container']}>
