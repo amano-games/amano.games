@@ -1,11 +1,11 @@
 .game-card {
-  --border-color: #717171;
+  --border-color: var(--gray);
 
-  background: var(--fg);
+  background: var(--black);
 }
 
 .game-header {
-  color: var(--bg);
+  color: var(--yellow);
   margin-bottom: var(--margin-02);
 }
 
@@ -54,8 +54,8 @@
 }
 
 .game-play-it-text {
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--yellow);
+  color: var(--black);
   padding: var(--margin-q) var(--margin-02);
   border-radius: var(--margin-01) 0 0 var(--margin-01);
   white-space: nowrap;
@@ -77,19 +77,19 @@
 }
 
 .game-play-it-links a:hover {
-  color: var(--bg);
+  color: var(--yellow);
 }
 
 .game-play-it svg {
   width: auto;
-  color: var(--bg);
+  color: var(--yellow);
   height: 100%;
 }
 
 a.game-trailer {
   text-decoration: none;
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--yellow);
+  color: var(--black);
   padding: var(--margin-q) var(--margin-04);
   border-radius: var(--margin-01);
   margin-right: var(--margin-02);

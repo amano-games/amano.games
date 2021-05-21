@@ -13,7 +13,7 @@
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
-  background: var(--bg);
+  background: var(--yellow);
 }
 
 .home-section {

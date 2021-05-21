@@ -28,8 +28,8 @@
 
 .route:hover,
 .route.-active {
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--yellow);
+  color: var(--black);
 }
 
 .route:hover::before,

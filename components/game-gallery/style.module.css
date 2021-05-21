@@ -5,7 +5,7 @@
 }
 
 .game-gallery-header {
-  color: var(--bg);
+  color: var(--yellow);
   margin-bottom: var(--margin-06);
   display: flex;
   align-items: center;

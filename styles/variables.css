@@ -1,12 +1,8 @@
 :root {
   --white: #e7e7e7;
-  --bg: #ffbc2f;
-  --bg-alt: #f7f7f7;
-  --fg: #252323;
-  --fg-alt: #35363c;
-  --hl-01: #f33bb6;
-  --hl-02: #aee73c;
-  --border: var(--bg-alt);
+  --yellow: #ffbc2f;
+  --black: #252323;
+  --gray: #717171;
 
   --font-sans: sans-serif;
   --font-mono: mono;

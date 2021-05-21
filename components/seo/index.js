@@ -1,10 +1,11 @@
 import Head from 'next/head';
 
-const description = `Games by hand`;
+const description = `Two frinds making games by hand.`;
 const title = `AMANO`;
 const url = `https://amano.games`;
 const image = `https://amano.games/preview.png`;
 const twitter = `@gamesamano`;
+const color = `#ffbc2f`;
 
 function Seo() {
   return (
@@ -16,7 +17,7 @@ function Seo() {
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       <link rel="alternate icon" href="/favicon.ico" />
 
-      <meta name="theme-color" content="#ffbc2f" />
+      <meta name="theme-color" content={color} />
 
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />

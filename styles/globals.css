@@ -5,8 +5,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: var(--font-serif);
-  color: var(--fg);
-  background: var(--fg);
+  color: var(--black);
+  background: var(--black);
   scroll-behavior: smooth;
 }
 
@@ -42,7 +42,7 @@ h3 {
 }
 
 a {
-  color: var(--fg);
+  color: var(--black);
   transition: 0.2s ease all;
 }
 
@@ -68,8 +68,8 @@ blockquote {
 }
 
 ::selection {
-  color: var(--bg);
-  background: var(--fg);
+  color: var(--yellow);
+  background: var(--black);
 }
 
 p,
@@ -115,12 +115,12 @@ ol:not([class]) ol {
 }
 
 .-inverted {
-  background: var(--fg);
+  background: var(--black);
   color: var(--white);
 }
 
 .-inverted a {
-  color: var(--bg);
+  color: var(--yellow);
 }
 
 .-inverted a:hover,
@@ -129,8 +129,8 @@ ol:not([class]) ol {
 }
 
 .-inverted *::selection {
-  color: var(--fg);
-  background: var(--bg);
+  color: var(--black);
+  background: var(--yellow);
 }
 
 @media screen and (max-width: 900px) {

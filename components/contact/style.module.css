@@ -12,7 +12,7 @@
 }
 
 .contact-message {
-  color: var(--bg);
+  color: var(--yellow);
 }
 
 .contact a {
@@ -20,7 +20,7 @@
 }
 
 .contact a:hover {
-  color: var(--bg);
+  color: var(--yellow);
 }
 
 @media screen and (max-width: 600px) {

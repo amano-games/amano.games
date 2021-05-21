@@ -2,7 +2,7 @@
   width: 100%;
   overflow: hidden;
   font-size: 2em;
-  background: var(--bg);
+  background: var(--yellow);
 }
 
 .footer-wrapper {

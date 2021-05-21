@@ -1,5 +1,5 @@
 .box {
-  --border-color: var(--fg);
+  --border-color: var(--black);
 
   padding: var(--margin-02);
   border-radius: var(--margin-03);
