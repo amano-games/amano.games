@@ -5,7 +5,7 @@ const title = `AMANO`;
 const url = `https://amano.games`;
 const image = `https://amano.games/preview.png`;
 const twitter = `@gamesamano`;
-const color = `#ffbc2f`;
+const color = `ffbc2f`;
 
 function Seo() {
   return (
