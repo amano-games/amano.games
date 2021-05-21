@@ -6,10 +6,12 @@ const year = new Date().getFullYear();
 
 function Footer() {
   return (
-    <footer id="footer" className={`${style.footer} wrapper`}>
-      <Fingers className={style['footer-hand']} />
+    <footer id="footer" className={`${style.footer}`}>
       <div className={`${style['footer-wrapper']} wrapper`}>
-        © {year} by Amano
+        <Fingers className={style['footer-hand']} />
+        <p>
+          © <time>{year}</time> by Amano
+        </p>
       </div>
     </footer>
   );

@@ -13,3 +13,15 @@
   width: 32px;
   height: 32px;
 }
+
+.social.-l svg {
+  width: 64px;
+  height: 64px;
+}
+
+@media screen and (max-width: 900px) {
+  .social.-l svg {
+    width: 32px;
+    height: 32px;
+  }
+}

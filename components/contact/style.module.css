@@ -6,6 +6,11 @@
   padding-bottom: var(--margin-10);
 }
 
+.contact-message-wrapper {
+  display: block;
+  margin-bottom: var(--margin-04);
+}
+
 .contact-message {
   color: var(--bg);
 }
@@ -20,6 +25,6 @@
 
 @media screen and (max-width: 600px) {
   .contact {
-    font-size: 2em;
+    font-size: 1.8em;
   }
 }

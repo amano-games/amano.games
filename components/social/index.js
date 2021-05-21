@@ -27,8 +27,10 @@ const social = [
   },
 ];
 
-function Social({ className }) {
-  const customClassName = classNames(style.social, 'social', className);
+function Social({ className, size }) {
+  const customClassName = classNames(style.social, 'social', className, [
+    style[`-${size}`],
+  ]);
   return (
     <ul className={customClassName}>
       {social.map((item) => {
@@ -46,10 +48,12 @@ function Social({ className }) {
 
 Social.propTypes = {
   className: PropTypes.string,
+  size: PropTypes.string,
 };
 
 Social.defaultProps = {
   className: null,
+  size: 'm',
 };
 
 export default Social;

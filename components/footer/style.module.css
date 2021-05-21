@@ -1,23 +1,28 @@
 .footer {
   width: 100%;
   overflow: hidden;
-  position: relative;
   font-size: 2em;
   background: var(--bg);
-}
-
-.footer-hand {
-  width: 400px;
-  position: absolute;
-  top: var(--margin-02);
-  left: 50%;
-  transform: translate(-50%, 0);
 }
 
 .footer-wrapper {
   display: flex;
   flex-flow: row;
   align-items: center;
-  justify-content: flex-end;
-  height: 200px;
+  justify-content: space-between;
+  position: relative;
+  padding-top: var(--margin-05);
+}
+
+.footer-hand {
+  width: 30%;
+  max-width: 400px;
+  align-self: flex-end;
+  margin-right: var(--margin-02);
+}
+
+@media screen and (max-width: 900px) {
+  .footer {
+    font-size: 1em;
+  }
 }
