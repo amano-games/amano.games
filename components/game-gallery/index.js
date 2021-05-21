@@ -1,14 +1,21 @@
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 
 import EyesWrap from 'components/eyes-wrap';
+import EyesWrapAdmin from 'components/eyes-wrap-admin';
 import GameCard from 'components/game-card';
 import Fire from 'components/fire';
 
 import style from './style.module.css';
 
 function GameGallery({ games, ...rest }) {
+  const router = useRouter();
+  const { edit } = router.query;
+
+  const Wrap = edit ? EyesWrapAdmin : EyesWrap;
+
   return (
-    <EyesWrap className={`${style['game-gallery']} -inverted`} {...rest}>
+    <Wrap className={`${style['game-gallery']} -inverted`} {...rest}>
       <div className="wrapper">
         <header className={style['game-gallery-header']}>
           <h1>Our Games</h1>
@@ -20,7 +27,7 @@ function GameGallery({ games, ...rest }) {
           })}
         </div>
       </div>
-    </EyesWrap>
+    </Wrap>
   );
 }
 
