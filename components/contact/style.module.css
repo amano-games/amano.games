@@ -18,8 +18,8 @@
   color: var(--bg);
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 600px) {
   .contact {
-    font-size: 1.2em;
+    font-size: 2em;
   }
 }

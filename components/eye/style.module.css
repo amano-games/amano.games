@@ -1,7 +1,7 @@
 .eye {
+  appearance: none;
   cursor: pointer;
   border: none;
   background: transparent;
-  appearance: none;
   padding: 0;
 }

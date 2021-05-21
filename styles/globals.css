@@ -7,6 +7,7 @@ body {
   font-family: var(--font-serif);
   color: var(--fg);
   background: var(--fg);
+  scroll-behavior: smooth;
 }
 
 h1,
