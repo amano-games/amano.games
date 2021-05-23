@@ -21,7 +21,6 @@ export function richTextToMarkdown(block) {
   }
 
   return block.rich_text.reduce((acc, curr) => {
-    console.log(curr);
     const { plain_text: text, annotations, href } = curr;
     const { bold, code, italic, strikethrough } = annotations;
     const url = href && new URL(href);

@@ -17,13 +17,16 @@ import Contact from 'components/contact';
 
 import { parseManitas, parseGames } from 'utils/notion';
 
+import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
+
 import styles from './style.module.css';
 
 export default function Home({ manitas, games }) {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [jsEnabled, setJsEnabled] = useState(false);
   useEffect(() => {
-    setJsEnabled(true);
-  }, []);
+    setJsEnabled(!prefersReducedMotion);
+  }, [prefersReducedMotion]);
 
   return (
     <>
