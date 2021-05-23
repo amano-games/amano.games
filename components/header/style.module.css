@@ -7,8 +7,11 @@
 }
 
 .header-wrapper {
-  display: grid;
-  grid-template-columns: min-content 1fr;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--margin-02);
 }
 
 .header-navigation {
@@ -17,9 +20,12 @@
   align-items: center;
   justify-content: flex-end;
   height: 100%;
+  flex: 1 1 auto;
+  max-width: 400px;
 }
 
 .routes {
+  width: 100%;
   margin: 0;
   padding: 0;
   flex: 1 1 auto;
@@ -33,7 +39,8 @@
 }
 
 .route-wrapper {
-  height: 100%;
+  flex: 1 1 auto;
+  height: 50px;
 }
 
 .header-eye {
@@ -44,4 +51,20 @@
 .header a {
   font-size: 1.2em;
   text-decoration: none;
+}
+
+@media screen and (max-width: 500px) {
+  .header-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .header-wrapper {
+    flex-flow: column;
+  }
+  .header-navigation {
+    width: 100%;
+  }
 }

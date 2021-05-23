@@ -8,7 +8,7 @@ import style from './style.module.css';
 function Contact() {
   return (
     <section className={`${style.contact} -inverted`} id="contact">
-      <div className="wrapper">
+      <div className={`${style['contact-wrapper']} wrapper`}>
         <div className={style['contact-message-wrapper']}>
           <p className={style['contact-message']}>Get in touch with us at</p>
           <Sparkles>

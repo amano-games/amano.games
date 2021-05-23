@@ -2,6 +2,13 @@
   font-size: 3em;
   text-align: center;
   width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-wrapper {
   padding-top: var(--margin-10);
   padding-bottom: var(--margin-10);
 }
@@ -26,5 +33,11 @@
 @media screen and (max-width: 600px) {
   .contact {
     font-size: 1.8em;
+  }
+
+  @media screen and (max-width: 500px) {
+    .contact {
+      min-height: 100vh;
+    }
   }
 }
