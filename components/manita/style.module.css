@@ -39,7 +39,8 @@
 }
 
 .manita-media {
-  width: 300px;
+  width: 80%;
+  max-width: 300px;
   height: auto;
   flex: 0 0 auto;
 }

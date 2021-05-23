@@ -28,3 +28,9 @@
   grid-gap: var(--margin-04);
   grid-template-columns: repeat(auto-fill, minmax(415px, 1fr));
 }
+
+@media screen and (max-width: 800px) {
+  .game-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}

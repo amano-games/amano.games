@@ -127,6 +127,12 @@ a.game-action {
   height: 100%;
 }
 
+@media screen and (max-width: 900px) {
+  .game-header {
+    flex-flow: column;
+  }
+}
+
 @media screen and (min-width: 900px) {
   .-featured .game-header {
     margin-right: var(--margin-04);
