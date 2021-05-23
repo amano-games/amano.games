@@ -11,7 +11,7 @@ import style from './style.module.css';
 function Route({ className, children, href, refId }) {
   const { width } = useWindowSize();
   const { ref, inView } = useInView({
-    threshold: width > 900 ? 0.8 : 0.1,
+    threshold: width > 900 ? 0.4 : 0.1,
   });
 
   useEffect(() => {

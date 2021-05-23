@@ -2,15 +2,30 @@
   --border-color: var(--gray);
 
   background: var(--black);
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-02);
+}
+
+.game-card.-featured {
+  grid-column: 1 / -1;
 }
 
 .game-header {
-  color: var(--yellow);
-  margin-bottom: var(--margin-02);
+  color: var();
+  gap: var(--margin-02);
 }
 
-.game-media {
-  margin-bottom: var(--margin-02);
+.game-content {
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-02);
+}
+
+.game-info {
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-02);
 }
 
 .game-media img {
@@ -25,6 +40,9 @@
   display: flex;
   flex-flow: column;
   font-size: 1.2em;
+}
+
+.game-actions > *:not(:last-child) {
   margin-bottom: var(--margin-02);
 }
 
@@ -35,7 +53,6 @@
   gap: var(--margin-02);
   padding: 0;
   margin: 0;
-  margin-bottom: var(--margin-01);
 }
 
 .game-where-to-play svg {
@@ -45,7 +62,6 @@
 
 .game-play-it {
   margin-right: var(--margin-02);
-  margin-bottom: auto;
   white-space: nowrap;
   position: relative;
   display: grid;
@@ -69,7 +85,23 @@
   gap: var(--margin-01);
   padding: 0;
   margin: 0;
-  margin-bottom: var(--margin-01);
+}
+
+.game-description {
+  border-top: 2px dashed var(--border-color);
+  padding-top: var(--margin-02);
+  text-align: center;
+}
+
+.game-description a,
+a.game-action {
+  text-decoration: none;
+  background: var(--yellow);
+  color: var(--black);
+  padding: var(--margin-q) var(--margin-04);
+  border-radius: var(--margin-01);
+  margin-right: var(--margin-02);
+  width: min-content;
 }
 
 .game-play-it-links a {
@@ -86,17 +118,24 @@
   height: 100%;
 }
 
-a.game-trailer {
-  text-decoration: none;
-  background: var(--yellow);
-  color: var(--black);
-  padding: var(--margin-q) var(--margin-04);
-  border-radius: var(--margin-01);
-  margin-right: var(--margin-02);
-  width: min-content;
-}
-
-.game-description {
-  border-top: 2px dashed var(--border-color);
-  padding-top: var(--margin-02);
+@media screen and (min-width: 900px) {
+  .-featured .game-header {
+    margin-right: var(--margin-04);
+    flex: 1 1 40%;
+  }
+  .-featured .game-content {
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--margin-06);
+  }
+  .-featured .game-info {
+    flex: 1 1 40%;
+  }
+  .-featured .game-description {
+    border-top: 0;
+    padding-top: 0;
+    height: auto;
+    flex: 1 0 50%;
+  }
 }

@@ -21,8 +21,15 @@ export function richTextToMarkdown(block) {
   }
 
   return block.rich_text.reduce((acc, curr) => {
-    const { plain_text: text, annotations } = curr;
+    console.log(curr);
+    const { plain_text: text, annotations, href } = curr;
     const { bold, code, italic, strikethrough } = annotations;
+    const url = href && new URL(href);
+    let path = href;
+
+    if (url?.hostname === 'amano.games') {
+      path = url.pathname;
+    }
 
     let parsed = text;
 
@@ -37,6 +44,9 @@ export function richTextToMarkdown(block) {
     }
     if (strikethrough) {
       parsed = `~~${parsed}~~`;
+    }
+    if (path) {
+      parsed = `[${parsed}](${path})`;
     }
 
     return `${acc}${parsed}`;
@@ -88,6 +98,7 @@ export function parseGames(games) {
         newgrounds: newgroundsProp,
         lexaloffle: lexaloffleProp,
         publish: publishProp,
+        featured: featuredProp,
       } = properties;
 
       if (!nameProp.title[0]) return null;
@@ -100,6 +111,7 @@ export function parseGames(games) {
         newgrounds: newgroundsProp?.url,
         lexaloffle: lexaloffleProp?.url,
         publish: publishProp.checkbox,
+        featured: featuredProp.checkbox,
       };
     })
     .filter(Boolean);
