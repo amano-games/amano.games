@@ -106,7 +106,7 @@ ol:not([class]) ol {
 
 .wrapper {
   width: 100%;
-  width: clamp(16rem, 100%, 70rem);
+  width: clamp(16rem, 100%, 85rem);
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;

@@ -13,6 +13,7 @@ import style from './style.module.css';
 
 function GameCard({
   name,
+  subtitle,
   featured,
   className,
   description,
@@ -48,12 +49,14 @@ function GameCard({
     }
   );
   const slug = name.replace(/\s+/g, '-').toLowerCase();
-  console.log('slug', slug);
 
   return (
     <Box className={customClassName}>
       <header className={style['game-header']}>
         <h2 className={style['game-title']}>{name}</h2>
+        {subtitle ? (
+          <h3 className={style['game-subtitle']}>{subtitle}</h3>
+        ) : null}
       </header>
       <div className={style['game-content']}>
         <div className={style['game-info']}>
@@ -107,6 +110,7 @@ function GameCard({
 
 GameCard.propTypes = {
   name: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   description: PropTypes.string.isRequired,
   className: PropTypes.string,
   trailer: PropTypes.string,
@@ -117,6 +121,7 @@ GameCard.propTypes = {
 };
 
 GameCard.defaultProps = {
+  subtitle: null,
   className: null,
   trailer: null,
   itch: null,

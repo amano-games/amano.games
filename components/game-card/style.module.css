@@ -12,8 +12,17 @@
 }
 
 .game-header {
-  color: var();
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--margin-02);
+}
+
+.game-subtitle {
+  font-size: 1.4em;
+  color: var(--gray);
 }
 
 .game-content {
