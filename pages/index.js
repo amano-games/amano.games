@@ -1,12 +1,15 @@
 /* eslint filenames/match-exported: 0 */
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Client } from '@notionhq/client';
 
 import Seo from 'components/seo';
-import Scene from 'components/scene';
 import Header from 'components/header';
 import Footer from 'components/footer';
 import Social from 'components/social';
+
+import FakeScene from 'components/fake-scene';
+import Scene from 'components/scene';
 
 import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
@@ -17,12 +20,17 @@ import { parseManitas, parseGames } from 'utils/notion';
 import styles from './style.module.css';
 
 export default function Home({ manitas, games }) {
+  const [jsEnabled, setJsEnabled] = useState(false);
+  useEffect(() => {
+    setJsEnabled(true);
+  }, []);
+
   return (
     <>
       <Seo />
       <Header />
       <div className={styles['hero-wrapper']} id="home">
-        <Scene />
+        {jsEnabled ? <Scene /> : <FakeScene />}
         <div className={styles['home-info-wrapper']}>
           <div className={styles['home-info']}>
             <p>Two friends</p>

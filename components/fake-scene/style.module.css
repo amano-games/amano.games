@@ -1,0 +1,16 @@
+.fake-scene {
+  width: 100%;
+  height: 50vh;
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.fake-scene svg {
+  width: auto;
+  height: 50vh;
+}
