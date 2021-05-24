@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Client } from '@notionhq/client';
+import Link from 'next/link';
 
 import Seo from 'components/seo';
 import Header from 'components/header';
@@ -37,7 +38,12 @@ export default function Home({ manitas, games }) {
         <div className={styles['home-info-wrapper']}>
           <div className={styles['home-info']}>
             <p>Two friends</p>
-            <p>Making games</p>
+            <p>
+              Making{' '}
+              <Link href="/#games">
+                <a>games</a>
+              </Link>
+            </p>
             <p>By Hand</p>
           </div>
 

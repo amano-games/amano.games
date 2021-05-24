@@ -4,7 +4,7 @@ const description = `Two frinds making games by hand.`;
 const title = `AMANO`;
 const url = `https://amano.games`;
 const image = `https://amano.games/preview.png`;
-const twitter = `@amano__games`;
+const twitter = `@amanogames_`;
 const color = `ffbc2f`;
 
 function Seo() {
