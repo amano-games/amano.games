@@ -12,7 +12,7 @@ import style from './style.module.css';
 const social = [
   {
     label: 'twitter',
-    href: 'https://twitter.com/gamesamano',
+    href: 'https://twitter.com/amano__games',
     icon: <Twitter />,
   },
   {

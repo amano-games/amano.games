@@ -12,17 +12,21 @@
   justify-content: space-between;
   position: relative;
   padding-top: var(--margin-05);
+  min-height: 50vh;
 }
 
 .footer-hand {
-  width: 30%;
-  max-width: 400px;
+  width: 40%;
+  max-width: 500px;
   align-self: flex-end;
   margin-right: var(--margin-02);
 }
 
 @media screen and (max-width: 900px) {
   .footer {
-    font-size: 1em;
+    font-size: 1.5em;
+  }
+  .footer-wrapper {
+    min-height: 0;
   }
 }
