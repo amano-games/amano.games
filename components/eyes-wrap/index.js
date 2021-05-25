@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { random } from 'utils/animation';
+import { random, shuffleArray } from 'utils/animation';
 import Eye from 'components/eye';
 
 import layouts from './layouts';
@@ -10,7 +10,7 @@ import styles from './style.module.css';
 
 const DEFAULT_COLOR = 'currentColor';
 
-const generateEye = (x, y) => {
+function generateEye(x, y) {
   const width = random(60, 100);
   const height = random(60, 100);
 
@@ -28,7 +28,7 @@ const generateEye = (x, y) => {
     },
   };
   return eye;
-};
+}
 
 function EyesWrap({ className, color, children, count, ...rest }) {
   const customClassName = classNames(
@@ -36,7 +36,7 @@ function EyesWrap({ className, color, children, count, ...rest }) {
     'eyes-wrap',
     className
   );
-  const layout = layouts[0];
+  const layout = shuffleArray(layouts)[0];
 
   const eyes = layout.map(({ x, y }) => generateEye(x, y));
 

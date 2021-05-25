@@ -20,7 +20,7 @@ function Contact() {
             ... or through our social media
           </p>
         </div>
-        <Social size="l" />
+        <Social size="l" filter={({ label }) => label !== 'email'} />
       </div>
     </section>
   );

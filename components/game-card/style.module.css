@@ -37,12 +37,27 @@
   gap: var(--margin-02);
 }
 
+.game-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--margin-02);
+}
+
 .game-media img {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: var(--margin-02);
-  overflow: hidden;
+}
+
+.game-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--yellow);
+  color: var(--black);
+  padding: var(--margin-h) var(--margin-04);
+  border-radius: 0 0 var(--margin-01) 0;
+  font-size: 1.6em;
 }
 
 .game-actions {
@@ -125,6 +140,17 @@ a.game-action {
   width: auto;
   color: var(--yellow);
   height: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .game-badge {
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+    display: block;
+    text-align: center;
+    font-size: 1em;
+  }
 }
 
 @media screen and (max-width: 900px) {

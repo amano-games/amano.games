@@ -22,8 +22,8 @@
 }
 
 .games-section {
-  padding-top: var(--margin-06);
-  padding-bottom: var(--margin-06);
+  padding-top: var(--margin-08);
+  padding-bottom: var(--margin-08);
   position: relative;
   overflow-x: hidden;
   display: flex;

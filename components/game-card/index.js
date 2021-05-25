@@ -13,6 +13,7 @@ import style from './style.module.css';
 
 function GameCard({
   name,
+  badge,
   subtitle,
   featured,
   className,
@@ -61,6 +62,9 @@ function GameCard({
       <div className={style['game-content']}>
         <div className={style['game-info']}>
           <div className={style['game-media']}>
+            {badge ? (
+              <span className={style['game-badge']}>{badge}</span>
+            ) : null}
             <img src={`/games/${slug}.png`} alt={name} />
           </div>
           {links.length > 0 || trailer ? (
@@ -110,6 +114,7 @@ function GameCard({
 
 GameCard.propTypes = {
   name: PropTypes.string.isRequired,
+  badge: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string.isRequired,
   className: PropTypes.string,
@@ -121,6 +126,7 @@ GameCard.propTypes = {
 };
 
 GameCard.defaultProps = {
+  badge: null,
   subtitle: null,
   className: null,
   trailer: null,

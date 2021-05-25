@@ -15,7 +15,7 @@ function Markdown({ children, className }) {
 
   return (
     <RichText className={customClassName}>
-      <ReactMarkdown>{children}</ReactMarkdown>
+      <ReactMarkdown linkTarget="_blank">{children}</ReactMarkdown>
     </RichText>
   );
 }

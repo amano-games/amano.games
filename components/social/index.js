@@ -27,13 +27,13 @@ const social = [
   },
 ];
 
-function Social({ className, size }) {
+function Social({ className, size, filter }) {
   const customClassName = classNames(style.social, 'social', className, [
     style[`-${size}`],
   ]);
   return (
     <ul className={customClassName}>
-      {social.map((item) => {
+      {social.filter(filter).map((item) => {
         return (
           <li key={item.label}>
             <a rel="noopener noreferrer" target="_blank" href={item.href}>
@@ -49,11 +49,13 @@ function Social({ className, size }) {
 Social.propTypes = {
   className: PropTypes.string,
   size: PropTypes.string,
+  filter: PropTypes.func,
 };
 
 Social.defaultProps = {
   className: null,
   size: 'm',
+  filter: () => true,
 };
 
 export default Social;

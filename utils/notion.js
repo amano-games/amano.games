@@ -92,6 +92,7 @@ export function parseGames(games) {
       const {
         name: nameProp,
         subtitle: subtitleProp,
+        badge: badgeProp,
         description: descriptionProp,
         trailer: trailerProp,
         itch: itchProp,
@@ -106,6 +107,7 @@ export function parseGames(games) {
       return {
         name: nameProp.title[0].plain_text,
         subtitle: richTextToMarkdown(subtitleProp),
+        badge: richTextToMarkdown(badgeProp),
         description: richTextToMarkdown(descriptionProp),
         trailer: trailerProp?.url,
         itch: itchProp?.url,
