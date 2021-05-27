@@ -36,7 +36,7 @@
   --border-color: var(--gray);
 
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: flex-start;
   gap: var(--margin-01);
