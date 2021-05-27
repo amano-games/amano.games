@@ -22,6 +22,14 @@
   margin-right: var(--margin-02);
 }
 
+.footer-info {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  justify-content: center;
+  text-align: right;
+}
+
 @media screen and (max-width: 900px) {
   .footer {
     font-size: 1.5em;

@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import Fingers from 'svg/fingers1.svg';
 
 import style from './style.module.css';
@@ -9,9 +11,14 @@ function Footer() {
     <footer id="footer" className={`${style.footer}`}>
       <div className={`${style['footer-wrapper']} wrapper`}>
         <Fingers className={style['footer-hand']} />
-        <p>
-          © <time>{year}</time> by Amano
-        </p>
+        <div className={style['footer-info']}>
+          <p>
+            © <time>{year}</time> by Amano
+          </p>
+          <Link href="/devlog">
+            <a>Devlog</a>
+          </Link>
+        </div>
       </div>
     </footer>
   );

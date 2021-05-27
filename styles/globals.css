@@ -42,13 +42,8 @@ h3 {
 }
 
 a {
-  color: var(--black);
+  color: currentColor;
   transition: 0.2s ease all;
-}
-
-a:hover,
-a.-active {
-  color: var(--white);
 }
 
 img {
@@ -116,15 +111,6 @@ ol:not([class]) ol {
 
 .-inverted {
   background: var(--black);
-  color: var(--white);
-}
-
-.-inverted a {
-  color: var(--yellow);
-}
-
-.-inverted a:hover,
-.-inverted a.-active {
   color: var(--white);
 }
 

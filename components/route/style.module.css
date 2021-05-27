@@ -35,6 +35,10 @@
   color: var(--black);
 }
 
+.route:hover a {
+  color: var(--black);
+}
+
 .route:hover::before,
 .route.-active::before {
   height: var(--margin-02);
