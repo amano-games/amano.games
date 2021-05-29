@@ -12,6 +12,8 @@
 .rich-text-container img {
   margin-left: auto;
   margin-right: auto;
+  max-width: 60ch;
+  max-width: 640px;
 }
 
 @media (min-width: 45em) {
