@@ -9,6 +9,11 @@
   margin-top: var(--flow-space, 1em);
 }
 
+.rich-text-container img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (min-width: 45em) {
   .rich-text-container h1 {
     font-size: var(--size-800);
@@ -30,5 +35,6 @@
   .rich-text-container blockquote p {
     font-size: var(--size-600);
     max-width: 40ch;
+    max-width: 560px;
   }
 }

@@ -70,6 +70,7 @@ blockquote {
 p,
 li {
   max-width: 60ch;
+  max-width: 640px;
 }
 
 ol:not([class]),

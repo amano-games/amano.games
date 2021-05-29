@@ -1,16 +1,19 @@
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 
-const description = `Two friends making games by hand.`;
-const title = `AMANO`;
 const url = `https://amano.games`;
-const image = `https://amano.games/preview.png`;
 const twitter = `@amanogames_`;
-const color = `ffbc2f`;
+const color = `#ffbc2f`;
 
-function Seo() {
+const defaultDescription = `Two friends making games by hand.`;
+const defaultTitle = `AMANO`;
+const defaultImage = `/preview.png`;
+
+function Seo({ title, description, image }) {
+  const imagePath = `${url}/${image}`;
   return (
     <Head>
-      <title>AMANO</title>
+      <title>{title}</title>
       <meta name="description" content={description} />
 
       <link rel="icon" href="/favicon.ico" />
@@ -22,7 +25,7 @@ function Seo() {
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={imagePath} />
 
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content={twitter} />
@@ -32,5 +35,17 @@ function Seo() {
     </Head>
   );
 }
+
+Seo.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  image: PropTypes.string,
+};
+
+Seo.defaultProps = {
+  title: defaultTitle,
+  description: defaultDescription,
+  image: defaultImage,
+};
 
 export default Seo;

@@ -49,7 +49,7 @@ function Post({ title, featured, className, content, date, author, tags }) {
         {tagsArr.length > 0 ? (
           <Box className={style['post-tags']}>
             {tagsArr.map((tag) => {
-              return <span>#{tag}</span>;
+              return <span key={tag}>#{tag}</span>;
             })}
           </Box>
         ) : null}

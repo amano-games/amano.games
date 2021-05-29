@@ -16,7 +16,7 @@ import style from './style.module.css';
 function Devlog({ allPosts }) {
   return (
     <>
-      <Seo />
+      <Seo title="AMANO Devlog" image="/devlog-preview.png" />
       <header className={style['devlog-header']}>
         <div
           className={`${style['devlog-wrapper']} ${style['devlog-header-wrapper']} wrapper`}

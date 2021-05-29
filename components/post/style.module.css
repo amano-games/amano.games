@@ -3,8 +3,9 @@
 }
 .post-title {
   width: 100%;
-  max-width: 30ch;
   color: var(--yellow);
+  max-width: 30ch;
+  max-width: 570px;
 }
 
 .post-content {
