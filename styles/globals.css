@@ -46,10 +46,6 @@ a {
   transition: 0.2s ease all;
 }
 
-img {
-  max-width: min(55rem, 100%);
-}
-
 figcaption {
   font-size: var(--size-300);
   font-style: italic;
@@ -70,6 +66,10 @@ blockquote {
   background: var(--black);
 }
 
+img {
+  max-width: min(640px, 100%);
+}
+
 p,
 li {
   max-width: 60ch;
@@ -78,7 +78,6 @@ li {
 
 ol:not([class]),
 ul:not([class]) {
-  margin: 0;
   padding: 0;
   list-style: none;
 }

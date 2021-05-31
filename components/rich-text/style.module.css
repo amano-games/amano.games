@@ -3,6 +3,7 @@
 
   font-family: var(--font-serif);
   line-height: 2em;
+  max-width: 640px;
 }
 
 .rich-text-container > * + * {
@@ -12,8 +13,12 @@
 .rich-text-container img {
   margin-left: auto;
   margin-right: auto;
-  max-width: 60ch;
-  max-width: 640px;
+  width: 100%;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  margin-top: var(--margin-06);
+  margin-bottom: var(--margin-06);
 }
 
 @media (min-width: 45em) {
