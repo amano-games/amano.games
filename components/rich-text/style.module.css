@@ -13,10 +13,7 @@
 .rich-text-container img {
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
+  max-width: 100%;
   margin-top: var(--margin-06);
   margin-bottom: var(--margin-06);
 }
