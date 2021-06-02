@@ -12,7 +12,7 @@ ogImage:
 
 Back in **2020** during the month of may [Mario](twitter.com/afk_mario) and myself started working on a game for [PICO-8](https://www.lexaloffle.com/pico-8.php) as part of a monthly game development club. I've always loved playing Tetris and other falling block puzzle games, although Tetris is more of a skill game than a puzzle game such as [Panel De Pon](https://en.wikipedia.org/wiki/Puzzle_League). I've also always loved playing platformers. Moving around a character that has well-polished controls makes it feel like controlling an extension of your body. So I'd kinda wanted to mash-up these two things for a while.
 
-![https://amano.sfo3.digitaloceanspaces.com/devlog/pullfrog-postmortem/pullfrog-postmortem-002.jpg](https://amano.sfo3.digitaloceanspaces.com/devlog/pullfrog-postmortem/pullfrog-postmortem-002.jpg)
+![https://amano.sfo3.digitaloceanspaces.com/devlog/pullfrog-postmortem/frogtris-cols-export.png](https://amano.sfo3.digitaloceanspaces.com/devlog/pullfrog-postmortem/frogtris-cols-export.png)
 
 I started by trying to lay down the feel of the character movement. I am not a programmer but attempting this really helped me understand how games and code really behave. and so after a while at work I managed to produce this janky-ass thing.
 
