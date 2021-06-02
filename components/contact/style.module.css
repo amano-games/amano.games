@@ -15,7 +15,6 @@
 }
 
 .contact-message-wrapper {
-  display: block;
   margin-bottom: var(--margin-04);
   display: flex;
   flex-flow: column;
