@@ -19,14 +19,17 @@ import Contact from 'components/contact';
 import { parseManitas, parseGames } from 'utils/notion';
 
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
+import { detectWebGLContext } from 'utils/animation';
 
 import styles from './style.module.css';
 
 export default function Home({ manitas, games }) {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [jsEnabled, setJsEnabled] = useState(false);
+  const [canRender, setCanRender] = useState(false);
+
   useEffect(() => {
-    setJsEnabled(!prefersReducedMotion);
+    const webglEnabled = detectWebGLContext();
+    setCanRender(!prefersReducedMotion && webglEnabled);
   }, [prefersReducedMotion]);
 
   return (
@@ -34,7 +37,7 @@ export default function Home({ manitas, games }) {
       <Seo />
       <Header />
       <div className={styles['hero-wrapper']} id="home">
-        {jsEnabled ? <Scene /> : <FakeScene />}
+        {canRender ? <Scene /> : <FakeScene />}
         <div className={styles['home-info-wrapper']}>
           <div className={styles['home-info']}>
             <p>Two friends</p>
