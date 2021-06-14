@@ -1,14 +1,16 @@
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
-const url = `https://amano.games`;
-const twitter = `@amanogames_`;
-const color = `#ffbc2f`;
+import {
+  url,
+  twitter,
+  color,
+  defaultDescription,
+  defaultTitle,
+  defaultImage,
+} from 'lib/site';
 
-const defaultDescription = `Two friends making games by hand.`;
-const defaultTitle = `AMANO`;
-const defaultImage = `/preview.png`;
-
+const RSS_TITLE = "RSS feed for Amano's devlog";
 function Seo({ title, description, image }) {
   const imagePath = `${url}/${image}`;
   return (
@@ -32,6 +34,19 @@ function Seo({ title, description, image }) {
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:creator" content={twitter} />
+
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={RSS_TITLE}
+        href="/rss/feed.xml"
+      />
+      <link
+        rel="alternate"
+        type="application/atom+xml"
+        title={RSS_TITLE}
+        href="/rss/feed.xml"
+      />
     </Head>
   );
 }

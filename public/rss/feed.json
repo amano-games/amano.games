@@ -1,0 +1,36 @@
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "AMANO",
+  "home_page_url": "https://amano.games",
+  "feed_url": "https://amano.games/rss/feed.json",
+  "description": "Two friends making games by hand.",
+  "icon": "https://amano.games/images/logo.svg",
+  "author": {
+    "name": "Amano",
+    "url": "twitter.com/amanogames_"
+  },
+  "items": [
+    {
+      "id": "https://amano.games/devlog/about-amano-collision-conundrum",
+      "content_html": "So a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the PlayDate. We laid down the main mechanic, blocks were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.",
+      "url": "https://amano.games/devlog/about-amano-collision-conundrum",
+      "title": "About Amano & the collision conundrum",
+      "date_modified": "2021-06-14T05:00:00.000Z",
+      "author": {
+        "name": "JP & Mario",
+        "url": "https://amano.games/"
+      }
+    },
+    {
+      "id": "https://amano.games/devlog/pullfrog-postmortem",
+      "content_html": "So towards the end of the year, Mario managed to get his hands on a Development console for the handheld \"Playdate\" and we decided to attempt do make a second version of Pullfrog, this time featuring a playful little crank and seemingly less restrictions except for the apparent ones like the black and white color of the screen. Oh the naivety.",
+      "url": "https://amano.games/devlog/pullfrog-postmortem",
+      "title": "Pullfrog postmortem, Long Live Pullfrog 2-Bits",
+      "date_modified": "2021-05-29T05:00:00.000Z",
+      "author": {
+        "name": "Jp",
+        "url": "https://twitter.com/eljovenpaul"
+      }
+    }
+  ]
+}

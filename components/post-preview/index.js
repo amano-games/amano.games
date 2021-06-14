@@ -8,25 +8,25 @@ import Markdown from 'components/markdown';
 import style from './style.module.css';
 
 const options = {
-  weekday: 'long',
   year: 'numeric',
-  month: 'long',
+  month: 'numeric',
   day: 'numeric',
 };
 
-function Post({
+function PostPreview({
   slug,
   title,
   featured,
   className,
-  content,
   date,
   author,
   tags,
+  cover,
+  excerpt,
 }) {
   const customClassName = classNames(
     style.post,
-    'post',
+    'post-preview',
     '-inverted',
     className,
     {
@@ -39,19 +39,23 @@ function Post({
   const tagsArr = tags.split(',');
 
   return (
-    <article className={customClassName}>
+    <Box className={customClassName} inverted>
+      {cover ? (
+        <Link href={`/devlog/${slug}`}>
+          <a className={style['post-image']}>
+            <img src={cover.url} alt={title} />
+          </a>
+        </Link>
+      ) : null}
       <header className={style['post-header']}>
-        <h1 className={style['post-title']}>
+        <h3 className={style['post-title']}>
           <Link href={`/devlog/${slug}`}>
             <a>{title}</a>
           </Link>
-        </h1>
-      </header>
-      <Markdown className={style['post-content']}>{content}</Markdown>
-      <footer className={style['post-footer']}>
+        </h3>
         <div className={style['post-info']}>
           <span className={style['post-date']}>
-            Posted <date>{dateParsed}</date>
+            <date>{dateParsed}</date>
           </span>
           <span className={style['post-author']}>
             By:{' '}
@@ -60,34 +64,42 @@ function Post({
             </a>
           </span>
         </div>
+      </header>
+      {excerpt ? (
+        <Markdown className={style['post-excerpt']}>{excerpt}</Markdown>
+      ) : null}
+      <footer className={style['post-footer']}>
         {tagsArr.length > 0 ? (
-          <Box className={style['post-tags']}>
+          <div className={style['post-tags']}>
             {tagsArr.map((tag) => {
               return <span key={tag}>#{tag}</span>;
             })}
-          </Box>
+          </div>
         ) : null}
       </footer>
-    </article>
+    </Box>
   );
 }
 
-Post.propTypes = {
+PostPreview.propTypes = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   author: PropTypes.shape({ name: PropTypes.string, url: PropTypes.string })
     .isRequired,
+  cover: PropTypes.shape({ url: PropTypes.string }),
   tags: PropTypes.string,
-  content: PropTypes.string.isRequired,
   className: PropTypes.string,
   featured: PropTypes.bool,
+  excerpt: PropTypes.string,
 };
 
-Post.defaultProps = {
+PostPreview.defaultProps = {
   className: null,
   featured: false,
   tags: '',
+  cover: null,
+  excerpt: null,
 };
 
-export default Post;
+export default PostPreview;

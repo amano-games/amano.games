@@ -1,46 +1,33 @@
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 
 import { getAllPosts } from 'lib/api';
+import { generateRssFeed } from 'lib/rss';
 
-import EyesWrap from 'components/eyes-wrap';
-import Seo from 'components/seo';
-import Footer from 'components/footer';
 import Post from 'components/post';
-
-import Hand from 'svg/hand.svg';
-import Text from 'svg/text.svg';
+import { LayoutDevlog } from 'components/layouts';
+import Seo from 'components/seo';
+import PostPreview from 'components/post-preview';
 
 import style from './style.module.css';
 
 function Devlog({ allPosts }) {
+  const [first, ...rest] = allPosts;
   return (
-    <>
+    <LayoutDevlog>
       <Seo title="AMANO Devlog" image="/devlog-preview.png" />
-      <header className={style['devlog-header']}>
-        <div
-          className={`${style['devlog-wrapper']} ${style['devlog-header-wrapper']} wrapper`}
-        >
-          <Link href="/">
-            <a className={style['devlog-logo']}>
-              <Hand className={style['devlog-hand']} />
-              <Text className={style['devlog-text']} />
-            </a>
-          </Link>
-          <h1 className={style['devlog-title']}>Devlog</h1>
-        </div>
-      </header>
-      <EyesWrap>
-        <main className={style['devlog-posts']}>
-          <div className={`${style['devlog-wrapper']} wrapper`}>
-            {allPosts.map((item) => {
-              return <Post {...item} key={item.slug} />;
-            })}
-          </div>
-        </main>
-      </EyesWrap>
-      <Footer />
-    </>
+      <div className={`${style['devlog-single-post']} wrapper`}>
+        <Post {...first} />
+      </div>
+
+      <div className="wrapper">
+        <h1 className={style['devlog-keep-reading']}>Older Posts</h1>
+      </div>
+      <div className={`${style['devlog-posts-grid']} wrapper`}>
+        {rest.map((item) => {
+          return <PostPreview {...item} key={item.slug} />;
+        })}
+      </div>
+    </LayoutDevlog>
   );
 }
 
@@ -58,11 +45,13 @@ export async function getStaticProps() {
     'date',
     'slug',
     'author',
-    'coverImage',
     'excerpt',
-    'content',
     'tags',
+    'cover',
+    'content',
   ]);
+
+  await generateRssFeed(allPosts);
 
   return {
     props: { allPosts },

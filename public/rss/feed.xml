@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>AMANO</title>
+        <link>https://amano.games</link>
+        <description>Two friends making games by hand.</description>
+        <lastBuildDate>Mon, 14 Jun 2021 23:51:01 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>Next.js using Feed for Node.js</generator>
+        <language>en</language>
+        <image>
+            <title>AMANO</title>
+            <url>https://amano.games/images/logo.svg</url>
+            <link>https://amano.games</link>
+        </image>
+        <copyright>All rights reserved 2021, Amano Games</copyright>
+        <item>
+            <title><![CDATA[About Amano & the collision conundrum]]></title>
+            <link>https://amano.games/devlog/about-amano-collision-conundrum</link>
+            <guid>https://amano.games/devlog/about-amano-collision-conundrum</guid>
+            <pubDate>Mon, 14 Jun 2021 05:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[So a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the PlayDate. We laid down the main mechanic, blocks were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Pullfrog postmortem, Long Live Pullfrog 2-Bits]]></title>
+            <link>https://amano.games/devlog/pullfrog-postmortem</link>
+            <guid>https://amano.games/devlog/pullfrog-postmortem</guid>
+            <pubDate>Sat, 29 May 2021 05:00:00 GMT</pubDate>
+            <content:encoded><![CDATA[So towards the end of the year, Mario managed to get his hands on a Development console for the handheld "Playdate" and we decided to attempt do make a second version of Pullfrog, this time featuring a playful little crank and seemingly less restrictions except for the apparent ones like the black and white color of the screen. Oh the naivety.]]></content:encoded>
+        </item>
+    </channel>
+</rss>

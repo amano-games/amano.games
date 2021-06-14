@@ -6,6 +6,8 @@
   color: var(--yellow);
   max-width: 30ch;
   max-width: 570px;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: 2px;
 }
 
 .post-content {

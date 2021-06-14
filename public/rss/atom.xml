@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://amano.games</id>
+    <title>AMANO</title>
+    <updated>2021-06-14T23:51:01.483Z</updated>
+    <generator>Next.js using Feed for Node.js</generator>
+    <author>
+        <name>Amano</name>
+        <email>hola@amano.games</email>
+        <uri>twitter.com/amanogames_</uri>
+    </author>
+    <link rel="alternate" href="https://amano.games"/>
+    <link rel="self" href="https://amano.games/rss/atom.xml"/>
+    <subtitle>Two friends making games by hand.</subtitle>
+    <logo>https://amano.games/images/logo.svg</logo>
+    <icon>https://amano.games/favicon.ico</icon>
+    <rights>All rights reserved 2021, Amano Games</rights>
+    <entry>
+        <title type="html"><![CDATA[About Amano & the collision conundrum]]></title>
+        <id>https://amano.games/devlog/about-amano-collision-conundrum</id>
+        <link href="https://amano.games/devlog/about-amano-collision-conundrum"/>
+        <updated>2021-06-14T05:00:00.000Z</updated>
+        <content type="html"><![CDATA[So a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the PlayDate. We laid down the main mechanic, blocks were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.]]></content>
+        <contributor>
+            <name>Amano</name>
+            <email>hola@amano.games</email>
+            <uri>twitter.com/amanogames_</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Pullfrog postmortem, Long Live Pullfrog 2-Bits]]></title>
+        <id>https://amano.games/devlog/pullfrog-postmortem</id>
+        <link href="https://amano.games/devlog/pullfrog-postmortem"/>
+        <updated>2021-05-29T05:00:00.000Z</updated>
+        <content type="html"><![CDATA[So towards the end of the year, Mario managed to get his hands on a Development console for the handheld "Playdate" and we decided to attempt do make a second version of Pullfrog, this time featuring a playful little crank and seemingly less restrictions except for the apparent ones like the black and white color of the screen. Oh the naivety.]]></content>
+        <contributor>
+            <name>Amano</name>
+            <email>hola@amano.games</email>
+            <uri>twitter.com/amanogames_</uri>
+        </contributor>
+    </entry>
+</feed>
