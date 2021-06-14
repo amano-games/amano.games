@@ -48,7 +48,7 @@
   margin: auto;
 }
 
-.devlog-wrapper > .post:not(:last-child) {
+.devlog-wrapper article:not(:last-child) {
   margin-bottom: var(--margin-10);
 }
 
