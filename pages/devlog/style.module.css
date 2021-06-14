@@ -48,6 +48,10 @@
   margin: auto;
 }
 
+.devlog-wrapper > .post:not(:last-child) {
+  margin-bottom: var(--margin-10);
+}
+
 @media screen and (max-width: 900px) {
   .devlog-header-wrapper {
     flex-flow: column;
