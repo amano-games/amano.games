@@ -20,7 +20,7 @@ function Devlog({ allPosts }) {
       </div>
 
       <div className="wrapper">
-        <h1 className={style['devlog-keep-reading']}>Older Posts</h1>
+        <h1 className={style['devlog-keep-reading']}>Other Posts</h1>
       </div>
       <div className={`${style['devlog-posts-grid']} wrapper`}>
         {rest.map((item) => {

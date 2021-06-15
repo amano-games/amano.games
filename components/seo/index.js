@@ -12,7 +12,7 @@ import {
 
 const RSS_TITLE = "RSS feed for Amano's devlog";
 function Seo({ title, description, image }) {
-  const imagePath = `${url}/${image}`;
+  const imagePath = `${url}${image}`;
   return (
     <Head>
       <title>{title}</title>
