@@ -15,6 +15,7 @@ function SinglePost({ post }) {
       <Seo
         title={post.title}
         image={post.cover ? post.cover.url : '/devlog-preview.png'}
+        description={post.excerpt}
       />
       <div className={`${style['single-post-wrapper']} wrapper`}>
         <Post {...post} />
@@ -28,11 +29,14 @@ export default SinglePost;
 SinglePost.propTypes = {
   post: PropTypes.shape({
     title: PropTypes.string,
+    excerpt: PropTypes.string,
     cover: PropTypes.shape({
       url: PropTypes.string,
     }),
   }).isRequired,
 };
+
+SinglePost.defaultProps = {};
 
 export async function getStaticProps(context) {
   const post = getPostBySlug(context.params.slug, [
@@ -40,10 +44,10 @@ export async function getStaticProps(context) {
     'date',
     'slug',
     'author',
-    'coverImage',
     'excerpt',
     'content',
     'tags',
+    'cover',
   ]);
 
   return {

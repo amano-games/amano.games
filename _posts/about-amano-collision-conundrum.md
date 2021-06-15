@@ -12,8 +12,6 @@ author:
 
 ## About Amano
 
-**JP:** So a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the [PlayDate](https://play.date/). We laid down the main mechanic, blocks were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.
-
 ![https://amano.sfo3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/10-about-amano.png](https://amano.sfo3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/10-about-amano.png)
 
 Turns out, the way we were handling collisions wasn’t the best. So we got kinda bummed out and stopped working on the game for a bit.
@@ -36,7 +34,7 @@ Hand-made tortillas are better than their machine-made cousins, and far superior
 
 ## The Collision _conundrum_
 
-**[Mario:](twitter.com/afk_mario)** The PlayDate SDK has pretty much everything we needed to start making Pullfrog, One of those things is a collision system. After spending the majority of the development time making a collision system for the original Pullfrog, this came as a welcome surprise. With a reassuring feeling that if everything went bad, we could always recreate the same system as the one in the PICO-8 version.
+[**Mario:**](https://twitter.com/afk_mario/) The PlayDate SDK has pretty much everything we needed to start making Pullfrog, One of those things is a collision system. After spending the majority of the development time making a collision system for the original Pullfrog, this came as a welcome surprise. With a reassuring feeling that if everything went bad, we could always recreate the same system as the one in the PICO-8 version.
 
 We started working on the main character and its behavior, we wanted to recreate the same feeling and polish we had on PICO-8 so the basic collision handling that we had on the PlayDate wasn't enough. Fortunately it wasn't to hard to customize and we ended up with even a better version of what we had in PICO-8. After a couple of days we already had the character moving in the screen! we already kind of had a game, so I built the game and send it to my device and started moving the little frog around.
 
@@ -77,3 +75,7 @@ We where so happy about the game running in the PlayDate that JP did the launche
 ![https://amano.sfo3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/02-about-amano.png](https://amano.sfo3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/02-about-amano.png)
 
 Next up is dealing on how the pieces and the frog behave when you pull them and they collide with the frog. We have some ideas on how to improve this based on what we learned from the PICO-8 version.
+
+[https://twitter.com/eljovenpaul](https://twitter.com/eljovenpaul)
+
+[https://twitter.com/eljovenpaul](https://twitter.com/eljovenpaul)
