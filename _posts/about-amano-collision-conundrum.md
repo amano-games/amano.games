@@ -2,7 +2,7 @@
 title: 'About Amano & the collision conundrum'
 tags: pullfrog,playdate,performance,collisions
 date: 2021/06/14
-excerpt: 'So a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the PlayDate. We laid down the main mechanic, blocks were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.'
+excerpt: 'So, a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the PlayDate. We laid down the main mechanic, blocks were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.'
 cover:
   url: https://amano.sfo3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/11-about-amano.gif
 author:
@@ -12,7 +12,7 @@ author:
 
 ## About Amano
 
-**[JP:](https://twitter.com/eljovenpaul)** So a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the [PlayDate](https://play.date/). We laid down the main mechanic, block were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.
+**[JP:](https://twitter.com/eljovenpaul)** So, a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the [PlayDate](https://play.date/). We laid down the main mechanic, block were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.
 
 ![https://amano.sfo3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/10-about-amano.png](https://amano.sfo3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/10-about-amano.png)
 
