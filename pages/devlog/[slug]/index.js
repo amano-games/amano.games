@@ -14,7 +14,7 @@ function SinglePost({ post }) {
     <LayoutDevlog>
       <Seo
         title={post.title}
-        image={post.cover ? post.cover.url : '/devlog-preview.png'}
+        image="/devlog-preview.png"
         description={post.excerpt}
       />
       <div className={`${style['single-post-wrapper']} wrapper`}>
