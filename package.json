@@ -36,7 +36,13 @@
     "react-markdown": "^6.0.2",
     "react-use": "^17.2.4",
     "react-use-dimensions": "^1.2.1",
+    "rehype-document": "^5.1.0",
+    "rehype-format": "^3.1.0",
+    "rehype-stringify": "^8.0.0",
+    "remark-parse": "^9.0.0",
+    "remark-rehype": "^8.1.0",
     "three": "^0.128.0",
+    "unified": "^9.2.1",
     "use-sound": "^3.0.1"
   },
   "devDependencies": {
