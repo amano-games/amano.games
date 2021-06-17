@@ -2,14 +2,16 @@
 
 module.exports = {
   target: 'serverless',
-  images: { disableStaticImages: true },
-  webpack5: true,
   webpack(config) {
+    // https://github.com/vercel/next.js/issues/25950#issuecomment-863298702
+    const fileLoaderRule = config.module.rules.find(
+      (rule) => rule.test && rule.test.test('.svg')
+    );
+    fileLoaderRule.exclude = /\.svg$/;
     config.module.rules.push({
       test: /\.svg$/,
-      use: ['@svgr/webpack'],
+      loader: require.resolve('@svgr/webpack'),
     });
-
     return config;
   },
 };
