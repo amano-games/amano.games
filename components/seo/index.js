@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 
 import {
   url,
@@ -12,6 +13,8 @@ import {
 
 const RSS_TITLE = "RSS feed for Amano's devlog";
 function Seo({ title, description, image }) {
+  const router = useRouter();
+  const canonicalUrl = `${url}/${router.asPath}`;
   return (
     <Head>
       <title>{title}</title>
@@ -25,7 +28,7 @@ function Seo({ title, description, image }) {
 
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content={url} />
+      <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={image} />
 
       <meta name="twitter:card" content="summary" />
