@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import { getAllPosts } from 'lib/api';
 import { generateRssFeed } from 'lib/rss';
+import { url } from 'lib/site';
 
 import Post from 'components/post';
 import { LayoutDevlog } from 'components/layouts';
@@ -14,7 +15,7 @@ function Devlog({ allPosts }) {
   const [first, ...rest] = allPosts;
   return (
     <LayoutDevlog>
-      <Seo title="AMANO Devlog" image="/devlog-preview.png" />
+      <Seo title="AMANO Devlog" image={`${url}/devlog-preview.png`} />
       <div className={`${style['devlog-single-post']} wrapper`}>
         <Post {...first} />
       </div>

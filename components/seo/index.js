@@ -12,7 +12,6 @@ import {
 
 const RSS_TITLE = "RSS feed for Amano's devlog";
 function Seo({ title, description, image }) {
-  const imagePath = `${url}${image}`;
   return (
     <Head>
       <title>{title}</title>
@@ -27,7 +26,7 @@ function Seo({ title, description, image }) {
       <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
-      <meta property="og:image" content={imagePath} />
+      <meta property="og:image" content={image} />
 
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content={twitter} />

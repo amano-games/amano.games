@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 
 import { getAllPosts, getPostBySlug } from 'lib/api';
+import { url } from 'lib/site';
 
 import Seo from 'components/seo';
 import Post from 'components/post';
@@ -14,7 +15,7 @@ function SinglePost({ post }) {
     <LayoutDevlog>
       <Seo
         title={post.title}
-        image="/devlog-preview.png"
+        image={post.cover ? post.cover.url : `${url}/devlog-preview.png`}
         description={post.excerpt}
       />
       <div className={`${style['single-post-wrapper']} wrapper`}>
