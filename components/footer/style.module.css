@@ -30,6 +30,10 @@
   text-align: right;
 }
 
+.footer-info > *:last-child {
+  margin-top: var(--margin-01);
+}
+
 @media screen and (max-width: 900px) {
   .footer {
     font-size: 1.5em;

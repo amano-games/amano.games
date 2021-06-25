@@ -15,11 +15,17 @@
   position: absolute;
 }
 
+.about-us-text {
+  margin: auto;
+  margin-bottom: var(--margin-06);
+  text-align: center;
+}
+
 .about-us-header {
   margin-bottom: var(--margin-06);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   flex-flow: row;
 }
 

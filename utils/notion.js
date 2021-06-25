@@ -11,16 +11,8 @@ export function getPageURL(team, id) {
   return `https://www.notion.so/indies/${id.replace(/[_-]/g, '')}`;
 }
 
-export function richTextToMarkdown(block) {
-  const { type } = block;
-  if (type !== 'rich_text') {
-    console.error(
-      new Error('Triying to convert non rich text block to markdown')
-    );
-    return null;
-  }
-
-  return block.rich_text.reduce((acc, curr) => {
+export function richTextToMarkdown(arr) {
+  return arr.reduce((acc, curr) => {
     const { plain_text: text, annotations, href } = curr;
     const { bold, code, italic, strikethrough } = annotations;
     const url = href && new URL(href);
@@ -52,6 +44,18 @@ export function richTextToMarkdown(block) {
   }, '');
 }
 
+export function blockRichTextToMarkdown(block) {
+  const { type } = block;
+  if (type !== 'rich_text') {
+    console.error(
+      new Error('Triying to convert non rich text block to markdown', type)
+    );
+    return null;
+  }
+
+  return richTextToMarkdown(block.rich_text);
+}
+
 export function parseManitas(manitas) {
   return manitas
     .map((event) => {
@@ -72,13 +76,13 @@ export function parseManitas(manitas) {
 
       return {
         title: titleProp.title[0].plain_text,
-        subtitle: richTextToMarkdown(subtitleProp),
-        description: richTextToMarkdown(descriptionProp),
+        subtitle: blockRichTextToMarkdown(subtitleProp),
+        description: blockRichTextToMarkdown(descriptionProp),
         itchio: itchioProp.url,
-        twitter: richTextToMarkdown(twitterProp),
+        twitter: blockRichTextToMarkdown(twitterProp),
         email: emailProp.email,
         avatar: avatarProp.url,
-        instagram: richTextToMarkdown(instagramProp),
+        instagram: blockRichTextToMarkdown(instagramProp),
         web: webProp.url,
       };
     })
@@ -106,9 +110,9 @@ export function parseGames(games) {
 
       return {
         name: nameProp.title[0].plain_text,
-        subtitle: richTextToMarkdown(subtitleProp),
-        badge: richTextToMarkdown(badgeProp),
-        description: richTextToMarkdown(descriptionProp),
+        subtitle: blockRichTextToMarkdown(subtitleProp),
+        badge: blockRichTextToMarkdown(badgeProp),
+        description: blockRichTextToMarkdown(descriptionProp),
         trailer: trailerProp?.url,
         itch: itchProp?.url,
         newgrounds: newgroundsProp?.url,
@@ -118,4 +122,9 @@ export function parseGames(games) {
       };
     })
     .filter(Boolean);
+}
+
+export function parseAobutUs(aboutUs) {
+  const [block] = aboutUs;
+  return richTextToMarkdown(block.paragraph.text);
 }

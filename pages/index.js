@@ -16,14 +16,14 @@ import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
 import Contact from 'components/contact';
 
-import { parseManitas, parseGames } from 'utils/notion';
+import { parseManitas, parseGames, parseAobutUs } from 'utils/notion';
 
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 import { detectWebGLContext } from 'utils/animation';
 
 import styles from './style.module.css';
 
-export default function Home({ manitas, games }) {
+export default function Home({ manitas, games, aboutUs }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [canRender, setCanRender] = useState(false);
 
@@ -62,10 +62,11 @@ export default function Home({ manitas, games }) {
         <AboutUs
           className={styles['home-section']}
           manitas={parseManitas(manitas)}
+          aboutUs={parseAobutUs(aboutUs)}
         />
         <Contact className={styles['home-section']} />
       </main>
-      <Footer />
+      <Footer showSocial={false} />
     </>
   );
 }
@@ -73,6 +74,7 @@ export default function Home({ manitas, games }) {
 Home.propTypes = {
   manitas: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   games: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  aboutUs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export async function getServerSideProps() {
@@ -92,7 +94,15 @@ export async function getServerSideProps() {
 
   const { results: games } = gamesData;
 
+  const pageIdAboutUs = '16545b37f4e642a7a4687a2b5e0b9d85';
+  const aboutUsData = await notion.blocks.children.list({
+    block_id: pageIdAboutUs,
+    page_size: 50,
+  });
+
+  const { results: aboutUs } = aboutUsData;
+
   return {
-    props: { manitas, games },
+    props: { manitas, games, aboutUs },
   };
 }
