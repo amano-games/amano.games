@@ -7,10 +7,11 @@ import { url } from 'lib/site';
 import Seo from 'components/seo';
 import Post from 'components/post';
 import { LayoutDevlog } from 'components/layouts';
+import DevlogOtherPosts from 'components/devlog-other-posts';
 
 import style from './style.module.css';
 
-function SinglePost({ post }) {
+function SinglePost({ post, allPosts }) {
   return (
     <LayoutDevlog>
       <Seo
@@ -21,6 +22,7 @@ function SinglePost({ post }) {
       <div className={`${style['single-post-wrapper']} wrapper`}>
         <Post {...post} />
       </div>
+      <DevlogOtherPosts allPosts={allPosts} currentSlug={post.slug} />
     </LayoutDevlog>
   );
 }
@@ -29,21 +31,34 @@ export default SinglePost;
 
 SinglePost.propTypes = {
   post: PropTypes.shape({
+    slug: PropTypes.string,
     title: PropTypes.string,
     excerpt: PropTypes.string,
     cover: PropTypes.shape({
       url: PropTypes.string,
     }),
   }).isRequired,
+  allPosts: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-SinglePost.defaultProps = {};
+SinglePost.defaultProps = {
+  allPosts: [],
+};
 
 export async function getStaticProps(context) {
-  const post = getPostBySlug(context.params.slug, [
+  const allPosts = getAllPosts([
     'title',
     'date',
     'slug',
+    'author',
+    'excerpt',
+    'tags',
+    'cover',
+  ]);
+  const post = getPostBySlug(context.params.slug, [
+    'slug',
+    'title',
+    'date',
     'author',
     'excerpt',
     'content',
@@ -52,7 +67,7 @@ export async function getStaticProps(context) {
   ]);
 
   return {
-    props: { post },
+    props: { post, allPosts },
   };
 }
 

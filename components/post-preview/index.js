@@ -25,7 +25,7 @@ function PostPreview({
   excerpt,
 }) {
   const customClassName = classNames(
-    style.post,
+    style['post-preview'],
     'post-preview',
     '-inverted',
     className,

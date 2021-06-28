@@ -1,15 +1,27 @@
 .post-preview {
   width: 100%;
+  height: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  overflow: hidden;
+  margin: auto;
+}
+
+.post-image {
+  width: 100%;
+  height: 200px;
+  margin-bottom: var(--margin-02);
 }
 
 .post-image img {
-  position: relative;
-  overflow: hidden;
   width: 100%;
-  height: 170px;
+  height: 100%;
   object-fit: cover;
+  overflow: hidden;
+  margin: auto;
   border-radius: var(--margin-02);
-  margin-bottom: var(--margin-02);
 }
 
 .post-title {
@@ -49,7 +61,7 @@
   display: flex;
   flex-flow: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: var(--margin-01);
 }
 
@@ -68,4 +80,13 @@
 .post-tags span {
   white-space: nowrap;
   margin-right: var(--margin-01);
+}
+
+@supports (aspect-ratio: 1) {
+  .post-image {
+    --aspect-ratio: 16/9;
+
+    height: auto;
+    aspect-ratio: var(--aspect-ratio);
+  }
 }

@@ -7,12 +7,12 @@ import { url } from 'lib/site';
 import Post from 'components/post';
 import { LayoutDevlog } from 'components/layouts';
 import Seo from 'components/seo';
-import PostPreview from 'components/post-preview';
+import DevlogOtherPosts from 'components/devlog-other-posts';
 
 import style from './style.module.css';
 
 function Devlog({ allPosts }) {
-  const [first, ...rest] = allPosts;
+  const [first] = allPosts;
   return (
     <LayoutDevlog>
       <Seo title="AMANO Devlog" image={`${url}/devlog-preview.png`} />
@@ -20,14 +20,7 @@ function Devlog({ allPosts }) {
         <Post {...first} />
       </div>
 
-      <div className="wrapper">
-        <h1 className={style['devlog-keep-reading']}>Other Posts</h1>
-      </div>
-      <div className={`${style['devlog-posts-grid']} wrapper`}>
-        {rest.map((item) => {
-          return <PostPreview {...item} key={item.slug} />;
-        })}
-      </div>
+      <DevlogOtherPosts allPosts={allPosts} currentSlug={first.slug} />
     </LayoutDevlog>
   );
 }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { email } from 'constants/site';
+import { twitter, email, itch } from 'lib/site';
 
 import Itch from 'svg/itch.svg';
 import Twitter from 'svg/twitter.svg';
@@ -12,12 +12,12 @@ import style from './style.module.css';
 const social = [
   {
     label: 'twitter',
-    href: 'https://twitter.com/amanogames_',
+    href: `https://twitter.com/${twitter}`,
     icon: <Twitter />,
   },
   {
     label: 'itch.io',
-    href: 'https://amanogames.itch.io/',
+    href: itch,
     icon: <Itch />,
   },
   {

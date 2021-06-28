@@ -1,7 +1,7 @@
 import Sparkles from 'components/sparkles';
 import Social from 'components/social';
 
-import { email } from 'constants/site';
+import { email } from 'lib/site';
 
 import style from './style.module.css';
 
