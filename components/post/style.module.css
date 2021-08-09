@@ -14,6 +14,10 @@
   margin-bottom: var(--margin-02);
 }
 
+.post-content a {
+  color: var(--yellow);
+}
+
 .post-footer {
   color: var(--gray);
   font-size: var(--size-500);

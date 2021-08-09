@@ -1,0 +1,4 @@
+.code-wrapper {
+  border-radius: var(--margin-01);
+  padding: var(--margin-01) var(--margin-02);
+}

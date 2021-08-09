@@ -51,7 +51,7 @@ function Post({
       <footer className={style['post-footer']}>
         <div className={style['post-info']}>
           <span className={style['post-date']}>
-            Posted <date>{dateParsed}</date>
+            <date>{dateParsed}</date>
           </span>
           <span className={style['post-author']}>
             By:{' '}

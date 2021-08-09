@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { gruvboxDark as dark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import RichText from 'components/rich-text';
 
@@ -20,6 +22,27 @@ function renderParagraph(props) {
 
   return <p>{children}</p>;
 }
+function renderCode({ node, inline, className, children, ...props }) {
+  const match = /language-(\w+)/.exec(className || '');
+  return !inline && match ? (
+    <SyntaxHighlighter
+      className={style['code-wrapper']}
+      customStyle={{
+        padding: undefined,
+      }}
+      style={dark}
+      language={match[1]}
+      PreTag="div"
+      {...props}
+    >
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
+  ) : (
+    <code className={className} {...props}>
+      {children}
+    </code>
+  );
+}
 
 function Markdown({ children, className }) {
   const customClassName = classNames(
@@ -34,6 +57,7 @@ function Markdown({ children, className }) {
         linkTarget="_blank"
         components={{
           p: renderParagraph,
+          code: renderCode,
         }}
       >
         {children}
