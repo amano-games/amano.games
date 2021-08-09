@@ -1,6 +1,6 @@
 ---
 title: 'On starting a game'
-excerpt: ''
+excerpt: 'A couple of things I would recommend when starting your first game on the Playdate.'
 tags: PICO-8,gamedev,playdate
 date: 2021/08/09
 author:
