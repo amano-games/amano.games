@@ -14,13 +14,13 @@ This is a more polished version of a long message that I wrote in the official *
 
 ## Lazy Devs
 
-[Lazy Devs](https://www.youtube.com/playlist?list=PLea8cjCua_P0qjjiG8G5FBgqwpqMU7rBk) is one of the best teaches for game development out there. I love his tutorials because it shows you the process of doing a game from start to finish with a lot of polish and focus on gameplay. The tutorials are for PICO-8, but it also uses LUA, so a lot of things translate well to **Playdate**.
+[Lazy Devs](https://www.youtube.com/playlist?list=PLea8cjCua_P0qjjiG8G5FBgqwpqMU7rBk) is one of the best teachers for game development out there. I love his tutorials because it shows you the process of doing a game from start to finish with a lot of polish and focus on gameplay. The tutorials are for PICO-8, but it also uses LUA, so a lot of things translate well to **Playdate**.
 
 ## a327ex
 
 If you want a big LUA codebase to look at as a reference, [BYTEPATH](https://github.com/a327ex/BYTEPATH) and [SNKRX](https://github.com/a327ex/SNKRX) are good examples of finished games made in LOVE2D. They are open source so you can check how they handles everything in the games.
 
-Dumb example:
+Basic example:
 
 Coming from **PICO-8** I wasn't used to importing external files so I was importing _CoreLibs_ in every single file. At some point I started to wonder if that's how everyone was doing it. I looked at **[a327ex](https://twitter.com/a327ex)** code and ended up having an single `init.lua` file where I do all my imports and set up the game.
 
@@ -30,7 +30,7 @@ The most valuable thing from a framework in my opinion is to look at their code.
 
 ## Scene Management
 
-This is a common mistake, I know that I have fallen in to this trap a couple of times before. Scene management is not specially hard to do, but it's something that can impose a lot of friction between iterations of your game.
+This is a common mistake, I know that I have fallen in to this trap a couple of times before. Scene management is not especially hard to do, but it's something that can impose a lot of friction between iterations of your game.
 
 I like to start my games with the main interaction of the gameplay and make that feel as nice as possible.
 
