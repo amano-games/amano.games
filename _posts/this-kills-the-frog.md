@@ -14,7 +14,7 @@ Remember when I said that making a hole inside a big collider was a good idea? I
 
 Something we wanted to improve from the PICO-8 version of the game, was to make it harder for the player to die. The game can be hard, as you need to mix platforming with puzzle solving abilities.
 
-On top of that, diving while pulling the pieces towards you was no fun, so we came up with a system to try to save you, moving you out of danger.
+On top of that, dying while pulling the pieces towards you was no fun, so we came up with a system to try to save you, moving you out of danger.
 
 First we figured we only are going to try to save the frog if you are getting squished by a piece that is moving vertically.
 
