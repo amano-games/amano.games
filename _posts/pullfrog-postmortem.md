@@ -3,6 +3,7 @@ title: 'Pullfrog postmortem, Long Live Pullfrog 2-Bits'
 excerpt: 'So towards the end of the year, Mario managed to get his hands on a Development console for the handheld "Playdate" and we decided to attempt do make a second version of Pullfrog, this time featuring a playful little crank and seemingly less restrictions except for the apparent ones like the black and white color of the screen. Oh the naivety.'
 tags: post-mortem,gamedev,pullfrog,playdate,PICO-8
 date: 2021/05/29
+publish: true
 author:
   name: Jp
   url: https://twitter.com/eljovenpaul

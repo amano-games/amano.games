@@ -47,6 +47,7 @@ SinglePost.defaultProps = {
 
 export async function getStaticProps(context) {
   const allPosts = getAllPosts([
+    'publish',
     'title',
     'date',
     'slug',

@@ -3,6 +3,7 @@ title: 'How to correct a corner'
 excerpt: 'There are many techniques that you can apply so that a platformer game feels good. One of those is corner correction.'
 tags: PICO-8,collisions,gamedesign,gamedev,playdate,pullfrog
 date: 2021/07/05
+publish: true
 author:
   name: Mario
   url: https://twitter.com/afk_mario

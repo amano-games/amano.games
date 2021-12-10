@@ -3,6 +3,7 @@ title: 'The collision stair case'
 excerpt: 'As stated on the previous post, updating all the pieces all the time was a bad idea. We needed to figure out a way to update only the ones that needed to be updated after another block got destroyed. The quick and dirty solution was to check all the pieces inside a bounding box on top of the piece that got destroyed.'
 tags: collisions,gamedev,playdate,pullfrog
 date: 2021/06/19
+publish: true
 author:
   name: Mario
   url: https://twitter.com/afk_mario

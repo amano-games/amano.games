@@ -10,7 +10,9 @@ const info = `You can subscribe via [RSS](/rss/feed.xml) or follow us [@${twitte
           ](https://twitter.com/${twitter})`;
 
 function DevlogOtherPosts({ allPosts, currentSlug }) {
-  const other = allPosts.filter((post) => post.slug !== currentSlug);
+  const other = allPosts.filter(
+    (post) => post.slug !== currentSlug && post.publish
+  );
   return (
     <>
       <div className={`${style['devlog-keep-reading']}  wrapper`}>

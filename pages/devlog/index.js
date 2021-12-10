@@ -12,7 +12,7 @@ import DevlogOtherPosts from 'components/devlog-other-posts';
 import style from './style.module.css';
 
 function Devlog({ allPosts }) {
-  const [first] = allPosts;
+  const [first] = allPosts.filter((item) => item.publish);
   return (
     <LayoutDevlog>
       <Seo title="AMANO Devlog" image={`${url}/devlog-preview.png`} />
@@ -35,6 +35,7 @@ Devlog.defaultProps = {
 
 export async function getStaticProps() {
   const allPosts = getAllPosts([
+    'publish',
     'title',
     'date',
     'slug',
