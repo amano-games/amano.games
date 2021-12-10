@@ -12,7 +12,7 @@ import DevlogOtherPosts from 'components/devlog-other-posts';
 import style from './style.module.css';
 
 function Devlog({ allPosts }) {
-  const [first] = allPosts.filter((item) => item.publish);
+  const [first] = allPosts;
   return (
     <LayoutDevlog>
       <Seo title="AMANO Devlog" image={`${url}/devlog-preview.png`} />
@@ -44,7 +44,7 @@ export async function getStaticProps() {
     'tags',
     'cover',
     'content',
-  ]);
+  ]).filter((item) => item.publish);
 
   await generateRssFeed(allPosts);
 
