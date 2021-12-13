@@ -3,7 +3,7 @@ title: 'Spooky eyes and level editors'
 excerpt: ''
 tags: design,playdate,pullfrog
 date: 2021/12/11
-publish: false
+publish: true
 author:
   name: Mario
   url: https://twitter.com/afk_mario
