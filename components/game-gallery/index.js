@@ -22,9 +22,11 @@ function GameGallery({ games, ...rest }) {
           <Fire className={style['game-gallery-fire']} />
         </header>
         <div className={style['game-gallery-grid']}>
-          {games.map((game) => {
-            return <GameCard {...game} key={game.name} />;
-          })}
+          {games
+            .filter((game) => game.publish === true)
+            .map((game) => {
+              return <GameCard {...game} key={game.name} />;
+            })}
         </div>
       </div>
     </Wrap>

@@ -24,7 +24,7 @@ const generateSparkle = (color) => {
   return sparkle;
 };
 
-const Sparkles = ({ color, children, ...delegated }) => {
+function Sparkles({ color, children, ...delegated }) {
   const [sparkles, setSparkles] = React.useState(() => {
     return range(3).map(() => generateSparkle(color));
   });
@@ -59,7 +59,7 @@ const Sparkles = ({ color, children, ...delegated }) => {
       <strong className={styles['child-wrapper']}>{children}</strong>
     </span>
   );
-};
+}
 
 Sparkles.propTypes = {
   color: PropTypes.string,

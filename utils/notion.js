@@ -104,6 +104,7 @@ export function parseGames(games) {
         lexaloffle: lexaloffleProp,
         publish: publishProp,
         featured: featuredProp,
+        show_links: showLinksProp,
       } = properties;
 
       if (!nameProp.title[0]) return null;
@@ -119,6 +120,7 @@ export function parseGames(games) {
         lexaloffle: lexaloffleProp?.url,
         publish: publishProp.checkbox,
         featured: featuredProp.checkbox,
+        showLinks: showLinksProp.checkbox,
       };
     })
     .filter(Boolean);

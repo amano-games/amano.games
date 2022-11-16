@@ -11,6 +11,13 @@ import Arrow from 'svg/arrow.svg';
 
 import style from './style.module.css';
 
+function getShouldShowLinks({ showLinks, links, trailer }) {
+  if (!showLinks) return false;
+  if (trailer) return true;
+  if (links.length > 0) return true;
+  return false;
+}
+
 function GameCard({
   name,
   badge,
@@ -22,6 +29,7 @@ function GameCard({
   itch,
   newgrounds,
   lexaloffle,
+  showLinks,
 }) {
   const links = [
     {
@@ -40,6 +48,7 @@ function GameCard({
       icon: <Pico />,
     },
   ].filter(({ url }) => url != null);
+  const shouldShowLinks = getShouldShowLinks({ links, showLinks, trailer });
 
   const customClassName = classNames(
     style['game-card'],
@@ -67,7 +76,7 @@ function GameCard({
             ) : null}
             <img src={`/games/${slug}.png`} alt={name} />
           </div>
-          {links.length > 0 || trailer ? (
+          {shouldShowLinks ? (
             <div className={style['game-actions']}>
               {links.length > 0 ? (
                 <div className={style['game-where-to-play']}>
@@ -123,6 +132,7 @@ GameCard.propTypes = {
   newgrounds: PropTypes.string,
   lexaloffle: PropTypes.string,
   featured: PropTypes.bool,
+  showLinks: PropTypes.bool,
 };
 
 GameCard.defaultProps = {
@@ -134,6 +144,7 @@ GameCard.defaultProps = {
   newgrounds: null,
   lexaloffle: null,
   featured: false,
+  showLinks: true,
 };
 
 export default GameCard;

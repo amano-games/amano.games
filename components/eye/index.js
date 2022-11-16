@@ -53,9 +53,7 @@ function Eye({ className, onClick, options, animationsOff, ...rest }) {
           play={!prefersReducedMotion}
         />
       ) : (
-        <>
-          <EyeIcon />
-        </>
+        <EyeIcon />
       )}
     </button>
   );
