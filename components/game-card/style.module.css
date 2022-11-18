@@ -124,7 +124,6 @@ a.game-action {
   color: var(--black);
   padding: var(--margin-q) var(--margin-04);
   border-radius: var(--margin-01);
-  margin-right: var(--margin-02);
   width: min-content;
 }
 
