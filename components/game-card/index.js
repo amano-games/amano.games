@@ -20,6 +20,7 @@ function getShouldShowLinks({ showLinks, links, trailer }) {
 
 function GameCard({
   name,
+  slug,
   badge,
   subtitle,
   featured,
@@ -31,7 +32,6 @@ function GameCard({
   lexaloffle,
   show_links: showLinks,
 }) {
-  console.log(name, showLinks);
   const links = [
     {
       label: 'itch.io',
@@ -59,7 +59,6 @@ function GameCard({
       [style['-featured']]: featured,
     }
   );
-  const slug = name.replace(/\s+/g, '-').toLowerCase();
 
   return (
     <Box className={customClassName}>
@@ -124,6 +123,7 @@ function GameCard({
 
 GameCard.propTypes = {
   name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   badge: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string.isRequired,

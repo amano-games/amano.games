@@ -1,7 +1,6 @@
 /* eslint filenames/match-exported: 0 */
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Client } from '@notionhq/client';
 import Link from 'next/link';
 
 import Seo from 'components/seo';
@@ -16,9 +15,7 @@ import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
 import Contact from 'components/contact';
 
-import { parseTableItems } from 'lib/notion';
-import { richTextToMarkdown } from 'lib/notion/utils';
-import { GAMES_DB_ID, MANITAS_DB_ID, ABOUTUS_PAGE_ID } from 'utils/notion';
+import { getManitas, getGames, getAboutUs } from 'utils/notion';
 
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 import { detectWebGLContext } from 'utils/animation';
@@ -77,30 +74,9 @@ Home.propTypes = {
 };
 
 export async function getStaticProps() {
-  const notion = new Client({
-    auth: process.env.NOTION_SECRET,
-  });
-
-  const manitasData = await notion.databases.query({
-    database_id: MANITAS_DB_ID,
-  });
-
-  const manitas = parseTableItems(manitasData.results);
-
-  const gamesData = await notion.databases.query({
-    database_id: GAMES_DB_ID,
-  });
-
-  const games = parseTableItems(gamesData.results);
-
-  const aboutUsData = await notion.blocks.children.list({
-    block_id: ABOUTUS_PAGE_ID,
-    page_size: 50,
-  });
-
-  const aboutUs = aboutUsData.results.map((block) =>
-    richTextToMarkdown(block.paragraph.rich_text)
-  );
+  const manitas = await getManitas();
+  const games = await getGames();
+  const aboutUs = await getAboutUs();
 
   return {
     props: { manitas, games, aboutUs },
