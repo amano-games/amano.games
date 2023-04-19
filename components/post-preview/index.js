@@ -55,7 +55,7 @@ function PostPreview({
         </h3>
         <div className={style['post-info']}>
           <span className={style['post-date']}>
-            <date>{dateParsed}</date>
+            <time>{dateParsed}</time>
           </span>
           <span className={style['post-author']}>
             By:{' '}
