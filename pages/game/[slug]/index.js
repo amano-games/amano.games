@@ -61,7 +61,7 @@ export async function getStaticPaths() {
   const paths = games.map((item) => {
     return {
       params: {
-        'game-slug': item.slug,
+        slug: item.slug,
       },
     };
   });
@@ -69,12 +69,12 @@ export async function getStaticPaths() {
   return {
     paths,
     // { fallback: false } means other routes should 404
-    fallback: true,
+    fallback: false,
   };
 }
 
 export async function getStaticProps(context) {
-  const slug = context.params['game-slug'];
+  const { slug } = context.params;
   const games = await getGames();
   const game = games.find((item) => item.slug === slug);
 

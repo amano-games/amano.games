@@ -9,7 +9,7 @@ import styles from './game-details.module.css';
 
 function Wishlist() {
   const router = useRouter();
-  const gameSlug = router.query['game-slug'];
+  const gameSlug = router.query.slug;
 
   return (
     <>
@@ -25,7 +25,7 @@ function Wishlist() {
 }
 
 export async function getServerSideProps(context) {
-  const slug = context.params['game-slug'];
+  const { slug } = context.params;
   const games = await getGames();
   const game = games.find((item) => item.slug === slug);
 
