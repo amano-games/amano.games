@@ -1,0 +1,8 @@
+.game-details-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--yellow);
+}
