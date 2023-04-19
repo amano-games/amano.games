@@ -24,24 +24,7 @@ function Wishlist() {
   );
 }
 
-export async function getStaticPaths() {
-  const games = await getGames();
-
-  const paths = games.map((item) => {
-    return {
-      params: {
-        'game-slug': item.slug,
-      },
-    };
-  });
-
-  return {
-    paths,
-    fallback: false, // can also be true or 'blocking'
-  };
-}
-
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const slug = context.params['game-slug'];
   const games = await getGames();
   const game = games.find((item) => item.slug === slug);
