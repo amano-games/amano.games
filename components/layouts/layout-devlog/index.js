@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import EyesWrap from 'components/eyes-wrap';
 import Seo from 'components/seo';
+import Header from 'components/header';
 import Footer from 'components/footer';
 
 import Hand from 'svg/hand.svg';
@@ -14,6 +15,7 @@ function LayoutDevlog({ children }) {
   return (
     <>
       <Seo title="AMANO Devlog" image="/devlog-preview.png" />
+      <Header />
       <header className={style['devlog-header']}>
         <div
           className={`${style['devlog-wrapper']} ${style['devlog-header-wrapper']} wrapper`}

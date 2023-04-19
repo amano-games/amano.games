@@ -1,25 +1,21 @@
-import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 
-function NavLink({ router, children, activeClassName, ...rest }) {
-  const child = Children.only(children);
-
-  let className = child.props.className || '';
-  if (router.pathname === rest.href && activeClassName) {
-    className = `${className} ${activeClassName}`.trim();
-  }
-
+function NavLink({ router, children, className, ...rest }) {
   return (
-    <Link {...rest} legacyBehavior>
-      {React.cloneElement(child, { className })}
+    <Link
+      {...rest}
+      className={className}
+      data-active={router.pathname === rest.href}
+    >
+      {children}
     </Link>
   );
 }
 
 NavLink.propTypes = {
-  activeClassName: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.node,
   router: PropTypes.shape({
     pathname: PropTypes.string,
@@ -27,7 +23,7 @@ NavLink.propTypes = {
 };
 
 NavLink.defaultProps = {
-  activeClassName: '-active',
+  className: null,
   children: null,
 };
 

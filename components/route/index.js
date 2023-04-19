@@ -15,31 +15,30 @@ function Route({ className, children, href, refId }) {
   });
 
   useEffect(() => {
-    const el = document.getElementById(refId);
-    ref(el);
-  }, []);
+    if (refId) {
+      const el = document.getElementById(refId);
+      ref(el);
+    }
+  }, [refId]);
 
-  const customClassName = classNames(style.route, 'route', className, {
-    [style['-active']]: inView,
-  });
+  const customClassName = classNames(style.route, 'route', className);
 
   return (
-    <NavLink href={href}>
-      <a className={customClassName}>
-        <span>{children}</span>
-      </a>
+    <NavLink href={href} className={customClassName} data-in-view={inView}>
+      <span>{children}</span>
     </NavLink>
   );
 }
 
 Route.propTypes = {
   href: PropTypes.string.isRequired,
-  refId: PropTypes.string.isRequired,
+  refId: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
 Route.defaultProps = {
+  refId: null,
   className: null,
 };
 

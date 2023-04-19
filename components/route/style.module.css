@@ -30,7 +30,8 @@
 }
 
 .route:hover,
-.route.-active {
+.route[data-active='true'],
+.route[data-in-view='true'] {
   background: var(--yellow);
   color: var(--black);
 }
@@ -40,7 +41,8 @@
 }
 
 .route:hover::before,
-.route.-active::before {
+.route[data-active='true']::before,
+.route[data-in-view='true']::before {
   height: var(--margin-02);
   transform: scaleY(1);
 }
