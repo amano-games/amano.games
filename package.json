@@ -14,7 +14,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@notionhq/client": "^0.1.9",
+    "@notionhq/client": "^2.2.4",
     "@reach/window-size": "^0.15.0",
     "@react-three/drei": "^9.65.3",
     "@react-three/fiber": "^8.12.1",

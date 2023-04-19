@@ -16,7 +16,9 @@ import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
 import Contact from 'components/contact';
 
-import { parseManitas, parseGames, parseAobutUs } from 'utils/notion';
+import { parseTableItems } from 'lib/notion';
+import { richTextToMarkdown } from 'lib/notion/utils';
+import { GAMES_DB_ID, MANITAS_DB_ID, ABOUTUS_PAGE_ID } from 'utils/notion';
 
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 import { detectWebGLContext } from 'utils/animation';
@@ -56,13 +58,13 @@ export default function Home({ manitas, games, aboutUs }) {
       <main className={styles['home-wrapper']}>
         <GameGallery
           id="games"
-          games={parseGames(games)}
+          games={games}
           className={`${styles['home-section']} ${styles['games-section']} -inverted`}
         />
         <AboutUs
           className={styles['home-section']}
-          manitas={parseManitas(manitas)}
-          aboutUs={parseAobutUs(aboutUs)}
+          manitas={manitas}
+          aboutUs={aboutUs[0]}
         />
         <Contact className={styles['home-section']} />
       </main>
@@ -74,7 +76,7 @@ export default function Home({ manitas, games, aboutUs }) {
 Home.propTypes = {
   manitas: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   games: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  aboutUs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  aboutUs: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export async function getStaticProps() {
@@ -83,24 +85,25 @@ export async function getStaticProps() {
   });
 
   const manitasData = await notion.databases.query({
-    database_id: 'db6aafe3a3c644d3a84a59657f82436a',
+    database_id: MANITAS_DB_ID,
   });
 
-  const { results: manitas } = manitasData;
+  const manitas = parseTableItems(manitasData.results);
 
   const gamesData = await notion.databases.query({
-    database_id: '89794766645149c2a79bb64a72c75d1b',
+    database_id: GAMES_DB_ID,
   });
 
-  const { results: games } = gamesData;
+  const games = parseTableItems(gamesData.results);
 
-  const pageIdAboutUs = '16545b37f4e642a7a4687a2b5e0b9d85';
   const aboutUsData = await notion.blocks.children.list({
-    block_id: pageIdAboutUs,
+    block_id: ABOUTUS_PAGE_ID,
     page_size: 50,
   });
 
-  const { results: aboutUs } = aboutUsData;
+  const aboutUs = aboutUsData.results.map((block) =>
+    richTextToMarkdown(block.paragraph.rich_text)
+  );
 
   return {
     props: { manitas, games, aboutUs },
