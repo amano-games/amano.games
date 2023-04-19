@@ -42,9 +42,7 @@ function Post({
     <article className={customClassName}>
       <header className={style['post-header']}>
         <h1 className={style['post-title']}>
-          <Link href={`/devlog/${slug}`}>
-            <a>{title}</a>
-          </Link>
+          <Link href={`/devlog/${slug}`}>{title}</Link>
         </h1>
       </header>
       <Markdown className={style['post-content']}>{content}</Markdown>

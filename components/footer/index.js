@@ -17,8 +17,8 @@ function Footer({ showSocial }) {
           <p className={style['footer-copy']}>
             © <time>{year}</time> by Amano
           </p>
-          <Link href="/devlog">
-            <a className={style['footer-devlog']}>Devlog</a>
+          <Link href="/devlog" className={style['footer-devlog']}>
+            Devlog
           </Link>
           {showSocial ? <Social className={style['footer-social']} /> : null}
         </div>

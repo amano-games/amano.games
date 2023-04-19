@@ -11,7 +11,11 @@ function NavLink({ router, children, activeClassName, ...rest }) {
     className = `${className} ${activeClassName}`.trim();
   }
 
-  return <Link {...rest}>{React.cloneElement(child, { className })}</Link>;
+  return (
+    <Link {...rest} legacyBehavior>
+      {React.cloneElement(child, { className })}
+    </Link>
+  );
 }
 
 NavLink.propTypes = {

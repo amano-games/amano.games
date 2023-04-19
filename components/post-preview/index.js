@@ -41,17 +41,13 @@ function PostPreview({
   return (
     <Box className={customClassName} inverted>
       {cover ? (
-        <Link href={`/devlog/${slug}`}>
-          <a className={style['post-image']}>
-            <img src={cover.url} alt={title} />
-          </a>
+        <Link href={`/devlog/${slug}`} className={style['post-image']}>
+          <img src={cover.url} alt={title} />
         </Link>
       ) : null}
       <header className={style['post-header']}>
         <h3 className={style['post-title']}>
-          <Link href={`/devlog/${slug}`}>
-            <a>{title}</a>
-          </Link>
+          <Link href={`/devlog/${slug}`}>{title}</Link>
         </h3>
         <div className={style['post-info']}>
           <span className={style['post-date']}>

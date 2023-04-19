@@ -29,8 +29,9 @@ function GameCard({
   itch,
   newgrounds,
   lexaloffle,
-  showLinks,
+  show_links: showLinks,
 }) {
+  console.log(name, showLinks);
   const links = [
     {
       label: 'itch.io',
@@ -132,7 +133,7 @@ GameCard.propTypes = {
   newgrounds: PropTypes.string,
   lexaloffle: PropTypes.string,
   featured: PropTypes.bool,
-  showLinks: PropTypes.bool,
+  show_links: PropTypes.bool,
 };
 
 GameCard.defaultProps = {
@@ -144,7 +145,7 @@ GameCard.defaultProps = {
   newgrounds: null,
   lexaloffle: null,
   featured: false,
-  showLinks: true,
+  show_links: true,
 };
 
 export default GameCard;

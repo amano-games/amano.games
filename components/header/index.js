@@ -27,9 +27,7 @@ function Header() {
     <header id="header" className={`${style.header} -inverted`}>
       <div className={`${style['header-wrapper']} wrapper`}>
         <Link href="/#">
-          <a>
-            <Eye className={style['header-eye']} />
-          </a>
+          <Eye className={style['header-eye']} />
         </Link>
         <nav className={style['header-navigation']}>
           <ul className={style.routes}>

@@ -18,15 +18,13 @@ function LayoutDevlog({ children }) {
         <div
           className={`${style['devlog-wrapper']} ${style['devlog-header-wrapper']} wrapper`}
         >
-          <Link href="/">
-            <a className={style['devlog-logo']}>
-              <Hand className={style['devlog-hand']} />
-              <Text className={style['devlog-text']} />
-            </a>
+          <Link href="/" className={style['devlog-logo']}>
+            <Hand className={style['devlog-hand']} />
+            <Text className={style['devlog-text']} />
           </Link>
           <h1 className={style['devlog-title']}>
-            <Link href="/devlog">
-              <a className={style['devlog-logo']}>Devlog</a>
+            <Link href="/devlog" className={style['devlog-logo']}>
+              Devlog
             </Link>
           </h1>
         </div>

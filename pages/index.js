@@ -44,10 +44,7 @@ export default function Home({ manitas, games, aboutUs }) {
           <div className={styles['home-info']}>
             <p>Two friends</p>
             <p>
-              Making{' '}
-              <Link href="/#games">
-                <a>games</a>
-              </Link>
+              Making <Link href="/#games">games</Link>
             </p>
             <p>By Hand</p>
           </div>
