@@ -65,7 +65,7 @@ export async function getStaticPaths() {
   return {
     paths,
     // { fallback: false } means other routes should 404
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 

@@ -38,3 +38,6 @@ yarn-error.log*
 /tags.lock
 /tags.temp
 
+
+# Local Netlify folder
+.netlify
