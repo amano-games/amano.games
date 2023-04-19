@@ -43,7 +43,6 @@
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "three": "^0.151.3",
-    "unified": "^9.2.1",
     "use-sound": "^4.0.0"
   },
   "devDependencies": {
