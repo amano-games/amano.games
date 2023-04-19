@@ -141,4 +141,8 @@ ol:not([class]) ol {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
+
+  [data-hide='mobile'] {
+    display: none !important;
+  }
 }

@@ -40,6 +40,9 @@ function Header() {
                 </li>
               );
             })}
+            <li className={style['route-wrapper']} data-hide="mobile">
+              <Route href="/devlog">Devlog</Route>
+            </li>
           </ul>
         </nav>
       </div>
