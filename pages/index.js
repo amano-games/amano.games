@@ -74,9 +74,11 @@ Home.propTypes = {
 };
 
 export async function getStaticProps() {
-  const manitas = await getManitas();
-  const games = await getGames();
-  const aboutUs = await getAboutUs();
+  const [manitas, games, aboutUs] = await Promise.all([
+    getManitas(),
+    getGames(),
+    getAboutUs(),
+  ]);
 
   return {
     props: { manitas, games, aboutUs },
