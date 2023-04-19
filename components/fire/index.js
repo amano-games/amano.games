@@ -5,6 +5,7 @@ import animation from './fire-choppy.json';
 
 function Fire(props) {
   const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <Lottie animationData={animation} {...props} play={!prefersReducedMotion} />
   );

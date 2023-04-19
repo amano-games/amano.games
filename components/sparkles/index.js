@@ -25,11 +25,16 @@ const generateSparkle = (color) => {
 };
 
 function Sparkles({ color, children, ...delegated }) {
+  const [loaded, setLoaded] = React.useState(false);
   const [sparkles, setSparkles] = React.useState(() => {
     return range(3).map(() => generateSparkle(color));
   });
 
   const prefersReducedMotion = usePrefersReducedMotion();
+
+  React.useEffect(() => {
+    setLoaded(true);
+  }, [setLoaded]);
 
   useRandomInterval(
     () => {
@@ -48,14 +53,16 @@ function Sparkles({ color, children, ...delegated }) {
 
   return (
     <span {...delegated} className={styles.sparkles}>
-      {sparkles.map((sparkle) => (
-        <Sparkle
-          key={sparkle.id}
-          color={sparkle.color}
-          size={sparkle.size}
-          style={sparkle.style}
-        />
-      ))}
+      {loaded
+        ? sparkles.map((sparkle) => (
+            <Sparkle
+              key={sparkle.id}
+              color={sparkle.color}
+              size={sparkle.size}
+              style={sparkle.style}
+            />
+          ))
+        : null}
       <strong className={styles['child-wrapper']}>{children}</strong>
     </span>
   );

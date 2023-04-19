@@ -22,6 +22,7 @@ module.exports = {
     'filenames/match-exported': [2, ['kebab']],
     'filenames/match-regex': [2, '^([a-z][a-z0-9]*)(-[a-z0-9]+)*$', true],
     'jsx-a11y/anchor-is-valid': 0,
+    'react/no-unknown-property': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',

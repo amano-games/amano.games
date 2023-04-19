@@ -8,7 +8,7 @@ import EyeIcon from 'svg/eye.svg';
 
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 
-import style from './style.module.css';
+import styles from './style.module.css';
 import animation from './eye.json';
 
 const sfx = '/sfx/plop.mp3';
@@ -20,7 +20,7 @@ function Eye({ className, onClick, options, animationsOff, ...rest }) {
   const [jsEnabled, setJsEnabled] = useState(false);
   const [play] = useSound(sfx);
   const [anim, setAnim] = useState(closeSegments);
-  const customClassName = classNames(style.eye, 'eye', className);
+  const customClassName = classNames(styles.eye, 'eye', className);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
@@ -64,9 +64,11 @@ Eye.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   animationsOff: PropTypes.bool,
+  style: PropTypes.shape({}),
 };
 
 Eye.defaultProps = {
+  style: null,
   options: null,
   className: null,
   onClick: () => {},

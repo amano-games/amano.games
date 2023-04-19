@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -31,6 +32,7 @@ function generateEye(x, y) {
 }
 
 function EyesWrap({ className, color, children, count, ...rest }) {
+  const [loaded, setLoaded] = React.useState(false);
   const customClassName = classNames(
     styles['eyes-wrap'],
     'eyes-wrap',
@@ -39,13 +41,18 @@ function EyesWrap({ className, color, children, count, ...rest }) {
   const layout = shuffleArray(layouts)[0];
 
   const eyes = layout.map(({ x, y }) => generateEye(x, y));
+  React.useEffect(() => {
+    setLoaded(true);
+  }, [setLoaded]);
 
   return (
     <div className={customClassName} {...rest}>
       <div className={styles['eyes-container']}>
-        {eyes.map((item) => (
-          <Eye key={item.id} style={item.style} />
-        ))}
+        {loaded
+          ? eyes.map((item) => (
+              <Eye key={item.id} style={loaded ? item.style : null} />
+            ))
+          : null}
       </div>
       {children}
     </div>
