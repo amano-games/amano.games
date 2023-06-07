@@ -6,6 +6,7 @@ import { twitter, email, itch } from 'lib/site';
 import Itch from 'svg/itch.svg';
 import Twitter from 'svg/twitter.svg';
 import Mail from 'svg/mail.svg';
+import Mastodon from 'svg/mastodon.svg';
 
 import style from './style.module.css';
 
@@ -33,10 +34,26 @@ function Social({ className, size, filter }) {
   ]);
   return (
     <ul className={customClassName}>
+      <li>
+        <a
+          // eslint-disable-next-line react/no-invalid-html-attribute
+          rel="me noopener noreferrer"
+          target="_blank"
+          href="https://mastodon.gamedev.place/@amano"
+          aria-label="Mastodon"
+        >
+          <Mastodon />
+        </a>
+      </li>
       {social.filter(filter).map((item) => {
         return (
           <li key={item.label}>
-            <a rel="noopener noreferrer" target="_blank" href={item.href}>
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href={item.href}
+              aria-label={item.label}
+            >
               {item.icon}
             </a>
           </li>

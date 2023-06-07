@@ -8,6 +8,7 @@ import Itch from 'svg/itch.svg';
 import Twitter from 'svg/twitter.svg';
 import Instagram from 'svg/insta.svg';
 import Web from 'svg/web.svg';
+import Mastodon from 'svg/mastodon.svg';
 
 import style from './style.module.css';
 
@@ -17,6 +18,7 @@ function Manita({
   avatar,
   description,
   itchio,
+  mastodon,
   twitter,
   web,
   instagram,
@@ -34,7 +36,7 @@ function Manita({
       icon: <Twitter />,
     },
     {
-      label: instagram,
+      label: 'Instagram',
       url: `https://instagram.com/${instagram}`,
       icon: <Instagram />,
     },
@@ -67,10 +69,27 @@ function Manita({
           {description}
         </Markdown>
         <ul className={style['manita-links']}>
+          {mastodon ? (
+            <li>
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href={mastodon}
+                aria-label="Mastodon"
+              >
+                <Mastodon />
+              </a>
+            </li>
+          ) : null}
           {links.map((link) => {
             return (
               <li key={link.url}>
-                <a rel="noopener noreferrer" target="_blank" href={link.url}>
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={link.url}
+                  aria-label={link.label}
+                >
                   {link.icon ? link.icon : link.label}
                 </a>
               </li>
@@ -90,6 +109,7 @@ Manita.propTypes = {
   description: PropTypes.string.isRequired,
   itchio: PropTypes.string.isRequired,
   twitter: PropTypes.string.isRequired,
+  mastodon: PropTypes.string,
   web: PropTypes.string.isRequired,
   instagram: PropTypes.string.isRequired,
   flipped: PropTypes.bool,
@@ -98,6 +118,7 @@ Manita.propTypes = {
 Manita.defaultProps = {
   className: null,
   flipped: false,
+  mastodon: null,
 };
 
 export default Manita;
