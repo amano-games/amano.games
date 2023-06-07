@@ -72,7 +72,8 @@ function Manita({
           {mastodon ? (
             <li>
               <a
-                rel="noopener noreferrer"
+                // eslint-disable-next-line react/no-invalid-html-attribute
+                rel="me noopener noreferrer"
                 target="_blank"
                 href={mastodon}
                 aria-label="Mastodon"
