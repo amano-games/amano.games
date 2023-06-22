@@ -3,6 +3,7 @@ title: 'This kills the frog'
 excerpt: 'After rewriting the physics system for the third time, it was time to start working on more fun stuff. The frog death system™.'
 tags: collisions,gamedev,playdate,pullfrog
 date: 2021/09/02
+publish: true
 author:
   name: Mario
   url: https://twitter.com/afk_mario
