@@ -8,7 +8,7 @@ author:
   name: Mario
   url: 'https://merveilles.town/@mario_afk'
 cover:
-  url: 'https://amano.sfo3.digitaloceanspaces.com/devlog/spooky-eyes-and-level-editors/eyes.gif'
+  url: 'https://amano.sfo3.digitaloceanspaces.com/devlog/lets-talk-about-don-salmon/08-preview.gif'
 ---
 
 Some things have been happening that triggered me to write this blog post. One of them is that a good friend of the studio showed me a couple of neat muck-ups for a pixel art point-and-click adventure game, which took me down a rabbit hole of research, and I ended up reading 50 entries of the Thimbleweed Park blog in a day.
