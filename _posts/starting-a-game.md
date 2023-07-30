@@ -8,7 +8,7 @@ author:
   name: Mario
   url: https://twitter.com/afk_mario
 cover:
-  url: 'https://amano.sfo3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif'
+  url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif'
 ---
 
 This is a more polished version of a long message that I wrote in the official **Playdate** Discord server. A couple of things I would recommend when starting your first game on the **Playdate**.
@@ -78,4 +78,4 @@ end
 
 It's been a while since we post anything new about **Pullfrog 2Bit** and it's mainly because all the new stuff is hard to share as it is has been a lot of refactor to try to have the game running at a better frame rate in the **Playdate**. I leave you with a GIF on the latest bug.
 
-![https://amano.sfo3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif](https://amano.sfo3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif)
+![https://amano-media.nyc3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif)
