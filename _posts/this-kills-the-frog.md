@@ -6,7 +6,7 @@ date: 2021/09/02
 publish: true
 author:
   name: Mario
-  url: https://twitter.com/afk_mario
+  url: 'https://merveilles.town/@mario-afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/ded.gif'
 ---

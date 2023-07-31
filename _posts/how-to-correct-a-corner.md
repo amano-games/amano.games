@@ -6,7 +6,7 @@ date: 2021/07/05
 publish: true
 author:
   name: Mario
-  url: https://twitter.com/afk_mario
+  url: 'https://merveilles.town/@mario-afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif'
 ---
