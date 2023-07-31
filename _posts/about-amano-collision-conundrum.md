@@ -19,7 +19,7 @@ author:
 
 Turns out, the way we were handling collisions wasn’t the best. So we got kinda bummed out and stopped working on the game for a bit.
 
-During that off-time decided to address another issue. [Mario](https://merveilles.town/@mario-afk) wasn’t very thrilled about our games coming out under his personal [itch.io](https://afk-mario.itch.io/), [Newgrounds](https://afk-mario.newgrounds.com/), and [Lexaloffle](https://www.lexaloffle.com/bbs/?uid=21440) accounts because he’d constantly get solely credited for the games on social media and stuff. So in order to unify things in one place and give our games more of an identity, we designed a brand a website: **Amano**.
+During that off-time decided to address another issue. [Mario](https://merveilles.town/@mario_afk) wasn’t very thrilled about our games coming out under his personal [itch.io](https://afk-mario.itch.io/), [Newgrounds](https://afk-mario.newgrounds.com/), and [Lexaloffle](https://www.lexaloffle.com/bbs/?uid=21440) accounts because he’d constantly get solely credited for the games on social media and stuff. So in order to unify things in one place and give our games more of an identity, we designed a brand a website: **Amano**.
 
 ![https://amano-media.nyc3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/09-about-amano.png](https://amano-media.nyc3.digitaloceanspaces.com/devlog/about-amano-collision-conundrum/09-about-amano.png)
 
@@ -37,7 +37,7 @@ Hand-made tortillas are better than their machine-made cousins, and far superior
 
 ## The Collision _conundrum_
 
-[Mario:](https://merveilles.town/@mario-afk) The PlayDate SDK has pretty much everything we needed to start making Pullfrog, One of those things is a collision system. After spending the majority of the development time making a collision system for the original Pullfrog, this came as a welcome surprise. With a reassuring feeling that if everything went bad, we could always recreate the same system as the one in the PICO-8 version.
+[Mario:](https://merveilles.town/@mario_afk) The PlayDate SDK has pretty much everything we needed to start making Pullfrog, One of those things is a collision system. After spending the majority of the development time making a collision system for the original Pullfrog, this came as a welcome surprise. With a reassuring feeling that if everything went bad, we could always recreate the same system as the one in the PICO-8 version.
 
 We started working on the main character and its behavior, we wanted to recreate the same feeling and polish we had on PICO-8 so the basic collision handling that we had on the PlayDate wasn't enough. Fortunately it wasn't to hard to customize and we ended up with even a better version of what we had in PICO-8. After a couple of days we already had the character moving in the screen! we already kind of had a game, so I built the game and send it to my device and started moving the little frog around.
 

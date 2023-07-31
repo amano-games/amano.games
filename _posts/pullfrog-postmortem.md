@@ -11,7 +11,7 @@ cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/pullfrog-postmortem/pullfrog-postmortem-008.png'
 ---
 
-Back in **2020** during the month of may [Mario](https://merveilles.town/@mario-afk) and myself started working on a game for [PICO-8](https://www.lexaloffle.com/pico-8.php) as part of a monthly game development club. I've always loved playing Tetris and other falling block puzzle games, although Tetris is more of a skill game than a puzzle game such as [Panel De Pon](https://en.wikipedia.org/wiki/Puzzle_League). I've also always loved playing platformers. Moving around a character that has well-polished controls makes it feel like controlling an extension of your body. So I'd kinda wanted to mash-up these two things for a while.
+Back in **2020** during the month of may [Mario](https://merveilles.town/@mario_afk) and myself started working on a game for [PICO-8](https://www.lexaloffle.com/pico-8.php) as part of a monthly game development club. I've always loved playing Tetris and other falling block puzzle games, although Tetris is more of a skill game than a puzzle game such as [Panel De Pon](https://en.wikipedia.org/wiki/Puzzle_League). I've also always loved playing platformers. Moving around a character that has well-polished controls makes it feel like controlling an extension of your body. So I'd kinda wanted to mash-up these two things for a while.
 
 ![https://amano-media.nyc3.digitaloceanspaces.com/devlog/pullfrog-postmortem/frogtris-cols-export.png](https://amano-media.nyc3.digitaloceanspaces.com/devlog/pullfrog-postmortem/frogtris-cols-export.png)
 
