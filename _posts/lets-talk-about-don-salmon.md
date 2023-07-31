@@ -29,7 +29,7 @@ We sent an email and a pitch deck but didn't hear back, so we assumed Panic wasn
 
 ![03-ded](https://amano-media.nyc3.digitaloceanspaces.com/devlog/lets-talk-about-don-salmon/03-ded.png)
 
-> We planned to publish this post in April! and a lot has happened since then. That’s the main reason why this post is published now is so that I can start writing one about Pullfrog.
+> We planned to publish this post in April! And a lot has happened since then, mainly that Panic! Got in contact with us, and we have been working on Pullfrog since the end of May. That’s the main reason why this post is published now: so that we can start writing about Pullfrog.
 
 As I said in the previous log, we have been dabbling with 3D, and personally, I was really deep in to learning the Godot Game engine, so I wanted to make a small game with it to get it out of my system. So after we send the email, I started working on a small prototype.
 
