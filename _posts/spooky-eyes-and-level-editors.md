@@ -1,6 +1,6 @@
 ---
 title: 'Spooky eyes and level editors'
-excerpt: ''
+excerpt: 'Last year we made the decision to take a break and focus on a spooky game around the spooky season.'
 tags: design,playdate,pullfrog
 date: 2021/12/11
 publish: true

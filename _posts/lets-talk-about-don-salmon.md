@@ -1,6 +1,6 @@
 ---
 title: "Let's talk about Don Salmon"
-excerpt: ''
+excerpt: 'Don salmon, a new platforming game made in Godot and a small update on Pullfrog'
 tags: playdate,pullfrog,godot,don-salmon
 date: 2023/06/31
 publish: true
