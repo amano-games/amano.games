@@ -41,7 +41,7 @@ The first thing was to stop trying to make a different game. We scrapped all the
 
 ![Screenshot 2023-08-11 at 15.29.51.png](https://amano-media.nyc3.digitaloceanspaces.com/devlog/lets-finish-this/4-frog-evolution.png)
 
-One of the first things [Jp](https://merveilles.town/@jp) did was to completely re-do all the game assets to make the resolution bigger. After playing other **Playdate** games, we that the game would read better by changing the resolution of the character and the pieces.
+One of the first things [Jp](https://merveilles.town/@jp) did was to completely re-do all the game assets to make the resolution bigger. After playing other **Playdate** games, we came to the conclusion that the game would read better by changing the resolution of the character and the pieces.
 
 ## The shop
 
@@ -53,7 +53,7 @@ As you can see, we had everything working already, but we decided it was somethi
 
 ![shop-export.png](https://amano-media.nyc3.digitaloceanspaces.com/devlog/lets-finish-this/6-new-shop.png)
 
-The thought of deleting all that code and focusing on the important parts of the game felt good. It took us about a two weeks to get back up to speed we had before doing the game, and once we did, we where closing tickets left to right.
+The thought of deleting all that code and focusing on the important parts of the game felt good. After that it took us about two weeks to get back up to speed, but once we did, we where closing tickets left to right.
 
 ## The eyes
 
@@ -65,9 +65,11 @@ In the **PICO-8** version you would collect eyes, purchasing them on the shop an
 
 ![eyes-2-export.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/lets-finish-this/8-eyes-collect-destroy.gif)
 
+Now that you don’t collect the eyes in the shop, we had more space left for power-ups.
+
 ## 1UP
 
-Now that you don’t collect the eyes in the shop, we had a space left. One thing we discovered while working on this new version is that having an extra life can be nice, but too many and the game is less fun. Getting squished by a piece but being able to get a second chance and go back to the game felt great.
+One thing we discovered while working on this new version is that having an extra life can be nice, but too many and the game is less fun. Getting squished by a piece but being able to get a second chance and go back to the game felt great.
 
 So we came up with the power up of a **1UP**, there will only be one each run, so it is precious but gives you that second chance.
 
