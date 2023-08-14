@@ -67,7 +67,6 @@ export async function getComments({ id, host, username }) {
   const data = await res.json();
 
   const { descendants } = data;
-  console.log('username', username);
 
   if (!descendants) return [];
   if (!Array.isArray) return [];
