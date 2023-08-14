@@ -9,6 +9,10 @@ author:
   url: 'https://merveilles.town/@mario_afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif'
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110889755599086703'
 ---
 
 This is a more polished version of a long message that I wrote in the official **Playdate** Discord server. A couple of things I would recommend when starting your first game on the **Playdate**.

@@ -9,6 +9,10 @@ cover:
 author:
   name: JP & Mario
   url: https://amano.games/
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110889744119747422'
 ---
 
 ## About Amano

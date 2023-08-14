@@ -9,6 +9,10 @@ author:
   url: 'https://merveilles.town/@mario_afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/lets-finish-this/2-slide.png'
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110889829981278614'
 ---
 
 It’s been a long time since we talked about **Pullfrog**. The main reason being that we paused the development to work on another game called **Don Salmon**, you can read more about it on the previous [devlog](https://amano.games/devlog/lets-talk-about-don-salmon).

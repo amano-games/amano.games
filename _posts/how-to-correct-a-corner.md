@@ -9,6 +9,10 @@ author:
   url: 'https://merveilles.town/@mario_afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif'
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110889752734607429'
 ---
 
 There are many techniques that you can apply so that a platformer game _feels good_. One of those is corner correction.

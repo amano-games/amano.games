@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
+import Box from 'components/box';
+import Markdown from 'components/markdown';
 import Comment from 'components/comment';
 
 import { getComments } from './functions';
 
 import style from './style.module.css';
+
+const noCommentsYet = `No comments yet :<`;
 
 function DevlogComments({ host, postId, username }) {
   const [comments, setComments] = useState([]);
@@ -26,11 +30,17 @@ function DevlogComments({ host, postId, username }) {
     <div className={`${style['devlog-comments']} devlog-comments -inverted`}>
       <h3 className={`${style['devlog-comments-title']}`}>Comments</h3>
       <div className={`${style['devlog-comments-list']}`}>
-        {comments.length > 0
-          ? comments.map((item) => {
-              return <Comment key={item.id} {...item} />;
-            })
-          : null}
+        {comments.length > 0 ? (
+          comments.map((item) => {
+            return <Comment key={item.id} {...item} />;
+          })
+        ) : (
+          <Box inverted>
+            <Markdown className={style['post-excerpt']}>
+              {noCommentsYet}
+            </Markdown>
+          </Box>
+        )}
       </div>
       <a
         className={`${style['devlog-comments-action']}`}

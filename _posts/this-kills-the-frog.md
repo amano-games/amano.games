@@ -9,6 +9,10 @@ author:
   url: 'https://merveilles.town/@mario_afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/ded.gif'
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110889758847395550'
 ---
 
 Remember when I said that making a hole inside a big collider was a good idea? It was not. After rewriting the physics system for the third time, it was time to start working on more fun stuff. The frog death system™.

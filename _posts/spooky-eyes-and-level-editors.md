@@ -9,6 +9,10 @@ author:
   url: 'https://merveilles.town/@mario_afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/spooky-eyes-and-level-editors/eyes.gif'
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110889761718115053'
 ---
 
 Last year we made the decision to take a break and focus on a spooky game around the spooky season.

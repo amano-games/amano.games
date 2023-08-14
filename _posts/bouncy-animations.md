@@ -9,6 +9,10 @@ author:
   url: https://twitter.com/eljovenpaul
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/bouncy-animations/07-bouncy.gif'
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110889749193805586'
 ---
 
 On some occasions people have commented on the character animations of the original Pullfrog. Saying how they look very bouncy, and asking how many frames we were using to get them to look so smooth. This used to throw me off-guard because the answer is one frame, or more like, as few as I can possibly draw.

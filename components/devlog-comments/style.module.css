@@ -1,4 +1,5 @@
 .devlog-comments {
+  width: 100%;
   max-width: 640px;
   display: flex;
   flex-flow: column;
@@ -8,6 +9,7 @@
 }
 
 .devlog-comments-title {
+  text-align: left;
 }
 
 .devlog-comments-list {
