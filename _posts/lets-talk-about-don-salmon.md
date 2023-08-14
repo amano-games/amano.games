@@ -9,6 +9,10 @@ author:
   url: 'https://merveilles.town/@mario_afk'
 cover:
   url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/lets-talk-about-don-salmon/08-preview.gif'
+mastodon:
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '110810208698857213'
 ---
 
 Some things have been happening that triggered me to write this blog post. One of them is that [a good friend of the studio](https://twitter.com/pepehxc) showed me a couple of neat muck-ups for a pixel art point-and-click adventure game, which took me down a rabbit hole of research, and I ended up reading 50 entries of the [Thimbleweed Park blog](https://blog.thimbleweedpark.com/index.html) in a day.

@@ -14,8 +14,8 @@ function DevlogOtherPosts({ allPosts, currentSlug }) {
     (post) => post.slug !== currentSlug && post.publish
   );
   return (
-    <>
-      <div className={`${style['devlog-keep-reading']}  wrapper`}>
+    <div className={`${style['devlog-keep-reading-wrapper']} wrapper`}>
+      <div className={`${style['devlog-keep-reading']}`}>
         <h1 className={style['devlog-keep-reading-title']}>Other Posts</h1>
         <Markdown className={`${style['devlog-keep-reading-info']} -inverted`}>
           {info}
@@ -27,7 +27,7 @@ function DevlogOtherPosts({ allPosts, currentSlug }) {
           return <PostPreview {...item} key={item.slug} />;
         })}
       </div>
-    </>
+    </div>
   );
 }
 

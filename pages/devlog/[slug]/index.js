@@ -8,6 +8,7 @@ import Seo from 'components/seo';
 import Post from 'components/post';
 import { LayoutDevlog } from 'components/layouts';
 import DevlogOtherPosts from 'components/devlog-other-posts';
+import DevlogComments from 'components/devlog-comments';
 
 import style from './style.module.css';
 
@@ -22,6 +23,7 @@ function SinglePost({ post, allPosts }) {
       <div className={`${style['single-post-wrapper']} wrapper`}>
         <Post {...post} />
       </div>
+      {post.mastodon ? <DevlogComments {...post.mastodon} /> : null}
       <DevlogOtherPosts allPosts={allPosts} currentSlug={post.slug} />
     </LayoutDevlog>
   );
@@ -36,6 +38,11 @@ SinglePost.propTypes = {
     excerpt: PropTypes.string,
     cover: PropTypes.shape({
       url: PropTypes.string,
+    }),
+    mastodon: PropTypes.shape({
+      host: PropTypes.string,
+      postId: PropTypes.string,
+      authorHandle: PropTypes.string,
     }),
   }).isRequired,
   allPosts: PropTypes.arrayOf(PropTypes.shape({})),
@@ -65,6 +72,7 @@ export async function getStaticProps(context) {
     'content',
     'tags',
     'cover',
+    'mastodon',
   ]);
 
   return {

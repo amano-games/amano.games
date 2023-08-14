@@ -43,6 +43,9 @@
 .devlog-posts {
   padding-top: var(--margin-10);
   padding-bottom: var(--margin-10);
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-06);
 }
 
 @media screen and (max-width: 900px) {

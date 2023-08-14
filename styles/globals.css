@@ -116,6 +116,11 @@ ol:not([class]) ol {
   padding-left: 1em;
 }
 
+time {
+  font-feature-settings: 'tnum';
+  font-variant-numeric: tabular-nums;
+}
+
 .wrapper {
   width: 100%;
   width: clamp(16rem, 100%, 85rem);

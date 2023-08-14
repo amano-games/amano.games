@@ -1,0 +1,33 @@
+.devlog-comments {
+  max-width: 640px;
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-04);
+  margin: auto;
+  position: relative;
+}
+
+.devlog-comments-title {
+}
+
+.devlog-comments-list {
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-04);
+}
+
+.devlog-comments-action {
+  margin: auto;
+  font-weight: bold;
+  text-decoration: none;
+  max-width: max-content;
+  text-align: center;
+  color: var(--black);
+  background-color: var(--yellow);
+  border-radius: var(--margin-04);
+  padding: var(--margin-01) var(--margin-02);
+}
+
+.devlog-comments-action:hover {
+  background-color: var(--white);
+}
