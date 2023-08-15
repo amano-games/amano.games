@@ -21,6 +21,8 @@
 }
 
 .devlog-comments-action {
+  cursor: pointer;
+  border: 0;
   margin: auto;
   font-weight: bold;
   text-decoration: none;
@@ -30,6 +32,7 @@
   background-color: var(--yellow);
   border-radius: var(--margin-04);
   padding: var(--margin-01) var(--margin-02);
+  transition: background-color 0.2s ease;
 }
 
 .devlog-comments-action:hover {

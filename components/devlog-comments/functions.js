@@ -17,8 +17,8 @@ export function emojify(input, emojis) {
   let output = input;
 
   emojis.forEach((emoji) => {
-    output = reactStringReplace(output, `:${emoji.shortcode}:`, () => (
-      <picture className="emoji-wrapper">
+    output = reactStringReplace(output, `:${emoji.shortcode}:`, (_, i) => (
+      <picture className="emoji-wrapper" key={`${emoji.shortcode}-${i}`}>
         <source
           srcSet={escapeHtml(emoji.url)}
           media="(prefers-reduced-motion: no-preference)"
