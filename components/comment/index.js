@@ -23,7 +23,6 @@ function Comment({
   accountInstance,
   accountUrl,
   createdAt,
-  favouritesCount,
 }) {
   const customClassName = classNames(style.comment, 'c-comment', className);
   const title = getTitle({ accountHandle, isOp });
@@ -103,11 +102,6 @@ function Comment({
         className={style['comment-content']}
         dangerouslySetInnerHTML={{ __html: content }}
       />
-      {favouritesCount > 0 ? (
-        <footer className={style['comment-interactions']}>
-          <a href={`${url}/favourites`}>{favouritesCount}</a>
-        </footer>
-      ) : null}
     </article>
   );
 }
@@ -127,7 +121,6 @@ Comment.propTypes = {
   accountInstance: PropTypes.string.isRequired,
   accountUrl: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  favouritesCount: PropTypes.number.isRequired,
 };
 
 Comment.defaultProps = {

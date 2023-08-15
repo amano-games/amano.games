@@ -84,6 +84,22 @@
   grid-area: interactions;
 }
 
+.comment-fav {
+  text-decoration: none;
+}
+
+.comment-fav::before {
+  content: '♥';
+  font-size: 1rem;
+  margin-inline-end: 0.25em;
+  color: var(--yellow);
+  transition: color 0.2s ease;
+}
+
+.comment-fav:hover::before {
+  color: var(--white);
+}
+
 .comment-avatar-wrapper img {
   background-position: 50%;
   background-size: cover;
