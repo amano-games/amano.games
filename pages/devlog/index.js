@@ -8,6 +8,7 @@ import Post from 'components/post';
 import { LayoutDevlog } from 'components/layouts';
 import Seo from 'components/seo';
 import DevlogOtherPosts from 'components/devlog-other-posts';
+import DevlogComments from 'components/devlog-comments';
 
 import style from './style.module.css';
 
@@ -20,6 +21,7 @@ function Devlog({ allPosts }) {
         <Post {...first} />
       </div>
 
+      {first.mastodon ? <DevlogComments {...first.mastodon} /> : null}
       <DevlogOtherPosts allPosts={allPosts} currentSlug={first.slug} />
     </LayoutDevlog>
   );
@@ -44,6 +46,7 @@ export async function getStaticProps() {
     'tags',
     'cover',
     'content',
+    'mastodon',
   ]).filter((item) => item.publish);
 
   await generateRssFeed(allPosts);

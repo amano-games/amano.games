@@ -1,4 +1,5 @@
 import * as DOMPurify from 'dompurify';
+import reactStringReplace from 'react-string-replace';
 
 export const HOST = 'mastodon.gamedev.place';
 export const USERNAME = '@amano@mastodon.gamedev.place';
@@ -16,24 +17,22 @@ export function emojify(input, emojis) {
   let output = input;
 
   emojis.forEach((emoji) => {
-    const picture = document.createElement('picture');
-
-    const source = document.createElement('source');
-    source.setAttribute('srcset', escapeHtml(emoji.url));
-    source.setAttribute('media', '(prefers-reduced-motion: no-preference)');
-
-    const img = document.createElement('img');
-    img.className = 'emoji';
-    img.setAttribute('src', escapeHtml(emoji.static_url));
-    img.setAttribute('alt', `:${emoji.shortcode}:`);
-    img.setAttribute('title', `:${emoji.shortcode}:`);
-    img.setAttribute('width', '20');
-    img.setAttribute('height', '20');
-
-    picture.appendChild(source);
-    picture.appendChild(img);
-
-    output = output.replace(`:${emoji.shortcode}:`, picture.outerHTML);
+    output = reactStringReplace(output, `:${emoji.shortcode}:`, () => (
+      <picture className="emoji-wrapper">
+        <source
+          srcSet={escapeHtml(emoji.url)}
+          media="(prefers-reduced-motion: no-preference)"
+        />
+        <img
+          src={escapeHtml(emoji.static_url)}
+          alt={emoji.shortcode}
+          title={emoji.shortcode}
+          width="20"
+          height="20"
+          className="emoji"
+        />
+      </picture>
+    ));
   });
 
   return output;
@@ -42,12 +41,11 @@ export function emojify(input, emojis) {
 export function getDisplayName({
   display_name: displayName,
   username,
-  // emojis,
+  emojis,
 }) {
   if (displayName.length > 0) {
     const scaped = escapeHtml(displayName);
-    return scaped;
-    // return emojify(scaped, emojis);
+    return emojify(scaped, emojis);
   }
 
   return username;
@@ -80,7 +78,7 @@ export async function getComments({ id, host, username }) {
       displayName: getDisplayName(item.account),
       isReply: item.in_reply_to_id !== id,
       isOp: item.account.acct === username,
-      content: DOMPurify.sanitize(item.content),
+      content: DOMPurify.sanitize(emojify(item.content, item.emojis)),
       avatarSrc: escapeHtml(item.account.avatar),
       avatarStaticSrc: escapeHtml(item.account.avatar_static),
       avatarAlt: `${accountHandle} avatar`,

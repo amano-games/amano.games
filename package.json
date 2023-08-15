@@ -35,6 +35,7 @@
     "react-intersection-observer": "^9.4.3",
     "react-lottie-player": "^1.5.4",
     "react-markdown": "^8.0.7",
+    "react-string-replace": "^1.1.1",
     "react-syntax-highlighter": "^15.4.4",
     "react-use": "^17.2.4",
     "react-use-dimensions": "^1.2.1",

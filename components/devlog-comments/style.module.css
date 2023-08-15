@@ -6,6 +6,8 @@
   gap: var(--margin-04);
   margin: auto;
   position: relative;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .devlog-comments-title {

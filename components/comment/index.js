@@ -65,7 +65,28 @@ function Comment({
           {accountInstance}
         </a>
       </header>
-      <time dateTime={createdAt} className={style['comment-timestamp']}>
+      <time
+        dateTime={createdAt}
+        className={`${style['comment-timestamp']}`}
+        data-hide="desktop"
+      >
+        <a
+          rel="external nofollow noopener noreferrer"
+          target="_blank"
+          title={`View comment at ${accountInstance}`}
+          href={url}
+        >
+          {new Date(createdAt).toLocaleString('en-US', {
+            dateStyle: 'short',
+            timeStyle: 'short',
+          })}
+        </a>
+      </time>
+      <time
+        dateTime={createdAt}
+        className={`${style['comment-timestamp']}`}
+        data-hide="mobile"
+      >
         <a
           rel="external nofollow noopener noreferrer"
           target="_blank"
@@ -95,7 +116,7 @@ Comment.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
+  displayName: PropTypes.node.isRequired,
   isReply: PropTypes.bool.isRequired,
   isOp: PropTypes.bool.isRequired,
   content: PropTypes.string.isRequired,

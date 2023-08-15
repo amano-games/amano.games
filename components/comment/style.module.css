@@ -64,7 +64,7 @@
   color: var(--neutral);
   font-size: smaller;
   font-weight: 400;
-  padding: 0px var(--margin-01);
+  padding: 0 var(--margin-01);
 }
 
 .comment-badge:hover {
@@ -91,4 +91,23 @@
   box-shadow: 0 0 2px var(--neutral);
   margin: 0;
   overflow: hidden;
+}
+
+@media screen and (max-width: 900px) {
+  .comment[data-is-reply='true'] {
+    margin: 0 auto 0 var(--margin-04);
+  }
+
+  .comment-header {
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: left;
+    gap: var(--spacing-h);
+  }
+
+  .comment-badge {
+    text-decoration: underline;
+    border: 0;
+    padding: 0;
+  }
 }
