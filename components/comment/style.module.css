@@ -9,10 +9,11 @@
     '...... interactions';
   grid-template-columns: min-content;
   justify-items: start;
+  width: 100%;
 }
 
 .comment[data-is-reply='true'] {
-  margin: 0 auto 0 var(--margin-04);
+  padding-left: var(--margin-06);
 }
 
 .comment-avatar-wrapper {
@@ -111,7 +112,7 @@
 
 @media screen and (max-width: 900px) {
   .comment[data-is-reply='true'] {
-    margin: 0 auto 0 var(--margin-04);
+    padding-left: var(--margin-04);
   }
 
   .comment-header {
