@@ -42,6 +42,7 @@
 .post-tags {
   --border-color: var(--gray);
 
+  max-width: 640px;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
