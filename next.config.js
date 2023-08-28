@@ -1,6 +1,14 @@
 /* eslint filenames/match-regex: 0 */
 
 module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: '/.well-known/webfinger',
+        destination: '/api/.well-known/webfinger',
+      },
+    ];
+  },
   async redirects() {
     return [
       {
