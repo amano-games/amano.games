@@ -3,11 +3,15 @@ import classNames from 'classnames';
 
 import style from './style.module.css';
 
-function Box({ className, children, inverted }) {
+function Box({ className, children, inverted, ...rest }) {
   const customClassName = classNames(style.box, 'box', className, {
     [style['-inverted']]: inverted,
   });
-  return <div className={customClassName}>{children}</div>;
+  return (
+    <div className={customClassName} {...rest}>
+      {children}
+    </div>
+  );
 }
 
 Box.propTypes = {

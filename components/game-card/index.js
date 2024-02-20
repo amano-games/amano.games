@@ -8,6 +8,8 @@ import Itch from 'svg/itch.svg';
 import Newgrounds from 'svg/ng.svg';
 import Pico from 'svg/pico.svg';
 import Arrow from 'svg/arrow.svg';
+import PlayIcon from 'svg/play-icon.svg';
+import Catalog from 'svg/catalog.svg';
 
 import style from './style.module.css';
 
@@ -30,6 +32,7 @@ function GameCard({
   itch,
   newgrounds,
   lexaloffle,
+  catalog,
   show_links: showLinks,
 }) {
   const links = [
@@ -48,20 +51,22 @@ function GameCard({
       url: lexaloffle,
       icon: <Pico />,
     },
+    {
+      label: 'catalog',
+      url: catalog,
+      icon: <Catalog />,
+    },
   ].filter(({ url }) => url != null);
   const shouldShowLinks = getShouldShowLinks({ links, showLinks, trailer });
 
   const customClassName = classNames(
     style['game-card'],
     'game-card',
-    className,
-    {
-      [style['-featured']]: featured,
-    }
+    className
   );
 
   return (
-    <Box className={customClassName}>
+    <Box className={customClassName} data-featured={featured}>
       <header className={style['game-header']}>
         <h2 className={style['game-title']}>{name}</h2>
         {subtitle ? (
@@ -74,48 +79,53 @@ function GameCard({
             {badge ? (
               <span className={style['game-badge']}>{badge}</span>
             ) : null}
+
             <img src={`/games/${slug}.png`} alt={name} />
+            {trailer ? (
+              <a
+                className={`${style['game-trailer-wrapper']}`}
+                href={trailer}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <PlayIcon />
+              </a>
+            ) : null}
           </div>
-          {shouldShowLinks ? (
-            <div className={style['game-actions']}>
-              {links.length > 0 ? (
-                <div className={style['game-where-to-play']}>
-                  <span className={style['game-play-it']}>
-                    <span className={style['game-play-it-text']}>
-                      Play it here
+          <div className={style['game-content-wrapper']}>
+            {shouldShowLinks ? (
+              <div className={style['game-actions']}>
+                {links.length > 0 ? (
+                  <div className={style['game-where-to-play']}>
+                    <span className={style['game-play-it']}>
+                      <span className={style['game-play-it-text']}>
+                        Play it here
+                      </span>
+                      <Arrow />
                     </span>
-                    <Arrow />
-                  </span>
-                  <div className={style['game-play-it-links']}>
-                    {links.map((link) => {
-                      return (
-                        <a
-                          key={link.url}
-                          rel="noopener noreferrer"
-                          target="_blank"
-                          href={link.url}
-                        >
-                          {link.icon ? link.icon : link.label}
-                        </a>
-                      );
-                    })}
+                    <div className={style['game-play-it-links']}>
+                      {links.map((link) => {
+                        return (
+                          <a
+                            key={link.url}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={link.url}
+                          >
+                            {link.icon ? link.icon : link.label}
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ) : null}
-              {trailer ? (
-                <a
-                  className={`${style['game-trailer']} ${style['game-action']}`}
-                  href={trailer}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Trailer
-                </a>
-              ) : null}
-            </div>
-          ) : null}
+                ) : null}
+              </div>
+            ) : null}
+            <Markdown className={style['game-description']}>
+              {description}
+            </Markdown>
+          </div>
         </div>
-        <Markdown className={style['game-description']}>{description}</Markdown>
       </div>
     </Box>
   );
@@ -132,6 +142,7 @@ GameCard.propTypes = {
   itch: PropTypes.string,
   newgrounds: PropTypes.string,
   lexaloffle: PropTypes.string,
+  catalog: PropTypes.string,
   featured: PropTypes.bool,
   show_links: PropTypes.bool,
 };
@@ -144,6 +155,7 @@ GameCard.defaultProps = {
   itch: null,
   newgrounds: null,
   lexaloffle: null,
+  catalog: null,
   featured: false,
   show_links: true,
 };
