@@ -9,7 +9,7 @@ import Newgrounds from 'svg/ng.svg';
 import Pico from 'svg/pico.svg';
 import Arrow from 'svg/arrow.svg';
 import PlayIcon from 'svg/play-icon.svg';
-import Catalog from 'svg/catalog.svg';
+import Catalog from 'svg/playdate.svg';
 
 import style from './style.module.css';
 
@@ -54,7 +54,7 @@ function GameCard({
     {
       label: 'catalog',
       url: catalog,
-      icon: <Catalog />,
+      icon: <Catalog className={style['catalog-badge']} />,
     },
   ].filter(({ url }) => url != null);
   const shouldShowLinks = getShouldShowLinks({ links, showLinks, trailer });
@@ -65,14 +65,16 @@ function GameCard({
     className
   );
 
+  const header = (
+    <header className={style['game-header']}>
+      <h2 className={style['game-title']}>{name}</h2>
+      {subtitle ? <h3 className={style['game-subtitle']}>{subtitle}</h3> : null}
+    </header>
+  );
+
   return (
     <Box className={customClassName} data-featured={featured}>
-      <header className={style['game-header']}>
-        <h2 className={style['game-title']}>{name}</h2>
-        {subtitle ? (
-          <h3 className={style['game-subtitle']}>{subtitle}</h3>
-        ) : null}
-      </header>
+      {!featured ? header : null}
       <div className={style['game-content']}>
         <div className={style['game-info']}>
           <div className={style['game-media']}>
@@ -93,16 +95,19 @@ function GameCard({
             ) : null}
           </div>
           <div className={style['game-content-wrapper']}>
+            {featured ? header : null}
             {shouldShowLinks ? (
               <div className={style['game-actions']}>
                 {links.length > 0 ? (
                   <div className={style['game-where-to-play']}>
-                    <span className={style['game-play-it']}>
-                      <span className={style['game-play-it-text']}>
-                        Play it here
+                    {!catalog ? (
+                      <span className={style['game-play-it']}>
+                        <span className={style['game-play-it-text']}>
+                          Play it here
+                        </span>
+                        <Arrow />
                       </span>
-                      <Arrow />
-                    </span>
+                    ) : null}
                     <div className={style['game-play-it-links']}>
                       {links.map((link) => {
                         return (

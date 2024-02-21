@@ -50,7 +50,7 @@
 .game-media img {
   max-width: none;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .game-content-wrapper {
-  flex: 1 0 50%;
+  flex: 1 0 auto;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -117,6 +117,11 @@
 .game-where-to-play svg {
   width: var(--icon-size);
   height: var(--icon-size);
+}
+
+svg.catalog-badge {
+  width: auto;
+  height: calc(40px);
 }
 
 .game-play-it {
@@ -186,20 +191,26 @@ a.game-action {
   .game-header {
     flex-flow: column;
   }
+
   .game-description {
+    width: 100%;
     max-width: none;
     align-items: center;
     justify-content: center;
     display: flex;
     flex-flow: column;
   }
+
+  .game-card[data-featured='true'] .game-info {
+    flex-flow: column;
+  }
 }
 
 @media screen and (min-width: 900px) {
-  [data-featured='true'] .game-header {
-    margin-right: var(--margin-04);
-    flex: 1 1 40%;
-  }
+  /* [data-featured='true'] .game-header { */
+  /*   margin-right: var(--margin-04); */
+  /*   flex: 1 1 40%; */
+  /* } */
   [data-featured='true'] .game-content {
     flex-flow: row;
     align-items: center;
