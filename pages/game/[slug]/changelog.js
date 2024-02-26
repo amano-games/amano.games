@@ -28,7 +28,7 @@ function GameDetails({ game, changelog }) {
             <h3>Changelog</h3>
           </div>
         </header>
-        <div className={`${styles['game-changelog-content']} `}>
+        <div className={`${styles['game-changelog-content']} wrapper`}>
           <img
             className={`${styles['game-changelog-cover']}`}
             src={`/games/${game.slug}.png`}

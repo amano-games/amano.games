@@ -30,7 +30,7 @@
 }
 
 .game-changelog-content {
-  padding: var(--margin-04) 0;
+  padding: var(--margin-04) 1.5rem;
   display: flex;
   flex-flow: column;
   align-items: center;
