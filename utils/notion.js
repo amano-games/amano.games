@@ -57,6 +57,8 @@ export async function getAboutUs() {
 
 export async function getChangelog(slug) {
   const id = CHANGELOGS_IDS[slug];
+  if (id == null) return null;
+
   const notion = getClient();
   const data = await notion.blocks.children.list({
     block_id: id,
