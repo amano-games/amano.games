@@ -18,6 +18,20 @@
   margin-bottom: var(--margin-06);
 }
 
+.rich-text-container li {
+  display: flex;
+  flex-flow: row;
+}
+
+.rich-text-container hr {
+  --border-color: var(--white);
+
+  width: 100%;
+  height: 1px;
+  background-color: transparent;
+  border: 1px dashed var(--border-color);
+}
+
 @media (min-width: 45em) {
   .rich-text-container h1 {
     font-size: var(--size-800);

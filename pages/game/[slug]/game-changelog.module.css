@@ -1,0 +1,54 @@
+.game-changelog-wrapper {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--black);
+}
+
+.game-changelog-header {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--yellow);
+}
+
+.game-changelog-header h1,
+.game-changelog-header h3 {
+  max-width: none;
+  text-align: center;
+}
+
+.game-changelog-header-wrapper {
+  padding: var(--margin-04) 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-changelog-content {
+  padding: var(--margin-04) 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--margin-04);
+}
+
+.game-changelog-cover {
+  border-radius: var(--margin-02);
+}
+
+.game-changelog-text h1,
+.game-changelog-text h3,
+.game-changelog-text h2 {
+  max-width: none;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
