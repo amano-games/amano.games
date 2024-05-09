@@ -13,7 +13,8 @@ import Catalog from 'svg/playdate.svg';
 
 import style from './style.module.css';
 
-function getShouldShowLinks({ showLinks, links, trailer }) {
+function getShouldShowLinks({ showLinks, links, trailer, badge }) {
+  if (badge != null) return true;
   if (!showLinks) return false;
   if (trailer) return true;
   if (links.length > 0) return true;
@@ -57,7 +58,12 @@ function GameCard({
       icon: <Catalog className={style['catalog-badge']} />,
     },
   ].filter(({ url }) => url != null);
-  const shouldShowLinks = getShouldShowLinks({ links, showLinks, trailer });
+  const shouldShowLinks = getShouldShowLinks({
+    links,
+    showLinks,
+    trailer,
+    badge,
+  });
 
   const customClassName = classNames(
     style['game-card'],
@@ -78,7 +84,7 @@ function GameCard({
       <div className={style['game-content']}>
         <div className={style['game-info']}>
           <div className={style['game-media']}>
-            {badge ? (
+            {badge && featured ? (
               <span className={style['game-badge']}>{badge}</span>
             ) : null}
 
@@ -98,7 +104,12 @@ function GameCard({
             {featured ? header : null}
             {shouldShowLinks ? (
               <div className={style['game-actions']}>
-                {links.length > 0 ? (
+                {badge && !featured ? (
+                  <div className={style['game-action-badge']}>
+                    <span className={style['game-badge']}>{badge}</span>
+                  </div>
+                ) : null}
+                {links.length > 0 && showLinks ? (
                   <div className={style['game-where-to-play']}>
                     {!catalog ? (
                       <span className={style['game-play-it']}>
