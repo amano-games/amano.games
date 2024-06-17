@@ -94,6 +94,7 @@ export async function getStaticProps(context) {
 
   return {
     props: { game, changelog },
+    notFound: game == null,
   };
 }
 
