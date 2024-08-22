@@ -8,7 +8,7 @@ import Itch from 'svg/itch.svg';
 import Twitter from 'svg/twitter.svg';
 import Instagram from 'svg/insta.svg';
 import Web from 'svg/web.svg';
-import Mastodon from 'svg/mastodon.svg';
+import Fediverse from 'svg/fediverse.svg';
 
 import style from './style.module.css';
 
@@ -31,16 +31,6 @@ function Manita({
 
   const links = [
     {
-      label: `@${twitter}`,
-      url: `https://twitter.com/${twitter}`,
-      icon: <Twitter />,
-    },
-    {
-      label: 'Instagram',
-      url: `https://instagram.com/${instagram}`,
-      icon: <Instagram />,
-    },
-    {
       label: 'web',
       url: web,
       icon: <Web />,
@@ -51,6 +41,30 @@ function Manita({
       icon: <Itch />,
     },
   ];
+
+  if (instagram) {
+    links.unshift({
+      label: 'Instagram',
+      url: `https://instagram.com/${instagram}`,
+      icon: <Instagram />,
+    });
+  }
+
+  if (twitter) {
+    links.unshift({
+      label: `@${twitter}`,
+      url: `https://twitter.com/${twitter}`,
+      icon: <Twitter />,
+    });
+  }
+
+  if (mastodon) {
+    links.unshift({
+      label: 'Fediverse',
+      url: mastodon,
+      icon: <Fediverse />,
+    });
+  }
 
   return (
     <article className={customClassName}>
@@ -69,19 +83,6 @@ function Manita({
           {description}
         </Markdown>
         <ul className={style['manita-links']}>
-          {mastodon ? (
-            <li>
-              <a
-                // eslint-disable-next-line react/no-invalid-html-attribute
-                rel="me noopener noreferrer"
-                target="_blank"
-                href={mastodon}
-                aria-label="Mastodon"
-              >
-                <Mastodon />
-              </a>
-            </li>
-          ) : null}
           {links.map((link) => {
             return (
               <li key={link.url}>
@@ -109,10 +110,10 @@ Manita.propTypes = {
   avatar: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   itchio: PropTypes.string.isRequired,
-  twitter: PropTypes.string.isRequired,
+  twitter: PropTypes.string,
   mastodon: PropTypes.string,
   web: PropTypes.string.isRequired,
-  instagram: PropTypes.string.isRequired,
+  instagram: PropTypes.string,
   flipped: PropTypes.bool,
 };
 
@@ -120,6 +121,8 @@ Manita.defaultProps = {
   className: null,
   flipped: false,
   mastodon: null,
+  twitter: null,
+  instagram: null,
 };
 
 export default Manita;
