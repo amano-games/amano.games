@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { twitter, email, itch } from 'lib/site';
+import { bsky, email, itch } from 'lib/site';
 
 import Itch from 'svg/itch.svg';
-import Twitter from 'svg/twitter.svg';
 import Mail from 'svg/mail.svg';
 import Fediverse from 'svg/fediverse.svg';
+import Bsky from 'svg/bsky.svg';
 
 import style from './style.module.css';
 
@@ -17,10 +17,15 @@ const social = [
     icon: <Fediverse />,
   },
   {
-    label: 'twitter',
-    href: `https://twitter.com/${twitter}`,
-    icon: <Twitter />,
+    label: 'bluesky',
+    href: `https://bsky.app/profile/${bsky}`,
+    icon: <Bsky />,
   },
+  // {
+  //   label: 'twitter',
+  //   href: `https://twitter.com/${twitter}`,
+  //   icon: <Twitter />,
+  // },
   {
     label: 'itch.io',
     href: itch,

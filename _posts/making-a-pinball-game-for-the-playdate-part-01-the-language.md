@@ -2,7 +2,7 @@
 title: 'Making a pinball game for Playdate: Part 01, the language'
 tags: playdate,pinball,c,devils-on-the-moon
 excerpt: 'Welcome to this December adventure, where I will try to write about the process of our last game, Devils on the Moon pinball. Today I will talk about our choice of programming language for the game.'
-publish: false
+publish: true
 date: 2024/12/01
 cover:
   url: https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-01-the-language/hand-made.jpg
@@ -15,7 +15,7 @@ mastodon:
   postId: '110889744119747422'
 ---
 
-Welcome to this [December adventure](https://eli.li/december-adventure), where I will try to write about the process of our last game, Devils on the Moon pinball.
+Welcome to this [December adventure](https://eli.li/december-adventure), where I will try to write about the process of our latest game, Devils on the Moon pinball.
 
 If you want to see the game in action, you can watch the [Playdate Fall update](https://youtu.be/wSNBCK5gIcY?si=t_YoBfm6o5_JanjH&t=415) where we show a sneak peek of the game.
 
@@ -33,11 +33,11 @@ You always have constraints when doing a game; there are fun ones, like a limite
 
 I always have had a curiosity about low-level languages, game engines and, as the name of our studio says, doing things from scratch. So one year ago, I started my last [December adventure](https://merveilles.town/@mario_afk/111509153847171054); I started the [Hand Made Hero](https://www.youtube.com/watch?v=A2dxjOjWHxQ) video series and followed along. This was my second attempt at it. The first time I tried it was back when the project launched, but I quickly gave up after trying to set up a dev environment on Linux and translating the platform code from Windows to Linux.
 
-This time I thought there were a [couple](https://hmh-notes.handmade.network/) of [good resources](https://davidgow.net/handmadepenguin/) that helped me get over the hump. I made it until day 32; it was great!. I have tried a couple of times to make games in _C_, mainly following small tutorials, and it just felt like doing games in any other language/framework but worse. Watching Casey make something from nothing and understanding most of it felt empowering, and kind of scary.
+This time I thought there were a [couple](https://hmh-notes.handmade.network/) of [good resources](https://davidgow.net/handmadepenguin/) that helped me get over the hump. I made it up to day 32; it was great!. I have tried a couple of times to make games in _C_, mainly following small tutorials, and it just felt like doing games in any other language/framework but worse. Watching Casey make something from nothing and understanding most of it felt empowering, and kind of scary.
 
 I realized that there were a ton of things to learn while doing games this way, and maybe that would help me to become better at doing them. So by the start of the next year I made a decision; I was going to make a game in _C_ and tried to do everything myself.
 
-The main rule I set for myself was that I prefer to make something simple and do it myself, than trying to do something complex that I don't understand and grabbing someone else's code.
+The main rule I set for myself was that I prefer to make something simple and do it myself, rather than trying to do something complex that I don't understand and grabbing someone else's code.
 
 **Spoiler alert:** I ended up doing the most complicated game mechanics I have done in the last 10 years. And I had a _great_ time doing it.
 
