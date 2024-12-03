@@ -12,7 +12,7 @@ author:
 mastodon:
   host: merveilles.town
   username: mario_afk
-  postId: '113581386304100171'
+  postId: '113587118246076392'
 ---
 
 Welcome to this [December adventure](https://eli.li/december-adventure), where I will try to write about the process of our latest game, Devils on the Moon pinball.
