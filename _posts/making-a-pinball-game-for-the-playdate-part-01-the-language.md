@@ -10,9 +10,9 @@ author:
   name: Mario
   url: 'https://merveilles.town/@mario_afk'
 mastodon:
-  host: mastodon.gamedev.place
-  username: amano
-  postId: '110889744119747422'
+  host: merveilles.town
+  username: mario_afk
+  postId: '113581386304100171'
 ---
 
 Welcome to this [December adventure](https://eli.li/december-adventure), where I will try to write about the process of our latest game, Devils on the Moon pinball.
