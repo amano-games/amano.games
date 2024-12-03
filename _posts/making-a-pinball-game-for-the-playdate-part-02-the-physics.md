@@ -1,6 +1,6 @@
 ---
 title: 'Making a pinball game for Playdate: Part 02, the physics'
-tags: playdate,pinball,c,devils-on-the-moon
+tags: playdate,pinball,physics,c,devils-on-the-moon
 excerpt: "Let's talk about physics."
 publish: true
 date: 2024/12/02
