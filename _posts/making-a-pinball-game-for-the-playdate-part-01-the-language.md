@@ -41,4 +41,4 @@ The main rule I set for myself was that I prefer to make something simple and do
 
 **Spoiler alert:** I ended up doing the most complicated game mechanics I have done in the last 10 years. And I had a _great_ time doing it.
 
-See you in the next adventure, Part 02: The Physics.
+See you in the next adventure, [Part 02: The Physics.](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics)

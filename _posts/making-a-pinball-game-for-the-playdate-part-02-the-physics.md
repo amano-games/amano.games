@@ -19,13 +19,13 @@ When we decided to make a pinball game, the main challenge I saw was the physics
 
 But there was always a small sliver of hope; old Game Boy pinball games didn't look like they had a really sophisticated physics simulation, so If we managed at least that, we were fine.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/Hero%20Shuugou!!%20Pinball%20Party.png]
+![Hero Shuugou!! Pinball Party](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/Hero%20Shuugou!!%20Pinball%20Party.png)
 
 I started looking more into how this game worked. I [found](https://www.raspberrypi.com/news/code-your-own-pinball-game-wireframe-53/) a [couple](https://news.ycombinator.com/item?id=28667945) of [good](https://talk.pokitto.com/t/wip-pinball-engine-for-the-pokitto/2206) [answers](https://www.reddit.com/r/howdidtheycodeit/comments/106uro7/how_did_they_code_physics_in_pinball/) [online](https://gamedev.stackexchange.com/questions/43705/2d-collision-detection-for-pinball-game).
 
 The main gist of it seemed to be to generate a collision mask where every pixel had encoded the value of the angle the ball had to bounce off in a value between 0-255. You then read the value of each pixel around the radius of the ball, get the x and y components of the force vector from the average of the angle, and apply the force to the ball. This sounds... simple!
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask.png]
+![Pinball collision mask](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask.png)
 
 One thing that you need to understand is that here at Amano, after 10 years working together, Jp and I try to always work in parallel. Gone are the days were Jp would send me the file through Dropbox, I would put them in the correct folder with the correct naming convention, show him my build of the game, tweak a couple of values and then recompile.
 
@@ -35,7 +35,7 @@ So going back to the collision mask, I just didn't know a good way of generating
 
 Jp who has become steadily better at 3D over the years, saw it as an opportunity to use Blender and came up with a pipeline on how to generate a mask like that.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask-amano.png]
+![Collision mask made in blender](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask-amano.png)
 
 I tried it for a day but quickly became frustrated; for one, as I said, there was little information on how to do this. I didn't understand the math behind it, as simple as it was, and I depended on Jp to generate a new image if I wanted to try a new mask.
 
@@ -49,11 +49,11 @@ For a long time I had been wanting to do one of the courses on [Pikuma.com](http
 
 I skimmed the contents, and it seemed like just the thing I needed.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-01.gif]
+![Pikuma 01](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-01.gif)
 
 It took me around a week to finish the course and it was good! I don't understand all the underlying math and wouldn't be able to derivate the formulas by myself, but I understood enough to feel confident to reimplement the physics engine in C for our pinball game.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-02.gif]
+![Pikuma 02](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-02.gif)
 
 It was a dangerous decision because while I took a full week learning new things, I left Jp with the hype of a new project and not a lot of tools to work with, but after showing my progress, we were both excited.
 
@@ -61,7 +61,7 @@ The main benefit of doing things ourselves meant that we could cut corners where
 
 Now I had to port my new physics engine to C and make it work on the Playdate so we could validate how many things we could have on the screen at the same time.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-03.gif]
+![Pikuma 03](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-03.gif)
 
 But first I started to worry. Remember how I said that my main priority was having tools ready so that Jp could work in parallel while I worked on the next thing? Authoring the collisions for the game started to look like a task more difficult than what I was expecting.
 
