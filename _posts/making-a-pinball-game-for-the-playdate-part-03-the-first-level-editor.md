@@ -37,7 +37,7 @@ In my search, I found the [Code & Web Physics Editor](https://www.codeandweb.com
 
 ![Code & Web physics editor](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/codeandweb.gif)
 
-One intermediately obvious benefit of the Code & Web editor was that it took care of subdividing the polygons to make the concave _automatically_.
+One immediate obvious benefit of the Code & Web editor was that it took care of subdividing the polygons to make the concave _automatically_.
 
 I hacked around a custom exporter that would generate a .h file with an array of polygons and started working from there.
 
