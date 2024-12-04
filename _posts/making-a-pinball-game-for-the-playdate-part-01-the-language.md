@@ -15,7 +15,7 @@ mastodon:
   postId: '113587118246076392'
 ---
 
-Welcome to this [December adventure](https://eli.li/december-adventure), where I will try to write about the process of our latest game, Devils on the Moon pinball.
+Welcome to this [December adventure](https://eli.li/december-adventure), where I will try to write about the process of our latest game, [Devils on the Moon pinball](https://play.date/games/devils-on-the-moon-pinball/).
 
 If you want to see the game in action, you can watch the [Playdate Fall update](https://youtu.be/wSNBCK5gIcY?si=t_YoBfm6o5_JanjH&t=415) where we show a sneak peek of the game.
 

@@ -15,6 +15,8 @@ mastodon:
   postId: '113587138535264969'
 ---
 
+Welcome to this [December adventure](https://eli.li/december-adventure), where I will try to write about the process of our latest game, [Devils on the Moon pinball](https://play.date/games/devils-on-the-moon-pinball/).
+
 When we decided to make a _pinball_ game, the main challenge I saw was the physics system. I don't consider myself to be someone good at math, and physics simulations sound like a scary big math mountain to climb.
 
 But there was always a small sliver of hope; old _Game Boy pinball_ games didn't look like they had a really sophisticated physics simulation, so If we at least managed something like that, we would be fine.
@@ -65,7 +67,7 @@ Now I had to port my new physics engine to C and make it work on the Playdate so
 
 But first I started to worry. Remember how I said that my main priority was having tools ready so that **JP** could work in parallel while I worked on the next thing? Authoring the collisions for the game started to look like a task more difficult than what I was expecting.
 
-See you in the next adventure, Part 03: The editor.
+See you in the next adventure, Part 03: The level editor.
 
 ## Resources
 
