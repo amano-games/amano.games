@@ -8,7 +8,7 @@ author:
   name: Mario
   url: 'https://merveilles.town/@mario_afk'
 cover:
-  url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif'
+  url: 'https://media.amano.games/devlog/starting-a-game/target-position-bug.gif'
 mastodon:
   host: mastodon.gamedev.place
   username: amano
@@ -82,4 +82,4 @@ end
 
 It's been a while since we post anything new about **Pullfrog 2Bit** and it's mainly because all the new stuff is hard to share as it is has been a lot of refactor to try to have the game running at a better frame rate in the **Playdate**. I leave you with a GIF on the latest bug.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/starting-a-game/target-position-bug.gif)
+![https://media.amano.games/devlog/starting-a-game/target-position-bug.gif](https://media.amano.games/devlog/starting-a-game/target-position-bug.gif)

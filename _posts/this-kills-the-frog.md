@@ -8,7 +8,7 @@ author:
   name: Mario
   url: 'https://merveilles.town/@mario_afk'
 cover:
-  url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/ded.gif'
+  url: 'https://media.amano.games/devlog/this-kills-the-frog/ded.gif'
 mastodon:
   host: mastodon.gamedev.place
   username: amano
@@ -39,11 +39,11 @@ The most important part is to figure out which direction we should move you. Our
 
 This simple solution had a small problem, our pieces have different shapes and the center is not always, well, in the center.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/hand-picked-center%281%29.png](https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/hand-picked-center%281%29.png)
+![https://media.amano.games/devlog/this-kills-the-frog/hand-picked-center%281%29.png](https://media.amano.games/devlog/this-kills-the-frog/hand-picked-center%281%29.png)
 
 So we created a small system to place the center of the pieces _by hand_
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/automatic-center%281%29.png](https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/automatic-center%281%29.png)
+![https://media.amano.games/devlog/this-kills-the-frog/automatic-center%281%29.png](https://media.amano.games/devlog/this-kills-the-frog/automatic-center%281%29.png)
 
 Now we have to figure out how many pixels we want the system to move the player each frame. If we move it too much, it would look like we are teleporting the player. If we move it too little, then it can get stuck for many frames and look like the game broke.
 
@@ -53,7 +53,7 @@ We can get this information based on the overlapping rect between the piece and 
 
 We figured that 1 pixel at a time would look the best most of the time. There are some times when you are on top of a piece that's falling and if you pull it towards you, you get stuck sliding between a piece sandwich. So in that specific case, we move you 2 pixels at a time to get you out faster.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/slide.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/slide.gif)
+![https://media.amano.games/devlog/this-kills-the-frog/slide.gif](https://media.amano.games/devlog/this-kills-the-frog/slide.gif)
 
 Another thing we realized was that it didn't feel good when you died while you were moving in one direction, and our system forced you to move in the opposite direction.
 
@@ -73,7 +73,7 @@ We added another rule. If the piece is crushing you by only a small amount, then
 
 Finally, if we fail to save you and the intersection rect between the piece and the frog is taller than 10pixels. This kills the frog.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/ded.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/this-kills-the-frog/ded.gif)
+![https://media.amano.games/devlog/this-kills-the-frog/ded.gif](https://media.amano.games/devlog/this-kills-the-frog/ded.gif)
 
 Here is the code we ended up having, there is a lot of context missing, but helps to understand the system a little better.
 

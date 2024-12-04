@@ -8,7 +8,7 @@ author:
   name: Mario
   url: 'https://merveilles.town/@mario_afk'
 cover:
-  url: 'https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif'
+  url: 'https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif'
 mastodon:
   host: mastodon.gamedev.place
   username: amano
@@ -17,17 +17,17 @@ mastodon:
 
 There are many techniques that you can apply so that a platformer game _feels good_. One of those is corner correction.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif)
+![https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif](https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif)
 
 As with most of these techniques, the goal is to assist the player in getting to the position where they want to be. Even if there is something in the way that wouldn't let them. In this case we are moving the player a few pixels to the sides so that they clear the platform above them.
 
 In the [PICO-8 version of Pullfrog](https://afk-mario.itch.io/pullfrog), we solved this using multiple colliders. We would check which one of them triggered the collision, based on that, we would apply some logic to move them where we wanted. This worked fine but the problem is that we where checking **all the colliders** every frame. It was hard to maintain, and an expensive operation, dropping frames when there were a lot of pieces in the screen.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/ezgif.com-gif-maker.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/ezgif.com-gif-maker.gif)
+![https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/ezgif.com-gif-maker.gif](https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/ezgif.com-gif-maker.gif)
 
 When starting the Playdate version I imposed myself a challenge, to have the same behavior using only one collider. The first thing we tried was to compare the position of the player with the object they collided with. Check if the distance between them is less than a certain amount, and if it is, move the player in the opposite direction.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/03.png](https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/03.png)
+![https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/03.png](https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/03.png)
 
 This worked fine, but it was a little more complicated than what we needed, and caused a couple of undesired consequences. For example the jump distance would get altered and you would miss platforms that you would otherwise land on.
 
@@ -41,10 +41,10 @@ I'm thinking of doing a more in-depth explanation with some code. But haven't ha
 
 A nice thing about doing this from scratch, is that now the code is less coupled with the player. This allow us to apply the same logic on different stages of the game an player movement. For example: If you are going to get squished by a moving piece, now we try to move you to safety.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/squish-export.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/squish-export.gif)
+![https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/squish-export.gif](https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/squish-export.gif)
 
 Another example would be when you pull a piece and it collides with another one, we try to move the piece so that it ends up where you intended it to be.
 
-![https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif](https://amano-media.nyc3.digitaloceanspaces.com/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif)
+![https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif](https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif)
 
 Did you noticed how the piece pushed you? this was an added benefit form the new physics system and a big difference from the PICO-8 version of Pullfrog, but we will talk about this is a different post.

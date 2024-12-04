@@ -5,7 +5,7 @@ excerpt: 'Welcome to this December adventure, where I will try to write about th
 publish: true
 date: 2024/12/01
 cover:
-  url: https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-01-the-language/hand-made.jpg
+  url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-01-the-language/hand-made.jpg
 author:
   name: Mario
   url: 'https://merveilles.town/@mario_afk'
