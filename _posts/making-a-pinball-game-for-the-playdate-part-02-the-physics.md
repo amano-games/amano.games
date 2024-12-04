@@ -17,11 +17,11 @@ mastodon:
 
 When we decided to make a _pinball_ game, the main challenge I saw was the physics system. I don't consider myself to be someone good at math, and physics simulations sound like a scary big math mountain to climb.
 
-But there was always a small sliver of hope; old _Game Boy pinball_ games didn't look like they had a really sophisticated physics simulation, so If we managed at least that, we were fine.
+But there was always a small sliver of hope; old _Game Boy pinball_ games didn't look like they had a really sophisticated physics simulation, so If we at least managed something like that, we would be fine.
 
 ![Hero Shuugou!! Pinball Party](https://amano-media.nyc3.digitaloceanspaces.com/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/Hero%20Shuugou!!%20Pinball%20Party.png)
 
-I started looking more into how this game worked. I [found](https://www.raspberrypi.com/news/code-your-own-pinball-game-wireframe-53/) a [couple](https://news.ycombinator.com/item?id=28667945) of [good](https://talk.pokitto.com/t/wip-pinball-engine-for-the-pokitto/2206) [answers](https://www.reddit.com/r/howdidtheycodeit/comments/106uro7/how_did_they_code_physics_in_pinball/) [online](https://gamedev.stackexchange.com/questions/43705/2d-collision-detection-for-pinball-game).
+I started looking more into how these games worked. I [found](https://www.raspberrypi.com/news/code-your-own-pinball-game-wireframe-53/) a [couple](https://news.ycombinator.com/item?id=28667945) of [good](https://talk.pokitto.com/t/wip-pinball-engine-for-the-pokitto/2206) [answers](https://www.reddit.com/r/howdidtheycodeit/comments/106uro7/how_did_they_code_physics_in_pinball/) [online](https://gamedev.stackexchange.com/questions/43705/2d-collision-detection-for-pinball-game).
 
 The main gist of it seemed to be to generate a collision mask where every pixel had encoded the value of the angle the ball had to bounce off in a value between 0-255. You then read the value of each pixel around the radius of the ball, get the x and y components of the force vector from the average of the angle, and apply the force to the ball. This sounds... simple!
 
@@ -43,9 +43,9 @@ I researched a little on the state of physics libraries for Playdate, but the re
 
 I was kind of lost; on one hand, I could try to figure out the collision mask method and have the simple janky physics of some early _Game Boy pinball_ games. And in the other, I could just try to do a rigid body simulation myself and see how that goes.
 
-[My first rule when I started this project was](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-01-the-language), "I prefer something simpler and do it myself, than doing something more complicated and grab someone else's code." So going for the collision mask seemed like the best option if I was going for simplicity, but the lack of resources made it harder on the understanding myself part of the rule.
+[My first rule when I started this project was](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-01-the-language), "I prefer something simpler and done by myself, rather than doing something more complicated and just grabing someone else's code." So going for the collision mask seemed like the best option if I was going for simplicity, but the lack of resources made it harder on the ‘me understanding it’ part of the rule.
 
-For a long time I had been wanting to do one of the courses on [Pikuma.com](https://pikuma.com/). They seemed in a similar spirit to Hand Made Hero, and they had a course on a [2D physics engine](https://pikuma.com/courses/game-physics-engine-programming), just what I needed, neat.
+For a long time I had been wanting to do one of the courses on [Pikuma.com](https://pikuma.com/). They seemed to share a similar spirit to Hand Made Hero, and they had a course on a [2D physics engine](https://pikuma.com/courses/game-physics-engine-programming), just what I needed, neat!
 
 I skimmed the contents, and it seemed like just the thing I needed.
 
@@ -89,7 +89,7 @@ Whenever I'm doing something new, I always feel more confident when I have the c
 
 ### [Everything by Erin Catto](https://box2d.org/)
 
-I don't really know where to start when linking things from Erin Catto. If you have worked for a while in games, probably you already know about Box2D and even maybe heard about Erin. What you may not know is that Box 2D is not at all as complicated as I thought it was! By the end of my work with the physics engine, my main source of reference was the Box2D and the Box2D lite source code. I didn't even realize that the intention behind Box2D Lite was to teach people on how to do physics simulations. Anyway, all the GDC presentations and all the code that Erin has written is excellent, and you should check it out.
+I don't really know where to start when linking things from Erin Catto. If you have worked for a while in games, probably you already know about Box2D and even maybe heard about Erin. What you may not know is that Box 2D is not at all as complicated as I thought it was! By the end of my work with the physics engine, my main source of reference was the Box2D and the [Box2D Lite source code](https://github.com/erincatto/box2d-lite). I didn't even realize that the intention behind **Box2D Lite** was to teach people on how to do physics simulations. Anyway, all the GDC presentations and all the code that Erin has written is excellent, and you should check it out.
 
 ### [Solving Rigid Body Contacts](http://www.richardtonge.com/presentations/Tonge-2012-GDC-solvingRigidBodyContacts.pdf) by [Richard Tonge](http://www.richardtonge.com/)
 
