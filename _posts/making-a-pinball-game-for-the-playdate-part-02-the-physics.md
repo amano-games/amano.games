@@ -67,7 +67,7 @@ Now I had to port my new physics engine to C and make it work on the Playdate so
 
 But first I started to worry. Remember how I said that my main priority was having tools ready so that **JP** could work in parallel while I worked on the next thing? Authoring the collisions for the game started to look like a task more difficult than what I was expecting.
 
-See you in the next adventure, Part 03: The level editor.
+See you in the next adventure, Part 03: The first level editor.
 
 ## Resources
 

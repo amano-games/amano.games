@@ -1,5 +1,5 @@
 ---
-title: 'Making a pinball game for Playdate: Part 03, the level editor'
+title: 'Making a pinball game for Playdate: Part 03, the first level editor'
 tags: playdate,pinball,c,devils-on-the-moon,tiled
 excerpt: ''
 publish: false
