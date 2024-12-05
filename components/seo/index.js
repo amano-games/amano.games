@@ -37,20 +37,25 @@ function Seo({ title, description, image, authors }) {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:creator" content={twitter} />
 
-      <meta name="fediverse:creator" content="@amano@mastodon.gamedev.place" />
-
-      {authors.map((item) => {
-        if (item.mastodon) {
-          return (
-            <meta
-              key={item.mastodon}
-              name="fediverse:creator"
-              content={item.mastodon}
-            />
-          );
-        }
-        return '';
-      })}
+      {authors.length > 0 ? (
+        authors.map((item) => {
+          if (item.mastodon) {
+            return (
+              <meta
+                key={item.mastodon}
+                name="fediverse:creator"
+                content={item.mastodon}
+              />
+            );
+          }
+          return '';
+        })
+      ) : (
+        <meta
+          name="fediverse:creator"
+          content="@amano@mastodon.gamedev.place"
+        />
+      )}
 
       <link
         rel="alternate"
