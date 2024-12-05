@@ -78,7 +78,7 @@ li {
 
 code,
 pre {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 code:not([class]) {

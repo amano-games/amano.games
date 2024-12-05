@@ -5,7 +5,7 @@
   --gray: #717171;
 
   --font-sans: sans-serif;
-  --font-mono: mono;
+  --font-mono: 'Space Mono', monospace;
   --font-serif: 'Kiwi Maru', serif;
 
   --max-width: 800px;

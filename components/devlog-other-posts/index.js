@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 
+import Link from 'next/link';
 import Markdown from 'components/markdown';
 import PostPreview from 'components/post-preview';
 
@@ -16,7 +17,15 @@ function DevlogOtherPosts({ allPosts, currentSlug }) {
   return (
     <div className={`${style['devlog-keep-reading-wrapper']} wrapper`}>
       <div className={`${style['devlog-keep-reading']}`}>
-        <h1 className={style['devlog-keep-reading-title']}>Other Posts</h1>
+        <header className={`${style['devlog-keep-reading-header']}`}>
+          <h1 className={style['devlog-keep-reading-title']}>Other Posts</h1>
+          <Link
+            className={style['devlog-keep-reading-archive']}
+            href="/devlog/archive"
+          >
+            Archive
+          </Link>
+        </header>
         <Markdown className={`${style['devlog-keep-reading-info']} -inverted`}>
           {info}
         </Markdown>

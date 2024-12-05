@@ -5,7 +5,7 @@ excerpt: '2 Bits image formats.'
 publish: true
 date: 2024/12/04
 cover:
-  url: 'https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/final.gif'
+  url: 'https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/glitch.png'
 authors:
   - name: Mario
     url: 'https://merveilles.town/@mario_afk'
