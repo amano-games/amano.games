@@ -16,9 +16,9 @@ mastodon:
   postId: '113599130117007875'
 ---
 
-Welcome to this [December adventure](https://eli.li/december-adventure), where I will write about the process of our latest game, [Devils on the Moon pinball](https://play.date/games/devils-on-the-moon-pinball/).
+Welcome to today’s [December adventure](https://eli.li/december-adventure), where I will write about the process of our latest game, [Devils on the Moon pinball](https://play.date/games/devils-on-the-moon-pinball/).
 
-One day, as we were scrolling through the Playdate Squad Discord server, [Lukas Wolski](https://bsky.app/profile/strupf.bsky.social) the dev behind the excellent game [Owlets Embrace](https://play.date/games/owlets-embrace/) posted the following picture.
+One day, as we were scrolling through the Playdate Squad Discord server, [Lukas Wolski](https://bsky.app/profile/strupf.bsky.social) the dev behind the excellent game [Owlet’s Embrace](https://play.date/games/owlets-embrace/) posted the following picture.
 
 ![Interlaced](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/interlaced.png)
 
@@ -28,7 +28,7 @@ One day, as we were scrolling through the Playdate Squad Discord server, [Lukas 
 >
 > The very same game scene in my own game went from 35 FPS to 50 FPS. And it all came down to cache misses, stalling the CPU. I use some very big textures here and there btw.
 
-This sounded promising! When we were working on [Pullfrog](https://play.date/games/pullfrog/) I didn't know a lot about how to measure performance bottlenecks, but even I knew that drawing things on the screen was expensive. If we could get a speed bump by doing our own custom drawing routines, that sounded like a big win!
+This sounded promising! When we were working on [ Pullfrog ](https://play.date/games/pullfrog/) I didn't know a lot about how to measure performance bottlenecks, but even I knew that drawing things on the screen was expensive. If we could get a speed bump by doing our own custom drawing routines, that sounded like a big win!
 
 I can't say I fully understood what Lukas was talking about or why it mattered, but I have heard before that cache misses were important for performance.
 
@@ -47,9 +47,9 @@ I wrote a custom [Aseprite exporter for ICN and CHR](https://git.sr.ht/~afk/ase-
 
 ![ICN/CHR](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/chr.gif)
 
-Now this didn't assure me that this would be faster to draw than the Playdate's [PDI](https://github.com/cranksters/playdate-reverse-engineering/blob/main/formats/pdi.md) format; not only that, but the restriction of having everything in tiles was something that made sense for the Famicon but not for our game.
+Now this didn't assure me that it would be faster to draw than the Playdate's [PDI](https://github.com/cranksters/playdate-reverse-engineering/blob/main/formats/pdi.md) format; not only that, but the restriction of having everything in tiles was something that made sense for the Famicom but not for our game.
 
-With this new knowledge, I started reading **Lukas** code. He shared it on the **Playdate Squad** Discord server and had his game code on GitHub. I didn't understand the blipping code yet, but thanks to his previous messages in the Discord, I was able to replicate the image format. Once again, I wrote another [small Aseprite](https://git.sr.ht/~afk/ase-scripts/tree/main/item/export-to-tex-32.lua) script and tried it with this code; it worked!
+With this new knowledge, I started reading **Lukas’** code. He shared it on the **Playdate Squad** Discord server and had his game code on GitHub. I didn't understand the blipping code yet, but thanks to his previous messages in the Discord, I was able to replicate the image format. Once again, I wrote another [small Aseprite](https://git.sr.ht/~afk/ase-scripts/tree/main/item/export-to-tex-32.lua) script and tried it with this code; it worked!
 
 ![Glitched](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/glitch.png)
 
@@ -58,7 +58,8 @@ Kind of...
 A couple of tries later, and it worked!
 
 ![Grid](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/grid.png)
-We now had physics and a way to draw textures on the screen; we felt over the devils on the **moon** pinball.
+
+We now had physics and a way to draw textures on the screen; we felt over the devil’s on the **moon** pinball.
 
 At this point, Jp had plenty of time to plan the pinball table design and had a bunch of art ready to implement.
 
