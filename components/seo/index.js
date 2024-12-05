@@ -37,6 +37,8 @@ function Seo({ title, description, image, authors }) {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:creator" content={twitter} />
 
+      <meta name="fediverse:creator" content="@amano@mastodon.gamedev.place" />
+
       {authors.map((item) => {
         if (item.mastodon) {
           return (
