@@ -79,4 +79,4 @@ There were a lot of things left to do, but the scariest part was done, or at lea
 
 Now we just needed to find a way to draw textures on the screen, and there was a message on the Playdate Squad discord server that excited us a ton.
 
-See you in the next adventure, Part 04: The Graphics.
+See you in the next adventure, Part 04: [The image format](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format).
