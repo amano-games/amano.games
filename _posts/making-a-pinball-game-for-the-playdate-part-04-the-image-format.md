@@ -12,7 +12,7 @@ author:
 mastodon:
   host: merveilles.town
   username: mario_afk
-  postId: ''
+  postId: '113599130117007875'
 ---
 
 One day, as we were scrolling through the Playdate Squad Discord server, [Lukas Wolski](https://bsky.app/profile/strupf.bsky.social) the dev behind the excellent game [Owlets Embrace](https://play.date/games/owlets-embrace/) posted the following picture.
