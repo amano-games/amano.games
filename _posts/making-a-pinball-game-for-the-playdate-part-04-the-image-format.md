@@ -19,7 +19,9 @@ One day, as we were scrolling through the Playdate Squad Discord server, [Lukas 
 
 ![Interlaced](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/interlaced.png)
 
-> Some time ago I wrote my own sprite and primitive blitting routines without using the SDK. I went for the same bitmap format like the SDK: First half of the bitmap buffer black/white pixel data, second half of the buffer transparent/opaque pixel data. I wondered what would happen if I rewrote my code and texture format to use an interlaced layout, where 32 bits of black/white and 32 bits of transparent/opaque are alternating. You need to read and write both of them for basically all graphics routines anyway. The performance difference depends probably on the size of the bitmaps used (-> distance between b/w and transparent regions in a bitmap).
+> Some time ago I wrote my own sprite and primitive blitting routines without using the SDK. I went for the same bitmap format like the SDK: First half of the bitmap buffer black/white pixel data, second half of the buffer transparent/opaque pixel data.
+>
+> I wondered what would happen if I rewrote my code and texture format to use an interlaced layout, where 32 bits of black/white and 32 bits of transparent/opaque are alternating. You need to read and write both of them for basically all graphics routines anyway. The performance difference depends probably on the size of the bitmaps used (-> distance between b/w and transparent regions in a bitmap).
 >
 > The very same game scene in my own game went from 35 FPS to 50 FPS. And it all came down to cache misses, stalling the CPU. I use some very big textures here and there btw.
 
@@ -27,7 +29,7 @@ This sounded promising! When we were working on [Pullfrog](https://play.date/gam
 
 I can't say I fully understood what Lukas was talking about or why it mattered, but I have heard before that cache misses were important for performance.
 
-![Cache miss](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/cache-miss.png)
+![Cache miss](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/cache-miss.jpg)
 [From Game Engine Architecture by Jason Gregory](https://www.gameenginebook.com/)
 
 Ok good. What is [interlacing](<https://en.wikipedia.org/wiki/Interlacing_(bitmaps)>) again? You probably have experienced this on the web.
