@@ -12,7 +12,7 @@ import {
 } from 'lib/site';
 
 const RSS_TITLE = "RSS feed for Amano's devlog";
-function Seo({ title, description, image }) {
+function Seo({ title, description, image, authors }) {
   const router = useRouter();
   const canonicalUrl = `${url}/${router.asPath}`;
   return (
@@ -37,6 +37,19 @@ function Seo({ title, description, image }) {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:creator" content={twitter} />
 
+      {authors.map((item) => {
+        if (item.mastodon) {
+          return (
+            <meta
+              key={item.mastodon}
+              name="fediverse:creator"
+              content={item.mastodon}
+            />
+          );
+        }
+        return '';
+      })}
+
       <link
         rel="alternate"
         type="application/rss+xml"
@@ -57,12 +70,20 @@ Seo.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
+  authors: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      mastodon: PropTypes.string,
+      twitter: PropTypes.string,
+    })
+  ),
 };
 
 Seo.defaultProps = {
   title: defaultTitle,
   description: defaultDescription,
   image: defaultImage,
+  authors: [],
 };
 
 export default Seo;

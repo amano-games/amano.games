@@ -4,9 +4,10 @@ excerpt: 'A couple of things I would recommend when starting your first game on 
 tags: PICO-8,gamedev,playdate
 date: 2021/08/09
 publish: true
-author:
-  name: Mario
-  url: 'https://merveilles.town/@mario_afk'
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/starting-a-game/target-position-bug.gif'
 mastodon:

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Box from 'components/box';
 import Markdown from 'components/markdown';
 
+import PostAuthors from 'components/post-authors';
+
 import style from './style.module.css';
 
 const options = {
@@ -21,7 +23,7 @@ function Post({
   className,
   content,
   date,
-  author,
+  authors,
   tags,
 }) {
   const customClassName = classNames(
@@ -51,12 +53,7 @@ function Post({
           <span className={style['post-date']}>
             <time>{dateParsed}</time>
           </span>
-          <span className={style['post-author']}>
-            By:{' '}
-            <a rel="noopener noreferrer" target="_blank" href={author.url}>
-              {author.name}
-            </a>
-          </span>
+          <PostAuthors authors={authors} />
         </div>
         {tagsArr.length > 0 ? (
           <Box className={style['post-tags']}>
@@ -74,8 +71,13 @@ Post.propTypes = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  author: PropTypes.shape({ name: PropTypes.string, url: PropTypes.string })
-    .isRequired,
+  authors: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      url: PropTypes.string,
+      mastodon: PropTypes.string,
+    })
+  ),
   tags: PropTypes.string,
   content: PropTypes.string.isRequired,
   className: PropTypes.string,
@@ -86,6 +88,7 @@ Post.defaultProps = {
   className: null,
   featured: false,
   tags: '',
+  authors: [],
 };
 
 export default Post;

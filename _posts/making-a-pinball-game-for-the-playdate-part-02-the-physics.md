@@ -6,9 +6,10 @@ publish: true
 date: 2024/12/02
 cover:
   url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-03.gif
-author:
-  name: Mario
-  url: 'https://merveilles.town/@mario_afk'
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
 mastodon:
   host: merveilles.town
   username: mario_afk

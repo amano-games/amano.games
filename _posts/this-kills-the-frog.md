@@ -4,9 +4,10 @@ excerpt: 'After rewriting the physics system for the third time, it was time to 
 tags: collisions,gamedev,playdate,pullfrog
 date: 2021/09/02
 publish: true
-author:
-  name: Mario
-  url: 'https://merveilles.town/@mario_afk'
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/this-kills-the-frog/ded.gif'
 mastodon:

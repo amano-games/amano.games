@@ -4,9 +4,10 @@ excerpt: 'So towards the end of the year, Mario managed to get his hands on a De
 tags: post-mortem,gamedev,pullfrog,playdate,PICO-8
 date: 2021/05/29
 publish: true
-author:
-  name: Jp
-  url: https://twitter.com/eljovenpaul
+authors:
+  - name: Jp
+    url: https://twitter.com/eljovenpaul
+    mastodon: '@jp@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-008.png'
 mastodon:

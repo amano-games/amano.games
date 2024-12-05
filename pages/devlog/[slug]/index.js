@@ -19,6 +19,7 @@ function SinglePost({ post, allPosts }) {
         title={post.title}
         image={post.cover ? post.cover.url : `${url}/devlog-preview.png`}
         description={post.excerpt}
+        authors={post.authors}
       />
       <div className={`${style['single-post-wrapper']} wrapper`}>
         <Post {...post} />
@@ -39,6 +40,13 @@ SinglePost.propTypes = {
     cover: PropTypes.shape({
       url: PropTypes.string,
     }),
+    authors: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        url: PropTypes.string,
+        mastodon: PropTypes.string,
+      })
+    ),
     mastodon: PropTypes.shape({
       host: PropTypes.string,
       postId: PropTypes.string,
@@ -58,7 +66,7 @@ export async function getStaticProps(context) {
     'title',
     'date',
     'slug',
-    'author',
+    'authors',
     'excerpt',
     'tags',
     'cover',
@@ -67,7 +75,7 @@ export async function getStaticProps(context) {
     'slug',
     'title',
     'date',
-    'author',
+    'authors',
     'excerpt',
     'content',
     'tags',

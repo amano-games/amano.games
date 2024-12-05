@@ -4,9 +4,10 @@ excerpt: 'There are many techniques that you can apply so that a platformer game
 tags: PICO-8,collisions,gamedesign,gamedev,playdate,pullfrog
 date: 2021/07/05
 publish: true
-author:
-  name: Mario
-  url: 'https://merveilles.town/@mario_afk'
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif'
 mastodon:

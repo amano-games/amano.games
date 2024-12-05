@@ -35,10 +35,6 @@
   gap: var(--margin-01);
 }
 
-.post-author {
-  color: var(--yellow);
-}
-
 .post-tags {
   --border-color: var(--gray);
 

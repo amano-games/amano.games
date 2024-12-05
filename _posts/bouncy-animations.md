@@ -4,9 +4,10 @@ excerpt: 'Another Equally important decision, is choosing which poses you want t
 tags: PICO-8,animation,art,pullfrog
 date: 2021/06/26
 publish: true
-author:
-  name: Jp
-  url: https://twitter.com/eljovenpaul
+authors:
+  - name: Jp
+    url: https://twitter.com/eljovenpaul
+    mastodon: '@jp@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/bouncy-animations/07-bouncy.gif'
 mastodon:

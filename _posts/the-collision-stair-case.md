@@ -4,9 +4,10 @@ excerpt: 'As stated on the previous post, updating all the pieces all the time w
 tags: collisions,gamedev,playdate,pullfrog
 date: 2021/06/19
 publish: true
-author:
-  name: Mario
-  url: 'https://merveilles.town/@mario_afk'
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/the-collision-stair-case/05-statircase.gif'
 mastodon:

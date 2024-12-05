@@ -4,9 +4,10 @@ excerpt: 'We are back working on Pullfrog! What happened?'
 tags: pullfrog,playdate,design
 date: 2023/08/14
 publish: true
-author:
-  name: Mario
-  url: 'https://merveilles.town/@mario_afk'
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/lets-finish-this/2-slide.png'
 mastodon:

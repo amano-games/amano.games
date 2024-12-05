@@ -6,9 +6,13 @@ publish: true
 date: 2021/06/14
 cover:
   url: https://media.amano.games/devlog/about-amano-collision-conundrum/11-about-amano.gif
-author:
-  name: JP & Mario
-  url: https://amano.games/
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
+  - name: Jp
+    url: https://twitter.com/eljovenpaul
+    mastodon: '@jp@merveilles.town'
 mastodon:
   host: mastodon.gamedev.place
   username: amano

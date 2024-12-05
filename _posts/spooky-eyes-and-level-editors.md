@@ -4,9 +4,10 @@ excerpt: 'Last year we made the decision to take a break and focus on a spooky g
 tags: design,playdate,pullfrog
 date: 2021/12/11
 publish: true
-author:
-  name: Mario
-  url: 'https://merveilles.town/@mario_afk'
+authors:
+  - name: Mario
+    url: 'https://merveilles.town/@mario_afk'
+    mastodon: '@mario_afk@merveilles.town'
 cover:
   url: 'https://media.amano.games/devlog/spooky-eyes-and-level-editors/eyes.gif'
 mastodon:

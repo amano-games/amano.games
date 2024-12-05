@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Box from 'components/box';
 import Markdown from 'components/markdown';
 
+import PostAuthors from 'components/post-authors';
+
 import style from './style.module.css';
 
 const options = {
@@ -19,7 +21,7 @@ function PostPreview({
   featured,
   className,
   date,
-  author,
+  authors,
   tags,
   cover,
   excerpt,
@@ -53,12 +55,7 @@ function PostPreview({
           <span className={style['post-date']}>
             <time>{dateParsed}</time>
           </span>
-          <span className={style['post-author']}>
-            By:{' '}
-            <a rel="noopener noreferrer" target="_blank" href={author.url}>
-              {author.name}
-            </a>
-          </span>
+          <PostAuthors authors={authors} />
         </div>
       </header>
       {excerpt ? (
@@ -81,8 +78,13 @@ PostPreview.propTypes = {
   slug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  author: PropTypes.shape({ name: PropTypes.string, url: PropTypes.string })
-    .isRequired,
+  authors: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      url: PropTypes.string,
+      mastodon: PropTypes.string,
+    })
+  ),
   cover: PropTypes.shape({ url: PropTypes.string }),
   tags: PropTypes.string,
   className: PropTypes.string,
@@ -96,6 +98,7 @@ PostPreview.defaultProps = {
   tags: '',
   cover: null,
   excerpt: null,
+  authors: [],
 };
 
 export default PostPreview;
