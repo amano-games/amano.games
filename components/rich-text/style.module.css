@@ -55,7 +55,7 @@
   }
 
   .rich-text-container blockquote p {
-    font-size: var(--size-600);
+    font-size: var(--size-500);
     max-width: 40ch;
     max-width: 560px;
   }
