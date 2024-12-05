@@ -56,7 +56,7 @@ figcaption {
 blockquote {
   max-width: max-content;
   padding-left: var(--size-600);
-  border-left: 4px dotted;
+  border-left: 4px solid;
   margin-left: auto;
   margin-right: auto;
 }
