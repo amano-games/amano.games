@@ -15,6 +15,8 @@ mastodon:
   postId: '113599130117007875'
 ---
 
+Welcome to this [December adventure](https://eli.li/december-adventure), where I will write about the process of our latest game, [Devils on the Moon pinball](https://play.date/games/devils-on-the-moon-pinball/).
+
 One day, as we were scrolling through the Playdate Squad Discord server, [Lukas Wolski](https://bsky.app/profile/strupf.bsky.social) the dev behind the excellent game [Owlets Embrace](https://play.date/games/owlets-embrace/) posted the following picture.
 
 ![Interlaced](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/interlaced.png)
@@ -34,7 +36,7 @@ I can't say I fully understood what Lukas was talking about or why it mattered, 
 
 Ok good. What is [interlacing](<https://en.wikipedia.org/wiki/Interlacing_(bitmaps)>) again? You probably have experienced this on the web.
 
-Sometimes a website image will show row by row of pixels while loading. But other times it would wait until the whole image was loaded. When the image is not interlaced, the browser needs the whole image information to be able to render it. This is because the information about the colors of the pixels and, importantly, the transparency is separated. So to show a single pixel, the browser needs to load all the color information and then load all the transparency information.
+Sometimes a website image will show row by row of pixels while loading. But other times it would wait until the whole image is loaded. When the image is not interlaced, the browser needs the whole image information to be able to render it. This is because the information about the colors of the pixels and, the transparency is separated. So to show a single pixel, the browser needs to load all the color information and then load all the transparency information.
 
 When the image is interlaced, meaning all the information to render a row of pixels is close together, the browser can render the pixel as soon as it loads that single pixel information.
 
