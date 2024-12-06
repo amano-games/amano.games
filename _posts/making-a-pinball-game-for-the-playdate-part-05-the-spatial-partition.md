@@ -2,7 +2,7 @@
 title: 'Making a pinball game for Playdate: Part 05, the spatial partition'
 tags: c, collisions, devils-on-the-moon, pinball, playdate
 excerpt: '2 Bits image formats.'
-publish: false
+publish: true
 date: 2024/12/05
 cover:
   url: 'https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/02.gif'
