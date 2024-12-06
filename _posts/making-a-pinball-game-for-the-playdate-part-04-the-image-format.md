@@ -67,4 +67,4 @@ At this point, Jp had plenty of time to plan the pinball table design and had a 
 
 We added a bunch of polygons and tried the game, but when we started to see the frame rate drop, I knew what I needed to do.
 
-See you in the next adventure, Part 04: The Spatial Partitioning.
+See you in the next adventure, [Part 04: The spatial partitioning](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition).
