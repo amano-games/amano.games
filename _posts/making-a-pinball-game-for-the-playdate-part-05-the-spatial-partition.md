@@ -78,4 +78,4 @@ We filled the bottom part of the level with all the polygons we planned for the 
 
 Well, intuition and good practice can only take you so far. I wanted to be sure that if there were any performance issues, I had tools to diagnose them and fix them!
 
-Will see you in the next adventure: The Profiler.
+Will see you in the next adventure: [The Profiler](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler).
