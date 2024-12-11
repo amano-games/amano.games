@@ -52,6 +52,6 @@ I also wanted to try [Tracy](https://tracy.nereid.pl/), but after reading the do
 
 One thing that got me excited is that [Superluminal](https://mastodon.gamedev.place/@rovarma/113194259676032577) is coming to Linux. Sounds like the next year could be the year of the Linux desktop!
 
-Well, it seems that all [the people](https://www.youtube.com/watch?v=WJVQLpGHB8g) who talked about profiling were right, it's really useful! And after years of using print statements to debug, I started to wonder? Is this the time to learn how to actually use a debugger?.
+Well, it seems that all [the people](https://www.youtube.com/watch?v=WJVQLpGHB8g) who talked about profiling were right, it's really useful! And after years of using print statements to debug, I started to wonder... Is this the time to learn how to actually use a debugger?.
 
-See you in the next adventure, The Debugger.
+See you in the next adventure, [The Debugger](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger).
