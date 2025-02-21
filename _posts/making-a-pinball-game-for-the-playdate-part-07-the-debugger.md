@@ -35,7 +35,7 @@ I also watched his [video talking about Remedy BG](https://www.youtube.com/watch
 ![gdb](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/gdb.png)
 GDB Is the de facto debugger people use on Linux. Not only that, but by the end of this adventure, I realized almost all the other options were just GDB in disguise, or a GDB front end, as they would say in their description.
 
-I’m not a person who shy away from the terminal; I use [nvim](https://neovim.io/), [tmux](https://github.com/tmux/tmux), [bat](https://github.com/sharkdp/bat), [ripgrep](https://github.com/BurntSushi/ripgrep), [lazy git](https://github.com/jesseduffield/lazygit), etc. almost daily. However, for some reason, just like with the profiler, I was having a hard time making sense of the debugger on the CLI.
+I’m not a person who shy away from the terminal and rely on tools like [nvim](https://neovim.io/), [tmux](https://github.com/tmux/tmux), [bat](https://github.com/sharkdp/bat), [ripgrep](https://github.com/BurntSushi/ripgrep), [lazy git](https://github.com/jesseduffield/lazygit), and others almost daily. However, for some reason, just like with the profiler, I was having a hard time making sense of the debugger on the CLI.
 
 I saw a [couple](https://jvns.ca/blog/2021/05/17/how-to-look-at-the-stack-in-gdb/) of [tutorials](https://www.youtube.com/watch?v=PorfLSr3DDI), read the manual a little and learned enough to be able to use it. But by the end of the day, it never felt faster or easier than just printing stuff to the terminal.
 
