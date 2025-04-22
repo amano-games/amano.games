@@ -39,17 +39,18 @@ function PostPreview({
   const datePosted = new Date(date);
   const dateParsed = datePosted.toLocaleDateString(undefined, options);
   const tagsArr = tags.split(',');
+  const slugEncoded = encodeURIComponent(slug);
 
   return (
     <Box className={customClassName} inverted>
       {cover ? (
-        <Link href={`/devlog/${slug}`} className={style['post-image']}>
+        <Link href={`/devlog/${slugEncoded}`} className={style['post-image']}>
           <img src={cover.url} alt={title} />
         </Link>
       ) : null}
       <header className={style['post-header']}>
         <h3 className={style['post-title']}>
-          <Link href={`/devlog/${slug}`}>{title}</Link>
+          <Link href={`/devlog/${slugEncoded}`}>{title}</Link>
         </h3>
         <div className={style['post-info']}>
           <span className={style['post-date']}>

@@ -51,13 +51,14 @@ function Archive({ allPosts }) {
                       options
                     );
                     const tagsArr = item.tags.split(',');
+                    const slugEncoded = encodeURIComponent(item.slug);
                     return (
                       <li
                         key={item.slug}
                         className={`${style['devlog-archive-list-item']}`}
                       >
                         <Link
-                          href={`/devlog/${item.slug}`}
+                          href={`/devlog/${slugEncoded}`}
                           className={`${style['devlog-archive-list-item-inner']}`}
                         >
                           <span

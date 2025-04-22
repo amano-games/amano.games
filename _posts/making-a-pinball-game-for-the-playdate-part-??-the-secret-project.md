@@ -2,7 +2,7 @@
 title: 'Making a pinball game for Playdate: Part ??, the secret project'
 tags: playdate,devils-on-the-moon,catchadiablos,season-two
 excerpt: 'Searching for a debugger on Linux'
-publish: false
+publish: true
 date: 2025/04/22
 cover:
   url: 'https://i.imgflip.com/9rlft3.jpg'

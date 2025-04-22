@@ -39,12 +39,13 @@ function Post({
   const datePosted = new Date(date);
   const dateParsed = datePosted.toLocaleDateString(undefined, options);
   const tagsArr = tags.split(',');
+  const slugEncoded = encodeURIComponent(slug);
 
   return (
     <article className={customClassName}>
       <header className={style['post-header']}>
         <h1 className={style['post-title']}>
-          <Link href={`/devlog/${slug}`}>{title}</Link>
+          <Link href={`/devlog/${slugEncoded}`}>{title}</Link>
         </h1>
       </header>
       <Markdown className={style['post-content']}>{content}</Markdown>
