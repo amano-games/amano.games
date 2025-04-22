@@ -20,7 +20,7 @@ Welcome to this not-December adventure, where I write about the process of our l
 
 So I have _good_ and _bad_ news. The good news is that we are releasing a game on the Playdate's second season!
 
-I present to you: Catchadiablos!
+I present to you: **Catchadiablos**!
 
 ![Catchadiablos promo image](https://i.imgflip.com/9rlft3.jpg)
 
