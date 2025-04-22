@@ -2,10 +2,10 @@
 title: 'Making a pinball game for Playdate: Part ??, the secret project'
 tags: playdate,devils-on-the-moon,catchadiablos,season-two
 excerpt: 'Searching for a debugger on Linux'
-publish: false
+publish: true
 date: 2025/04/22
 cover:
-  url: 'https://i.imgflip.com/9rlft3.jpg'
+  url: 'https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-the-secret-project/catchadiablos-key.png'
 authors:
   - name: Mario
     url: 'https://merveilles.town/@mario_afk'
@@ -22,7 +22,7 @@ So I have _good_ and _bad_ news. The good news is that we are releasing a game o
 
 I present to you: **Catchadiablos**!
 
-![Catchadiablos promo image](https://i.imgflip.com/9rlft3.jpg)
+![Catchadiablos promo image](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-the-secret-project/catchadiablos-key.png)
 
 The _bad_ news is that we paused the development of _Devils on the Moon Pinball_ for the past 6 months while we finished _CatchaDiablos_. That’s why there haven’t been any updates on it.
 
