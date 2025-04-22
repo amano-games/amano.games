@@ -112,10 +112,8 @@
   gap: var(--margin-02);
   padding: 0;
   margin: 0;
-}
-
-.game-actions > *:not(:last-child) {
-  margin-bottom: var(--margin-02);
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .game-actions svg {
@@ -129,11 +127,11 @@ svg.catalog-badge {
 }
 
 .game-call-to-action {
+  margin: auto 0;
   margin-right: var(--margin-02);
   white-space: nowrap;
   position: relative;
   display: grid;
-  height: 16px;
   grid-template-columns: min-content min-content;
 }
 
@@ -167,6 +165,10 @@ a.game-action {
 }
 
 .game-actions-links a {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
   color: var(--white);
 }
 
