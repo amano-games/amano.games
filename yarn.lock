@@ -1213,6 +1213,18 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@lottiefiles/dotlottie-react@^0.13.4":
+  version "0.13.4"
+  resolved "https://registry.yarnpkg.com/@lottiefiles/dotlottie-react/-/dotlottie-react-0.13.4.tgz#36fa2bcb7ceaa68ac3d2657cdeab387fbe999bd5"
+  integrity sha512-QW3hSF1k95B56nswzs5iLY7FFGbwv/DkNDK3Kv1PyaoInAmj0+BE0496YTkWqRaYM2p0jKskjrZrLsHJVvfatg==
+  dependencies:
+    "@lottiefiles/dotlottie-web" "0.43.0"
+
+"@lottiefiles/dotlottie-web@0.43.0":
+  version "0.43.0"
+  resolved "https://registry.yarnpkg.com/@lottiefiles/dotlottie-web/-/dotlottie-web-0.43.0.tgz#96a182d8d06af98e72a4dd7b0c970c98ebf1872b"
+  integrity sha512-mIfb2aZj1xFY/NTtZ4tQPiOVz8MfWDkdUOCVpzCv3q8C8WRKxZUwPgIG8BdqhkujPksS9eYDXH/4f9qxyfNCwg==
+
 "@next/env@13.3.0":
   version "13.3.0"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.3.0.tgz#cc2e49f03060a4684ce7ec7fd617a21bc5b9edba"

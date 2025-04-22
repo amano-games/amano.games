@@ -1,4 +1,4 @@
-import Lottie from 'react-lottie-player';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 
 import animation from './fire-choppy.json';
@@ -7,7 +7,12 @@ function Fire(props) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
-    <Lottie animationData={animation} {...props} play={!prefersReducedMotion} />
+    <DotLottieReact
+      data={animation}
+      {...props}
+      loop
+      autoplay={!prefersReducedMotion}
+    />
   );
 }
 
