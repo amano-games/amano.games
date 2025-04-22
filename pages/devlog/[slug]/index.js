@@ -61,31 +61,40 @@ SinglePost.defaultProps = {
 };
 
 export async function getStaticProps(context) {
-  const allPosts = getAllPosts([
-    'publish',
-    'title',
-    'date',
-    'slug',
-    'authors',
-    'excerpt',
-    'tags',
-    'cover',
-  ]);
-  const post = getPostBySlug(context.params.slug, [
-    'slug',
-    'title',
-    'date',
-    'authors',
-    'excerpt',
-    'content',
-    'tags',
-    'cover',
-    'mastodon',
-  ]);
+  try {
+    const allPosts = getAllPosts([
+      'publish',
+      'title',
+      'date',
+      'slug',
+      'authors',
+      'excerpt',
+      'tags',
+      'cover',
+    ]);
+    const post = getPostBySlug(context.params.slug, [
+      'slug',
+      'title',
+      'date',
+      'authors',
+      'excerpt',
+      'content',
+      'tags',
+      'cover',
+      'mastodon',
+    ]);
 
-  return {
-    props: { post, allPosts },
-  };
+    return {
+      props: { post, allPosts },
+    };
+  } catch (e) {
+    if (e.code === 'ENOENT') {
+      return {
+        notFound: true,
+      };
+    }
+    throw e;
+  }
 }
 
 export async function getStaticPaths() {
