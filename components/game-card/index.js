@@ -10,12 +10,14 @@ import Pico from 'svg/pico.svg';
 import Arrow from 'svg/arrow.svg';
 import PlayIcon from 'svg/play-icon.svg';
 import Catalog from 'svg/playdate.svg';
+import Steam from 'svg/steam.svg';
 
 import style from './style.module.css';
 
-function getShouldShowLinks({ showLinks, links, trailer, badge }) {
-  if (badge != null) return true;
+function getShouldShowLinks({ showLinks, links, trailer, badge, wishlist }) {
   if (!showLinks) return false;
+  if (badge != null) return true;
+  if (wishlist != null) return true;
   if (trailer) return true;
   if (links.length > 0) return true;
   return false;
@@ -33,7 +35,10 @@ function GameCard({
   itch,
   newgrounds,
   lexaloffle,
+  steam,
   catalog,
+  wishlist,
+  action,
   show_links: showLinks,
 }) {
   const links = [
@@ -53,6 +58,11 @@ function GameCard({
       icon: <Pico />,
     },
     {
+      label: 'steam',
+      url: steam,
+      icon: <Steam />,
+    },
+    {
       label: 'catalog',
       url: catalog,
       icon: <Catalog className={style['catalog-badge']} />,
@@ -63,6 +73,7 @@ function GameCard({
     showLinks,
     trailer,
     badge,
+    wishlist,
   });
 
   const customClassName = classNames(
@@ -84,7 +95,7 @@ function GameCard({
       <div className={style['game-content']}>
         <div className={style['game-info']}>
           <div className={style['game-media']}>
-            {badge && featured ? (
+            {badge ? (
               <span className={style['game-badge']}>{badge}</span>
             ) : null}
 
@@ -104,37 +115,26 @@ function GameCard({
             {featured ? header : null}
             {shouldShowLinks ? (
               <div className={style['game-actions']}>
-                {badge && !featured ? (
-                  <div className={style['game-action-badge']}>
-                    <span className={style['game-badge']}>{badge}</span>
-                  </div>
-                ) : null}
-                {links.length > 0 && showLinks ? (
-                  <div className={style['game-where-to-play']}>
-                    {!catalog ? (
-                      <span className={style['game-play-it']}>
-                        <span className={style['game-play-it-text']}>
-                          Play it here
-                        </span>
-                        <Arrow />
-                      </span>
-                    ) : null}
-                    <div className={style['game-play-it-links']}>
-                      {links.map((link) => {
-                        return (
-                          <a
-                            key={link.url}
-                            rel="noopener noreferrer"
-                            target="_blank"
-                            href={link.url}
-                          >
-                            {link.icon ? link.icon : link.label}
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ) : null}
+                <span className={style['game-call-to-action']}>
+                  <span className={style['game-call-to-action-text']}>
+                    {action}
+                  </span>
+                  <Arrow />
+                </span>
+                <div className={style['game-actions-links']}>
+                  {links.map((link) => {
+                    return (
+                      <a
+                        key={link.url}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={link.url}
+                      >
+                        {link.icon ? link.icon : link.label}
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
             ) : null}
             <Markdown className={style['game-description']}>
@@ -153,24 +153,30 @@ GameCard.propTypes = {
   badge: PropTypes.string,
   subtitle: PropTypes.string,
   description: PropTypes.string.isRequired,
+  action: PropTypes.string,
   className: PropTypes.string,
   trailer: PropTypes.string,
   itch: PropTypes.string,
+  wishlist: PropTypes.string,
   newgrounds: PropTypes.string,
   lexaloffle: PropTypes.string,
+  steam: PropTypes.string,
   catalog: PropTypes.string,
   featured: PropTypes.bool,
   show_links: PropTypes.bool,
 };
 
 GameCard.defaultProps = {
+  action: null,
   badge: null,
   subtitle: null,
   className: null,
   trailer: null,
   itch: null,
   newgrounds: null,
+  wishlist: null,
   lexaloffle: null,
+  steam: null,
   catalog: null,
   featured: false,
   show_links: true,

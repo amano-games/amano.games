@@ -63,10 +63,6 @@
   background: var(--yellow);
   color: var(--black);
   padding: var(--margin-h) var(--margin-04);
-  border-radius: var(--margin-01);
-}
-
-.game-card[data-featured='true'] .game-badge {
   position: absolute;
   top: 0;
   left: 0;
@@ -103,19 +99,14 @@
   gap: var(--margin-02);
 }
 
+.game-card[data-featured='true'] .game-content-wrapper {
+  flex: 1 0 50%;
+}
+
 .game-actions {
   width: 100%;
   display: flex;
-  flex-flow: column;
   font-size: 1.2em;
-}
-
-.game-actions > *:not(:last-child) {
-  margin-bottom: var(--margin-02);
-}
-
-.game-where-to-play {
-  display: flex;
   list-style: none;
   flex-flow: row;
   gap: var(--margin-02);
@@ -123,7 +114,11 @@
   margin: 0;
 }
 
-.game-where-to-play svg {
+.game-actions > *:not(:last-child) {
+  margin-bottom: var(--margin-02);
+}
+
+.game-actions svg {
   width: var(--icon-size);
   height: var(--icon-size);
 }
@@ -133,7 +128,7 @@ svg.catalog-badge {
   height: calc(40px);
 }
 
-.game-play-it {
+.game-call-to-action {
   margin-right: var(--margin-02);
   white-space: nowrap;
   position: relative;
@@ -142,7 +137,7 @@ svg.catalog-badge {
   grid-template-columns: min-content min-content;
 }
 
-.game-play-it-text {
+.game-call-to-action-text {
   background: var(--yellow);
   color: var(--black);
   padding: var(--margin-q) var(--margin-02);
@@ -151,7 +146,7 @@ svg.catalog-badge {
   position: relative;
 }
 
-.game-play-it-links {
+.game-actions-links {
   display: flex;
   list-style: none;
   flex-flow: row wrap;
@@ -171,15 +166,15 @@ a.game-action {
   color: var(--yellow);
 }
 
-.game-play-it-links a {
+.game-actions-links a {
   color: var(--white);
 }
 
-.game-play-it-links a:hover {
+.game-actions-links a:hover {
   color: var(--yellow);
 }
 
-.game-play-it svg {
+.game-call-to-action svg {
   width: auto;
   color: var(--yellow);
   height: 100%;
