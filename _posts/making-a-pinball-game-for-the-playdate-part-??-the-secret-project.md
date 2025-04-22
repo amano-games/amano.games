@@ -38,4 +38,6 @@ The _good_ news is that it's a really cool game and we’re super proud of how i
 
 We learned a lot in the process and will write more once it's released.
 
+The other _good_ news is we are still planing to release the game before the year ends.
+
 Now for real, see you in the next adventure: The physics debugger.
