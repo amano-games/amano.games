@@ -11,9 +11,9 @@ authors:
     url: 'https://merveilles.town/@mario_afk'
     mastodon: '@mario_afk@merveilles.town'
 mastodon:
-  host: merveilles.town
-  username: mario_afk
-  postId: ''
+  host: mastodon.gamedev.place
+  username: amano
+  postId: '114384364283092663'
 ---
 
 Welcome to this not-December adventure, where I write about the process of our latest game, [Devils on the Moon pinball](https://play.date/games/devils-on-the-moon-pinball/).
