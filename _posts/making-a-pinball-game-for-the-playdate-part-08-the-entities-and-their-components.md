@@ -27,17 +27,16 @@ We are moving from an entity type/archetype to component-based behaviors.
 I had this structure for the game objects/entities of the game:
 
 ```c
-	struct entity {
-		enum entity_type type;
-		u32 components;
-		struct transform transform;
-		struct rigid_body body;
-		struct sensor sensor;
-		struct sprite sprite;
-		struct animator animator;
-		...
-	};
-
+struct entity {
+    enum entity_type type;
+    u32 components;
+    struct transform transform;
+    struct rigid_body body;
+    struct sensor sensor;
+    struct sprite sprite;
+    struct animator animator;
+    ...
+};
 ```
 
 This was mirrored in the Level editor (Tiled), where I would build custom types that had the components needed for that entity type.
@@ -101,7 +100,6 @@ void sprite_sys_upd(struct world *world, f32 dt){
 		sprite_upd(&entities[i]->sprite, dt);
 	}
 }
-
 ```
 
 The more I migrated the entity logic to the components, the more flexible the game code and level editor became.
@@ -135,7 +133,6 @@ void flipper_sys_upd(struct world *world, f32 dt){
 		flipper_upd(entities[i], dt);
 	}
 }
-
 ```
 
 This way I keep the ability to have specific archetypes of entities but with the added flexibility for the more generic ones.
@@ -166,7 +163,6 @@ void sprite_sys_upd(struct world, f32 dt){
 		sprite_upd(&sprites[i], dt);
 	}
 }
-
 ```
 
 This seems obvious in hindsight, especially if you're familiar with Unity, where this is the norm. But when starting the project, it was easier to think about all the pieces separately and not try to generalize too much.
