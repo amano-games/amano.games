@@ -79,6 +79,7 @@ li {
 code,
 pre {
   font-family: var(--font-mono);
+  tab-size: 4;
 }
 
 code:not([class]) {
