@@ -87,7 +87,7 @@ code:not([class]) {
   padding: 0 var(--margin-01);
   color: var(--yellow);
   border-radius: var(--margin-01);
-  background: var(--gray);
+  background: var(--gray-02);
 }
 
 ol:not([class]),
