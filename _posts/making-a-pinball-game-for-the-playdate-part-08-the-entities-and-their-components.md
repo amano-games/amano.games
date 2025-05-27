@@ -2,7 +2,7 @@
 title: 'Making a pinball game for Playdate: Part 08, the entities and their components'
 tags: playdate,devils-on-the-moon,tiled,pinball
 excerpt: 'How do we organize our game entities and their components.'
-publish: false
+publish: true
 date: 2025/05/26
 cover:
   url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/entities-components-cover.png
