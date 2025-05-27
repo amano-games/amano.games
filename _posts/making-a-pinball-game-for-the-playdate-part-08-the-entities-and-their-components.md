@@ -28,20 +28,20 @@ I had this structure for the game objects/entities of the game:
 
 ```c
 struct entity {
-    enum entity_type type;
-    u32 components;
-    struct transform transform;
-    struct rigid_body body;
-    struct sensor sensor;
-    struct sprite sprite;
-    struct animator animator;
-    ...
+	enum entity_type type;
+	u32 components;
+	struct transform transform;
+	struct rigid_body body;
+	struct sensor sensor;
+	struct sprite sprite;
+	struct animator animator;
+	...
 };
 ```
 
 This was mirrored in the Level editor (Tiled), where I would build custom types that had the components needed for that entity type.
 
-![Tiled properties inspector before](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_before.png)
+![](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_before.png)
 
 Then I would iterate over the entities, check which type they were, and perform some logic depending on the type.
 
@@ -72,7 +72,6 @@ void flipper_upd(struct entity *entity, f32 dt) {
 }
 
 void flipper_drw(struct entity *entity);
-
 ```
 
 This worked well for a while, but quickly I stopped updating every entity every frame, because some things didn’t need to be updated unless they were on the screen or near a ball.
@@ -86,10 +85,9 @@ void flipper_sys_upd(struct world *world, f32 dt){
 		flipper_upd(entities[i], dt);
 	}
 }
-
 ```
 
-The more I did this, the more I realized a lot of the logic was at the component level, not really the entity type level. So I started moving all the common logic for updating components to their own systems.
+The more I did this, the more I realized a lot of the logic was at the component level, not really at the entity type level. So I started moving all the common logic for updating components to their own systems.
 
 I used the same idea of making a DB of all the entities that had a specific component and using that for caching.
 
@@ -108,13 +106,17 @@ I even created a new entity type called _Generic Entity_ that we started using m
 
 At some point, I realized we could just get rid of the `entity_type` variable altogether. I was a little hesitant to change things, because we had a lot of entities already placed in the map, and migrating and checking them one by one seemed like a lot of work.
 
-But then we stopped working on the game for 6 months to work on Catchadiablos (You can [Pre-order it now!](https://play.date/games/seasons/two/)). When we came back, we had both forgotten 60% of the game’s systems and functionalities. So it seemed like a good time to refactor this architectural design.
+But then we stopped working on the game for 6 months to work on **Catchadiablos** (You can [Pre-order it now!](https://play.date/games/seasons/two/)). When we came back, we had both forgotten 60% of the game’s systems and functionalities. So it seemed like a good time to refactor this architectural design, and re-visit all the game functionality.
 
 # Now
 
-It was! It forced us to go entity by entity, check what they were supposed to do, and make sure that after the refactor, they still worked as intended.
+It worked! It forced us to go through each entity, check what it was supposed to do, and ensure that after the refactor, it still behaved as intended.
 
-So now, if I need to implement logic for a specific type of entity archetype that needs a group of components to work properly, I create a new component, even if it's just a bool, and update the entity based on that.
+If an entity needed a new behavior, I could create a new component and add it as a property to the Tiled entity without having to modify every entity of the same type.
+
+This also allowed us to have optional components that wouldn’t clutter the Tiled inspector, if an entity didn’t need them, we simply wouldn’t add them.
+
+And if I need to implement logic for a specific type of entity archetype that requires a group of components to work properly, I can just create a new component and add it to any entity. Even if it's just a `bool`, its main purpose is to allow me to query for that component specifically and update the entity accordingly.
 
 ```c
 void flipper_upd(struct entity *entity, f32 dt) {
@@ -139,7 +141,7 @@ This way I keep the ability to have specific archetypes of entities but with the
 
 And this is how it currently looks in [Tiled](https://www.mapeditor.org/): we can reorder, rename, or remove any of the components and the game will keep working.
 
-![Tiled properties inspector after](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_now.png)
+![](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_now.png)
 
 It doesn't look like much, but it helped us clean up the [Tiled](https://www.mapeditor.org/) properties a lot. To convert from one type of entity to another, you just need to add or remove a component, instead of changing the entity type. Before, we needed to create a new entity type for each combination of components. Whereas now, we can remove and add components freely.
 
