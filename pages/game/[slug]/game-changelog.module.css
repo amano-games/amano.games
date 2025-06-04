@@ -42,6 +42,10 @@
   border-radius: var(--margin-02);
 }
 
+.game-changelog-text {
+  width: 100%;
+}
+
 .game-changelog-text h1,
 .game-changelog-text h3,
 .game-changelog-text h2 {

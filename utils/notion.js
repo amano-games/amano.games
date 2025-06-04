@@ -9,6 +9,7 @@ export const GAMES_DB_ID = '89794766645149c2a79bb64a72c75d1b';
 export const MANITAS_DB_ID = 'db6aafe3a3c644d3a84a59657f82436a';
 export const CHANGELOGS_IDS = {
   'pullfrog-deluxe': '8366bcc2-e5ee-4a49-98ea-25d43279b405',
+  catchadiablos: '208b113f991f802f9c67ca8cd4b4ec9a',
 };
 
 export function getClient() {
