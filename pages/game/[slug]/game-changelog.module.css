@@ -39,6 +39,7 @@
 }
 
 .game-changelog-cover {
+  width: 100%;
   max-width: 800px;
   border-radius: var(--margin-02);
 }
