@@ -7,7 +7,6 @@ import Markdown from 'components/markdown';
 import Itch from 'svg/itch.svg';
 import Newgrounds from 'svg/ng.svg';
 import Pico from 'svg/pico.svg';
-import Arrow from 'svg/arrow.svg';
 import PlayIcon from 'svg/play-icon.svg';
 import Catalog from 'svg/playdate.svg';
 import Steam from 'svg/steam.svg';
@@ -115,12 +114,7 @@ function GameCard({
             {featured ? header : null}
             {shouldShowLinks ? (
               <div className={style['game-actions']}>
-                <span className={style['game-call-to-action']}>
-                  <span className={style['game-call-to-action-text']}>
-                    {action}
-                  </span>
-                  <Arrow />
-                </span>
+                <span className={style['game-call-to-action']}>{action}</span>
                 <div className={style['game-actions-links']}>
                   {links.map((link) => {
                     return (
