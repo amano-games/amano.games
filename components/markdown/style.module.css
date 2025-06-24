@@ -2,3 +2,7 @@
   border-radius: var(--margin-01);
   padding: var(--margin-01) var(--margin-02);
 }
+
+.spoiler summary {
+  cursor: pointer;
+}
