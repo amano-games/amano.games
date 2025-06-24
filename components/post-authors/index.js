@@ -7,7 +7,7 @@ const listFormatter = new Intl.ListFormat('en', {
   type: 'conjunction',
 });
 
-function PostAuthors({ authors }) {
+function PostAuthors({ authors = [] }) {
   const flat = authors.map((item) => `${item.name};${item.url}`);
   return (
     <span className={style['post-author']}>
@@ -40,10 +40,6 @@ PostAuthors.propTypes = {
       mastodon: PropTypes.string,
     })
   ),
-};
-
-PostAuthors.defaultProps = {
-  authors: [],
 };
 
 export default PostAuthors;

@@ -10,7 +10,7 @@ import style from './style.module.css';
 const info = `You can subscribe via [RSS](/rss/feed.xml) or follow us [@${twitter}
           ](https://twitter.com/${twitter})`;
 
-function DevlogOtherPosts({ allPosts, currentSlug }) {
+function DevlogOtherPosts({ allPosts = [], currentSlug }) {
   const other = allPosts.filter(
     (post) => post.slug !== currentSlug && post.publish
   );
@@ -43,11 +43,6 @@ function DevlogOtherPosts({ allPosts, currentSlug }) {
 DevlogOtherPosts.propTypes = {
   currentSlug: PropTypes.string,
   allPosts: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-DevlogOtherPosts.defaultProps = {
-  allPosts: [],
-  currentSlug: null,
 };
 
 export default DevlogOtherPosts;

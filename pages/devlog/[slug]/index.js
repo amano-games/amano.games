@@ -12,7 +12,7 @@ import DevlogComments from 'components/devlog-comments';
 
 import style from './style.module.css';
 
-function SinglePost({ post, allPosts }) {
+function SinglePost({ post, allPosts = [] }) {
   return (
     <LayoutDevlog>
       <Seo
@@ -54,10 +54,6 @@ SinglePost.propTypes = {
     }),
   }).isRequired,
   allPosts: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-SinglePost.defaultProps = {
-  allPosts: [],
 };
 
 export async function getStaticProps(context) {

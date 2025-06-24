@@ -11,7 +11,7 @@ import Markdown from 'components/markdown';
 
 import styles from './game-details.module.css';
 
-function GameDetails({ game }) {
+function GameDetails({ game = {} }) {
   return (
     <>
       <Seo
@@ -49,10 +49,6 @@ GameDetails.propTypes = {
     featured: PropTypes.bool,
     show_links: PropTypes.bool,
   }),
-};
-
-GameDetails.defaultProps = {
-  game: {},
 };
 
 export async function getStaticPaths() {

@@ -18,11 +18,11 @@ const options = {
 function PostPreview({
   slug,
   title,
-  featured,
+  featured = false,
   className,
   date,
-  authors,
-  tags,
+  authors = [],
+  tags = '',
   cover,
   excerpt,
 }) {
@@ -91,15 +91,6 @@ PostPreview.propTypes = {
   className: PropTypes.string,
   featured: PropTypes.bool,
   excerpt: PropTypes.string,
-};
-
-PostPreview.defaultProps = {
-  className: null,
-  featured: false,
-  tags: '',
-  cover: null,
-  excerpt: null,
-  authors: [],
 };
 
 export default PostPreview;

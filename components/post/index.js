@@ -19,12 +19,12 @@ const options = {
 function Post({
   slug,
   title,
-  featured,
+  featured = false,
   className,
   content,
   date,
-  authors,
-  tags,
+  authors = [],
+  tags = '',
 }) {
   const customClassName = classNames(
     style.post,
@@ -83,13 +83,6 @@ Post.propTypes = {
   content: PropTypes.string.isRequired,
   className: PropTypes.string,
   featured: PropTypes.bool,
-};
-
-Post.defaultProps = {
-  className: null,
-  featured: false,
-  tags: '',
-  authors: [],
 };
 
 export default Post;

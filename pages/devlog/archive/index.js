@@ -20,7 +20,7 @@ const dateFormat = new Intl.DateTimeFormat('en-UK', {
   year: 'numeric',
 });
 
-function Archive({ allPosts }) {
+function Archive({ allPosts = [] }) {
   const list = allPosts.reduce((acc, item) => {
     const key = dateFormat.format(Date.parse(item.date));
     const group = acc[key] || [];
@@ -94,10 +94,6 @@ function Archive({ allPosts }) {
 
 Archive.propTypes = {
   allPosts: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-Archive.defaultProps = {
-  allPosts: [],
 };
 
 export async function getStaticProps() {

@@ -12,7 +12,7 @@ import DevlogComments from 'components/devlog-comments';
 
 import style from './style.module.css';
 
-function Devlog({ allPosts }) {
+function Devlog({ allPosts = [] }) {
   const [first] = allPosts;
   return (
     <LayoutDevlog>
@@ -29,10 +29,6 @@ function Devlog({ allPosts }) {
 
 Devlog.propTypes = {
   allPosts: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-Devlog.defaultProps = {
-  allPosts: [],
 };
 
 export async function getStaticProps() {

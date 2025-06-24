@@ -16,7 +16,13 @@ const sfx = '/sfx/plop.mp3';
 const openSegments = [0, 10];
 const closeSegments = [12, 22];
 
-function Eye({ className, onClick, options, animationsOff, ...rest }) {
+function Eye({
+  className,
+  onClick = () => {},
+  options,
+  animationsOff = false,
+  ...rest
+}) {
   const [jsEnabled, setJsEnabled] = useState(false);
   const [play] = useSound(sfx);
   const [anim, setAnim] = useState(closeSegments);
@@ -94,14 +100,6 @@ Eye.propTypes = {
   onClick: PropTypes.func,
   animationsOff: PropTypes.bool,
   style: PropTypes.shape({}),
-};
-
-Eye.defaultProps = {
-  style: null,
-  options: null,
-  className: null,
-  onClick: () => {},
-  animationsOff: false,
 };
 
 export default Eye;

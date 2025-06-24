@@ -10,7 +10,7 @@ import Markdown from 'components/markdown';
 
 import styles from './game-changelog.module.css';
 
-function GameDetails({ game, changelog }) {
+function GameDetails({ game = {}, changelog }) {
   const changelogText = changelog ? changelog.join('\n\n') : null;
 
   return (
@@ -61,11 +61,6 @@ GameDetails.propTypes = {
     featured: PropTypes.bool,
     show_links: PropTypes.bool,
   }),
-};
-
-GameDetails.defaultProps = {
-  changelog: null,
-  game: {},
 };
 
 export async function getStaticPaths() {
