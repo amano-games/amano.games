@@ -38,13 +38,13 @@ const social = [
   },
 ];
 
-function Social({ className, size, filter }) {
+function Social({ className, size = 'm', filter = () => true }) {
   const customClassName = classNames(style.social, 'social', className, [
     style[`-${size}`],
   ]);
   return (
     <ul className={customClassName}>
-      {social.filter(filter).map((item) => {
+      {social?.filter(filter).map((item) => {
         return (
           <li key={item.label}>
             <a
@@ -66,12 +66,6 @@ Social.propTypes = {
   className: PropTypes.string,
   size: PropTypes.string,
   filter: PropTypes.func,
-};
-
-Social.defaultProps = {
-  className: null,
-  size: 'm',
-  filter: () => true,
 };
 
 export default Social;

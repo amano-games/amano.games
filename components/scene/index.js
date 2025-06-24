@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
+// eslint-disable-next-line import/no-unresolved
 import { ErrorBoundary } from 'react-error-boundary';
 
 import FakeScene from 'components/fake-scene';

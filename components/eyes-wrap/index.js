@@ -9,8 +9,6 @@ import layouts from './layouts';
 
 import styles from './style.module.css';
 
-const DEFAULT_COLOR = 'currentColor';
-
 function generateEye(x, y) {
   const width = random(60, 100);
   const height = random(60, 100);
@@ -31,7 +29,7 @@ function generateEye(x, y) {
   return eye;
 }
 
-function EyesWrap({ className, color, children, count, ...rest }) {
+function EyesWrap({ className = null, children = null, ...rest }) {
   const [loaded, setLoaded] = React.useState(false);
   const customClassName = classNames(
     styles['eyes-wrap'],
@@ -64,13 +62,6 @@ EyesWrap.propTypes = {
   color: PropTypes.string,
   children: PropTypes.node,
   count: PropTypes.number,
-};
-
-EyesWrap.defaultProps = {
-  className: null,
-  color: DEFAULT_COLOR,
-  children: null,
-  count: 3,
 };
 
 export default EyesWrap;

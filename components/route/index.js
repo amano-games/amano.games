@@ -8,7 +8,7 @@ import NavLink from 'components/nav-link';
 
 import style from './style.module.css';
 
-function Route({ className, children, href, refId }) {
+function Route({ className = null, children, href, refId = null }) {
   const { width } = useWindowSize();
   const { ref, inView } = useInView({
     threshold: width > 900 ? 0.4 : null,
@@ -35,11 +35,6 @@ Route.propTypes = {
   refId: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-};
-
-Route.defaultProps = {
-  refId: null,
-  className: null,
 };
 
 export default Route;

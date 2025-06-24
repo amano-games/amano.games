@@ -11,8 +11,6 @@ import Eye from 'components/eye';
 
 import styles from './style.module.css';
 
-const DEFAULT_COLOR = 'currentColor';
-
 const generateEye = () => {
   const width = random(60, 100);
   const height = random(60, 100);
@@ -30,7 +28,12 @@ const generateEye = () => {
   return eye;
 };
 
-function EyesWrapAdmin({ className, color, children, count, ...rest }) {
+function EyesWrapAdmin({
+  className = null,
+  children = null,
+  count = 3,
+  ...rest
+}) {
   const [ref, { width, height }] = useDimensions();
   const customClassName = classNames(
     styles['eyes-wrap'],
@@ -114,13 +117,6 @@ EyesWrapAdmin.propTypes = {
   color: PropTypes.string,
   children: PropTypes.node,
   count: PropTypes.number,
-};
-
-EyesWrapAdmin.defaultProps = {
-  className: null,
-  color: DEFAULT_COLOR,
-  children: null,
-  count: 3,
 };
 
 export default EyesWrapAdmin;

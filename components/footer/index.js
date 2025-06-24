@@ -8,7 +8,7 @@ import style from './style.module.css';
 
 const year = new Date().getFullYear();
 
-function Footer({ showSocial }) {
+function Footer({ showSocial = true }) {
   return (
     <footer id="footer" className={`${style.footer}`}>
       <div className={`${style['footer-wrapper']} wrapper`}>
@@ -29,10 +29,6 @@ function Footer({ showSocial }) {
 
 Footer.propTypes = {
   showSocial: PropTypes.bool,
-};
-
-Footer.defaultProps = {
-  showSocial: true,
 };
 
 export default Footer;

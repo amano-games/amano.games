@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -9,7 +10,7 @@ function getTitle({ accountHandle, isOp }) {
 }
 
 function Comment({
-  className,
+  className = null,
   id,
   url,
   displayName,
@@ -121,10 +122,6 @@ Comment.propTypes = {
   accountInstance: PropTypes.string.isRequired,
   accountUrl: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-};
-
-Comment.defaultProps = {
-  className: null,
 };
 
 export default Comment;

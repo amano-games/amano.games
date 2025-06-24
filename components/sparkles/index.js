@@ -24,7 +24,7 @@ const generateSparkle = (color) => {
   return sparkle;
 };
 
-function Sparkles({ color, children, ...delegated }) {
+function Sparkles({ color = DEFAULT_COLOR, children = null, ...delegated }) {
   const [loaded, setLoaded] = React.useState(false);
   const [sparkles, setSparkles] = React.useState(() => {
     return range(3).map(() => generateSparkle(color));
@@ -71,11 +71,6 @@ function Sparkles({ color, children, ...delegated }) {
 Sparkles.propTypes = {
   color: PropTypes.string,
   children: PropTypes.node,
-};
-
-Sparkles.defaultProps = {
-  color: DEFAULT_COLOR,
-  children: null,
 };
 
 export default Sparkles;

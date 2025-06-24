@@ -25,20 +25,20 @@ function getShouldShowLinks({ showLinks, links, trailer, badge, wishlist }) {
 function GameCard({
   name,
   slug,
-  badge,
-  subtitle,
-  featured,
-  className,
+  badge = null,
+  subtitle = null,
+  featured = false,
+  className = null,
   description,
-  trailer,
-  itch,
-  newgrounds,
-  lexaloffle,
-  steam,
-  catalog,
-  wishlist,
-  action,
-  show_links: showLinks,
+  trailer = null,
+  itch = null,
+  newgrounds = null,
+  lexaloffle = null,
+  steam = null,
+  catalog = null,
+  wishlist = null,
+  action = null,
+  show_links: showLinks = true,
 }) {
   const links = [
     {
@@ -158,22 +158,6 @@ GameCard.propTypes = {
   catalog: PropTypes.string,
   featured: PropTypes.bool,
   show_links: PropTypes.bool,
-};
-
-GameCard.defaultProps = {
-  action: null,
-  badge: null,
-  subtitle: null,
-  className: null,
-  trailer: null,
-  itch: null,
-  newgrounds: null,
-  wishlist: null,
-  lexaloffle: null,
-  steam: null,
-  catalog: null,
-  featured: false,
-  show_links: true,
 };
 
 export default GameCard;

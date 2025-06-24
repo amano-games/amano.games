@@ -24,16 +24,11 @@ function renderParagraph(props) {
   const { children } = props;
   // Can't put a summary inside a <p>
   // so we need remove the <p> tag if the children is a spoiler.
-  if (getIsSpoiler(children[0]?.props)) {
+  const childrenProps = children?.props;
+  if (getIsSpoiler(childrenProps)) {
     return children;
   }
-  if (
-    children &&
-    children[0] &&
-    children.length === 1 &&
-    children[0].props &&
-    children[0].props.src
-  ) {
+  if (children && children?.props && children?.props.src) {
     return children;
   }
 
@@ -45,20 +40,20 @@ function renderSpoiler(props) {
   if (!children) return null;
   const isSpoiler = getIsSpoiler(props);
   if (isSpoiler) {
-    const child = String(children)?.slice(SPOILER_PREFIX.length);
+    // const child = String(children)?.slice(SPOILER_PREFIX.length);
     return (
       <details className={style.spoiler} aria-label="Spoiler">
         <summary>Spoiler</summary>
-        {child}
+        {children}
       </details>
     );
   }
   return <del>{children}</del>;
 }
 
-function renderCode({ node, inline, className, children, ...props }) {
+function renderCode({ node, className, children, ...props }) {
   const match = /language-(\w+)/.exec(className || '');
-  return !inline && match ? (
+  return match ? (
     <SyntaxHighlighter
       className={style['code-wrapper']}
       customStyle={{
@@ -78,7 +73,7 @@ function renderCode({ node, inline, className, children, ...props }) {
   );
 }
 
-function Markdown({ children, className }) {
+function Markdown({ children = null, className = null }) {
   const customClassName = classNames(
     style['markdown-container'],
     'markdown-container',
@@ -88,7 +83,6 @@ function Markdown({ children, className }) {
   return (
     <RichText className={customClassName}>
       <ReactMarkdown
-        linkTarget="_blank"
         remarkPlugins={[remarkGfm]}
         components={{
           p: renderParagraph,
@@ -105,11 +99,6 @@ function Markdown({ children, className }) {
 Markdown.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-};
-
-Markdown.defaultProps = {
-  children: null,
-  className: null,
 };
 
 export default Markdown;

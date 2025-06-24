@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import style from './style.module.css';
 
-function RichText({ children, className }) {
+function RichText({ children = null, className = null }) {
   const customClassName = classNames(
     style['rich-text-container'],
     'rich-text-container',
@@ -16,11 +16,6 @@ function RichText({ children, className }) {
 RichText.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-};
-
-RichText.defaultProps = {
-  children: null,
-  className: null,
 };
 
 export default RichText;

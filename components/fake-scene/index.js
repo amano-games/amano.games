@@ -4,7 +4,7 @@ import Logo from 'svg/logo.svg';
 
 import style from './style.module.css';
 
-function FakeScene({ className }) {
+function FakeScene({ className = null }) {
   const customClassName = classNames(
     style['fake-scene'],
     'fake-scene',
@@ -19,10 +19,6 @@ function FakeScene({ className }) {
 
 FakeScene.propTypes = {
   className: PropTypes.string,
-};
-
-FakeScene.defaultProps = {
-  className: null,
 };
 
 export default FakeScene;

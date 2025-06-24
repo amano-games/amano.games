@@ -5,7 +5,7 @@ import Mask from 'svg/mask.svg';
 
 import style from './style.module.css';
 
-function Avatar({ className, flipped, src, alt }) {
+function Avatar({ className = null, flipped = false, src, alt }) {
   const customClassName = classNames(style.avatar, 'avatar', className, {
     [style['-flipped']]: flipped,
   });
@@ -29,11 +29,6 @@ Avatar.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   flipped: PropTypes.bool,
-};
-
-Avatar.defaultProps = {
-  className: null,
-  flipped: false,
 };
 
 export default Avatar;

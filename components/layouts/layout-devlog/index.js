@@ -11,7 +11,7 @@ import Text from 'svg/text.svg';
 
 import style from './style.module.css';
 
-function LayoutDevlog({ children }) {
+function LayoutDevlog({ children = null }) {
   return (
     <>
       <Seo title="AMANO Devlog" image="/devlog-preview.png" />
@@ -41,10 +41,6 @@ function LayoutDevlog({ children }) {
 
 LayoutDevlog.propTypes = {
   children: PropTypes.node,
-};
-
-LayoutDevlog.defaultProps = {
-  children: null,
 };
 
 export default LayoutDevlog;

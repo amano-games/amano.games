@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'next/router';
 import Link from 'next/link';
 
-function NavLink({ router, children, className, ...rest }) {
+function NavLink({ router, children = null, className = null, ...rest }) {
   return (
     <Link
       {...rest}
@@ -20,11 +20,6 @@ NavLink.propTypes = {
   router: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
-};
-
-NavLink.defaultProps = {
-  className: null,
-  children: null,
 };
 
 export default withRouter(NavLink);

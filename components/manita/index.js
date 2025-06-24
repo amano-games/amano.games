@@ -18,12 +18,12 @@ function Manita({
   avatar,
   description,
   itchio,
-  mastodon,
-  twitter,
+  mastodon = null,
+  twitter = null,
   web,
-  instagram,
-  className,
-  flipped,
+  instagram = null,
+  className = null,
+  flipped = false,
 }) {
   const customClassName = classNames(style.manita, 'manita', className, {
     [style['-flipped']]: flipped,
@@ -115,14 +115,6 @@ Manita.propTypes = {
   web: PropTypes.string.isRequired,
   instagram: PropTypes.string,
   flipped: PropTypes.bool,
-};
-
-Manita.defaultProps = {
-  className: null,
-  flipped: false,
-  mastodon: null,
-  twitter: null,
-  instagram: null,
 };
 
 export default Manita;

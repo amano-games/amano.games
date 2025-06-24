@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import style from './style.module.css';
 
-function Box({ className, children, inverted, ...rest }) {
+function Box({ className = null, children, inverted = false, ...rest }) {
   const customClassName = classNames(style.box, 'box', className, {
     [style['-inverted']]: inverted,
   });
@@ -18,11 +18,6 @@ Box.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   inverted: PropTypes.bool,
-};
-
-Box.defaultProps = {
-  className: null,
-  inverted: false,
 };
 
 export default Box;
