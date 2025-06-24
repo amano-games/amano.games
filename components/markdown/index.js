@@ -40,11 +40,11 @@ function renderSpoiler(props) {
   if (!children) return null;
   const isSpoiler = getIsSpoiler(props);
   if (isSpoiler) {
-    // const child = String(children)?.slice(SPOILER_PREFIX.length);
+    const child = String(children)?.slice(SPOILER_PREFIX.length);
     return (
       <details className={style.spoiler} aria-label="Spoiler">
         <summary>Spoiler</summary>
-        {children}
+        {child}
       </details>
     );
   }
