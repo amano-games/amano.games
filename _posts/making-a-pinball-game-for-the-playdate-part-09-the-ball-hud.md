@@ -2,7 +2,7 @@
 title: 'Making a pinball game for Playdate: Part 09, the ball HUD'
 tags: playdate,devils-on-the-moon,pinball,gamedesign
 excerpt: 'How do we show how many chances you have left?'
-publish: false
+publish: true
 date: 2025/07/30
 cover:
   url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/end-result.gif
