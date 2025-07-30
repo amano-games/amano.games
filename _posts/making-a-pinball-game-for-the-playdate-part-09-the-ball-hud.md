@@ -46,7 +46,17 @@ Later on, when the ambiguity is resolved and you lose the last game, the game en
 
 # Option B
 
-We show only two balls, as that's the chance you have left? But then we never show the UI with three balls;; we just used the same ball entity and just reset its position.
+We show only two balls, as that's the chance you have left? But then we never show the UI with three balls; the UI has the space to show you three balls filled, but we never do! It felt wrong somehow.
+
+![Option B](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/option-b.png)
+
+Again, kind of silly.
+
+After like a day of debate, we ended up with option B, it's better to not risk disappointing the player. That's how we show it in the **Catchadiablos** pinball
+
+![Catchadiablos Pinball](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/playdate-20250730-131927-export%201.gif)
+
+Yesterday, though, we were working on the ball spawning **polish**, adding animations, making sure timings were right, etc. It sounds simple, but we had to change a lot of things, as before we weren't destroying the entity and spawning it again; we just used the same ball entity and just reset its position.
 
 At the end, when we were tweaking the timings, we had an idea: what if we show the 3 balls filled in the UI, and with the spawning animation, we remove the ball from the HUD, signaling that you just spent one ball of the 3 balls that you have available? Best of both worlds!
 
