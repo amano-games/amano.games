@@ -2,7 +2,7 @@
 title: 'Making a pinball game for playdate: Part 10, the events and actions'
 tags: playdate,devils-on-the-moon,pinball,gamedesign
 excerpt: 'Events and actions handle most of the logic of our pinball game'
-publish: false
+publish: true
 date: 2025/11/07
 cover:
   url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/slingshot.gif
