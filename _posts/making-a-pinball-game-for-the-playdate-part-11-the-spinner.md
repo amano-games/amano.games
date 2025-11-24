@@ -22,7 +22,6 @@ We are ramping up to the final stages of the game so I had to cross off one of o
 
 From the beginning of development, when the idea to make a pinball game started we were excited about the spinner, Jp had figure out a way to use blender to generate rotated sprites that looked good (hopefully one day he will have enough time to talk about it here). And we played the physical table of Pulp Fiction and we fell in love with its spinner.
 
-![[pulp-fiction.png]]
 ![pulp fiction](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner/pulp-fiction.png)
 
 So Jp started working and soon enough had a really good spinner sprite for me to implement in to the game.
