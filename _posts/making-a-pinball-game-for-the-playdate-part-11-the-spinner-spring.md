@@ -32,7 +32,7 @@ Now we just needed a way to make it spin. The first step I needed was to detect 
 
 ## The Sensors
 
-Each sensor component has two buffers with a list of entity handles. Each frame it queries entities inside its collision shape using the [spacial hashing](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition) and then compares the new list with the previous list of entities.
+Each sensor component has [two buffers](https://gameprogrammingpatterns.com/double-buffer.html) with a list of entity handles. Each frame it queries entities inside its collision shape using the [spacial hashing](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition) and then compares the new list with the previous list of entities.
 
 If there is an entity that is not on the previous frame list, it sends the event `body_entered`.
 If an entity is missing from the previous frame, it sends the event `body_exited`.
@@ -69,7 +69,6 @@ spinner->vel = vel * spinner->damp;
 spinner->t   = t;
 
 return did_spin;
-
 ```
 
 The only problem with this is that the spinner would stop at some awkward rotation and stay like that until the ball entered again. That's not how pinball spinners work! They have a weight at the tips to make sure it always ends up perpendicular to the table. It worked but didn't feel as good.
