@@ -1,9 +1,9 @@
 ---
-title: 'Making a pinball game for Playdate: Part 11, the spinner'
+title: 'Making a pinball game for Playdate: Part 11, the spinner spring'
 tags: playdate,devils-on-the-moon,tiled,pinball
 excerpt: ''
 publish: false
-date: 2025/11/25
+date: 2025/12/08
 cover:
   url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner/spinner.gif
 authors:
@@ -22,11 +22,11 @@ We are ramping up to the final stages of the game so I had to cross off one of o
 
 From the beginning of development, when the idea to make a pinball game started, we were excited about the spinner, Jp had figure out a way to use blender to generate rotated sprites that looked good (hopefully one day he will have enough time to talk about it here). And we played the physical table of Pulp Fiction and we fell in love with its spinner.
 
-![pulp fiction](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner/pulp-fiction.png)
+![pulp fiction](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/pulp-fiction.png)
 
 So Jp started working and soon enough had a really good spinner sprite for me to implement in to the game.
 
-![spinner](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner/spinner.gif)
+![spinner](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner.gif)
 
 Now we just needed a way to make it spin. First step I needed to detect if the ball was colliding with the spinner in some way. This was the first time we needed to know if the ball was inside a collision shape but don't affect it as a physics body. So I implemented the sensor system.
 
@@ -73,7 +73,7 @@ return did_spin;
 
 The only problem with this is that the spinner would stop at some awkward rotation and stay like that until the ball entered again. That's not how pinball spinner work! they have a weight at the tips to make sure it always ends up perpendicular to the table. It worked but didn't feel as good.
 
-![[spinner.gif]]
+![spinner-diablo](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-diablo.gif)
 This is how the pinball at Catchadiablos works by the way.
 
 ## Springs
@@ -128,5 +128,5 @@ return spinned;
 
 ```
 
-![[spinner-spring.gif]]
+![spinner spring](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-spring.gif)
 And now it looks great! So yeah springs, I just think they are neat.
