@@ -125,7 +125,6 @@ if(curr_half != prev_half && spinner->register_spins) {
 }
 
 return spinned;
-
 ```
 
 ![spinner spring](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-spring.gif)
