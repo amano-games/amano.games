@@ -79,11 +79,11 @@ This is how the spinner at [Catchadiablos](https://play.date/games/catchadiablos
 
 ## Springs
 
-The first time I was reading about using springs for animation was from [this great article by Josh W. Comeau](https://www.joshwcomeau.com/animation/a-friendly-introduction-to-spring-physics/). The article is full of interactive examples that helped the concept click. Since then I have used it sparingly for some little animations on our games. Another great resource is [this video on a small script for Godot](https://www.youtube.com/watch?v=YBgCUQVDRkw) that helps you animate almost anything using springs.
+The first time I was reading about using springs for animation was from [this great article by Josh W. Comeau](https://www.joshwcomeau.com/animation/a-friendly-introduction-to-spring-physics/). The article is full of interactive examples that helped the concept _click_. Since then I have used it sparingly for some little animations on our games. Another great resource is [this video on a small script for Godot](https://www.youtube.com/watch?v=YBgCUQVDRkw) that helps you animate almost anything using springs.
 
 When I started thinking about our spinner problem, I thought I would need to simulate some kind of pendulum using physics and that my cheap trick of just using the ball velocity was going away. And that's why I put if off for a long time, until I got this article on my RSS feed on [springs and all their utilities](https://theorangeduck.com/page/spring-roll-call). It's great! I greatly recommend it.
 
-So I started thinking these springs surely look like the motion a pinball spinner does.
+So I started thinking these springs surely look like the motion a pinball spinner.
 
 I didn't have to change that much; just make sure to record the starting direction of the spinner as it will bounce back and forth until it gets to its resting angle.
 
