@@ -37,7 +37,7 @@ module.exports = defineConfig([
       },
     },
 
-    extends: compat.extends('airbnb', 'prettier'),
+    extends: [...compat.extends('airbnb'), ...compat.extends('prettier')],
 
     plugins: {
       prettier,

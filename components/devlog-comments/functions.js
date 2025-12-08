@@ -1,4 +1,4 @@
-import * as DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify';
 import reactStringReplace from 'react-string-replace';
 
 export const HOST = 'mastodon.gamedev.place';
