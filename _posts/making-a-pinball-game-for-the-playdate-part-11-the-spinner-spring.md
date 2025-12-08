@@ -1,6 +1,6 @@
 ---
 title: 'Making a pinball game for Playdate: Part 11, the spinner spring'
-tags: playdate,devils-on-the-moon,tiled,pinball
+tags: playdate,devils-on-the-moon,programming,springs,pinball
 excerpt: ''
 publish: false
 date: 2025/12/08
@@ -20,7 +20,7 @@ Welcome to this adventure, where I write about the process of our latest game, [
 
 We are ramping up to the final stages of the game so I had to cross off one of our long standing pending features: _The Pinball spinner_
 
-From the beginning of development, when the idea to make a pinball game started, we were excited about the spinner, Jp had figure out a way to use blender to generate rotated sprites that looked good (hopefully one day he will have enough time to talk about it here). And we played the physical table of Pulp Fiction and we fell in love with its spinner.
+From the beginning of development, when the idea to make a pinball game started, we were excited about the spinner. Jp had to figure out a way to use blender to generate rotated sprites that looked good (hopefully one day he will have enough time to talk about it here). And we played the physical table of Pulp Fiction and we fell in love with its spinner.
 
 ![pulp fiction](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/pulp-fiction.png)
 
@@ -37,9 +37,9 @@ Each sensor component has two buffers with a list of entity handles. Each frame 
 If there is an entity that it's not on the previous frame list it sends the event `body_entered`.
 If an entity is missing from the previous frame it sends the event `body_exited`.
 
-As we only have one ball and at least for the main table we are probably not going to have multi-ball the check is really simple, I just go through both arrays and compare one to one.
+As we only have one ball, at least for the main table we are probably not going to have multi-ball, the check is really simple, I just go through both arrays and compare one to one.
 
-Another problem was how do we decide which sensors should update each frame, we have over 70 sensors in the main table, some of them with complex polygon collision shapes. We query a circle at the position of each of the balls that it's 4 times the radius of the ball and mark all the overlapping sensors as dirty. Then we go through all the dirty sensors and update them.
+Another problem was, how do we decide which sensors should update each frame, we have over 70 sensors in the main table, some of them with complex polygon collision shapes. So I decided to use the ball to tell which one to update, I query a circle at the position of each of the balls that it's 4 times the radius of the ball and mark all the overlapping sensors as dirty. Then we go through all the dirty sensors and update them.
 
 ## Back to the spinner
 
@@ -69,16 +69,18 @@ spinner->vel = vel * spinner->damp;
 spinner->t   = t;
 
 return did_spin;
+
 ```
 
 The only problem with this is that the spinner would stop at some awkward rotation and stay like that until the ball entered again. That's not how pinball spinner work! they have a weight at the tips to make sure it always ends up perpendicular to the table. It worked but didn't feel as good.
 
 ![spinner-diablo](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-diablo.gif)
+
 This is how the pinball at Catchadiablos works by the way.
 
 ## Springs
 
-The first time I was reading about using springs for animation was from [this great article by Josh W. Comeau](https://www.joshwcomeau.com/animation/linear-timing-function/). The article is full of interactive examples that helped the concept click. Since then I have used sparingly for some little animations on our games. Another great resource is [this video on a small script for Godot](https://www.youtube.com/watch?v=YBgCUQVDRkw) that help you animate almost anything using springs.
+The first time I was reading about using springs for animation was from [this great article by Josh W. Comeau](https://www.joshwcomeau.com/animation/a-friendly-introduction-to-spring-physics/). The article is full of interactive examples that helped the concept click. Since then I have used sparingly for some little animations on our games. Another great resource is [this video on a small script for Godot](https://www.youtube.com/watch?v=YBgCUQVDRkw) that help you animate almost anything using springs.
 
 When I started thinking about our spinner problem I though I would need to simulate some kind of pendulum using physics and that my cheap trick of just using the ball velocity was going away. And that's why I put if off for a long time, until I got this article on my RSS feed on [springs and all their utilities](https://theorangeduck.com/page/spring-roll-call). It's great! I greatly recommend it.
 
@@ -128,4 +130,5 @@ return spinned;
 ```
 
 ![spinner spring](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-spring.gif)
-And now it looks great! So yeah springs, I just think they are neat.
+
+And now it looks great! So yeah springs, I just think they are _neat_.
