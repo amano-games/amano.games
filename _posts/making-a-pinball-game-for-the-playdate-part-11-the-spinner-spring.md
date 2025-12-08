@@ -1,8 +1,8 @@
 ---
 title: 'Making a pinball game for Playdate: Part 11, the spinner spring'
 tags: playdate,devils-on-the-moon,programming,springs,pinball
-excerpt: ''
-publish: false
+excerpt: 'A pinball spinner behaves like a spring if you think about it.'
+publish: true
 date: 2025/12/08
 cover:
   url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-diablo.gif
