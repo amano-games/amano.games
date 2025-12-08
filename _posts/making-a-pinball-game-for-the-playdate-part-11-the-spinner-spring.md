@@ -75,7 +75,7 @@ The only problem with this is that the spinner would stop at some awkward rotati
 
 ![spinner-diablo](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-diablo.gif)
 
-This is how the spinner at Catchadiablos works by the way.
+This is how the spinner at [Catchadiablos](https://play.date/games/catchadiablos/) works by the way.
 
 ## Springs
 
