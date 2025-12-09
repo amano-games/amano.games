@@ -13,7 +13,7 @@ authors:
 mastodon:
   host: merveilles.town
   username: mario_afk
-  postId: ''
+  postId: '115686655329865829'
 ---
 
 Welcome to this adventure, where I write about the process of our latest game, [Devils on the Moon pinball](https://play.date/games/devils-on-the-moon-pinball/).
