@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 import EyesWrap from 'components/eyes-wrap';
-import Seo from 'components/seo';
 import Header from 'components/header';
 import Footer from 'components/footer';
 
@@ -14,7 +13,6 @@ import style from './style.module.css';
 function LayoutDevlog({ children = null }) {
   return (
     <>
-      <Seo title="AMANO Devlog" image="/devlog-preview.png" />
       <Header />
       <header className={style['devlog-header']}>
         <div
