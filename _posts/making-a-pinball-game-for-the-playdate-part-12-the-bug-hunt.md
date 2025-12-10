@@ -27,15 +27,85 @@ I went to that part of the code and found nothing, literally nothing, I wasn't d
 ```bash
 --- crash at 2025/12/10 20:35:08---
 build:e44193e8-3.0.1-release.194549-gitlab-runner
- r0:00008001    r1:20009b90     r2:38800088    r3: 00000000
-r12:2000f8d1    lr:24021457     pc:24021456   psr: 410f0000
-cfsr:00010000  hfsr:40000000  mmfar:00000000  bfar: 00000000
+   r0:00008001    r1:20009b90     r2:38800088    r3: 00000000
+  r12:2000f8d1    lr:24021457     pc:24021456   psr: 410f0000
+ cfsr:00010000  hfsr:40000000  mmfar:00000000  bfar: 00000000
 rcccsr:00000000
 heap allocated: 15233952
 Lua totalbytes=0 GCdebt=0 GCestimate=0 stacksize=0
 ```
 
 First time I looked at this I just closed the file and started putting `printf`'s everywhere. But this time I knew that wasn't going to work. So understanding the crash report it is.
+
+# Low hanging fruit
+
+The first step to understand the crash is to run the `firmware_symbolizer.py` script provided on the SDK. This tool tries to tell you where the crash happen.
+
+```bash
+python $(PLAYDATE_SDK)/bin/firmware_symbolizer.py ./crashlog.txt build/playdate/pdex.elf
+
+?? ??:0
+?? ??:0
+```
+
+Well that is not helpful, but this will happen a lot of times, the really bad crashes tend to crash so bad that the **symbolizer** is unable to tell where the crash happened.
+
+There are some things that have helped me though. One is that I use a modified version of the simbolizer that prints the actual command used to get the line of code.
+
+```python
+import re
+import subprocess
+import click
+
+
+@click.command()
+@click.argument("crashlog", type=click.Path(exists=True))
+@click.argument("elf", type=click.Path(exists=True))
+def symbolize(crashlog, elf):
+    cl_contents = open(crashlog, "r").read()
+
+    cl_blocks = re.split(r"\n\n", cl_contents)
+
+    for block in cl_blocks:
+        matches = re.search(r"lr:([0-9a-f]{8})\s+pc:([0-9a-f]{8})", block)
+
+        if matches:
+            print(block, "\n")
+
+            lr = matches.group(1)
+            pc = matches.group(2)
+
+            lr_num = int(lr, 16)
+            pc_num = int(pc, 16)
+
+            lr_num = lr_num & 0x0FFFFFFF
+            pc_num = pc_num & 0x0FFFFFFF
+
+            print("lr: {} -> {}".format(hex(int(lr, 16)), lr_num))
+
+            lr = hex(lr_num)
+            pc = hex(pc_num)
+
+            cmd = f"arm-none-eabi-addr2line -f -i -p -e {elf} {pc} {lr}"
+            print(cmd)
+            stack = subprocess.check_output(cmd, shell=True).decode("ASCII")
+            print(stack)
+
+
+if __name__ == "__main__":
+    symbolize()
+```
+
+What the simbolyzer is doing, is calling the command `arm-none-eabi-addr2line` and passing the address that caused the crash. Your code lives in RAM memory same as your runtime allocations, and it's stored in a memory address, the `PC` and `LR` registers store the memory address where the function that caused the crash is stored. The only problem is that the address is not mapped one to one to your `elf` file because the playdate stores it on a different offset depending if it's a `Rev A` or `Rev B` Playdate. So the symbolizer also converts the memory you get from the `crashlog.txt` to the correct one on the `elf file`
+
+```bash
+lr: 0x24021457 -> 67245143
+arm-none-eabi-addr2line -f -i -p -e ./build/playdate/pdex.elf 0x4021456 0x4021457
+?? ??:0
+?? ??:0
+```
+
+Still not really helpful. I have found that the really nasty bugs tend to crash on a random function that that it's not on a helpful region of memory this can be because the function is a Playdate function and we don't have the map for that, or the address is completely wrong. There are some people at the Playdate Discord that can tell what kind of function made the crash just by looking at the address (shout out to scratchminer) but every time I see the `?? ??:0` I know I'm in trouble.
 
 # Memory suspects
 
@@ -58,9 +128,9 @@ It happen to me a bunch of times that on the simulator build of the game all the
 To fix this there is a couple of things you can do. One is to make sure to clear out any memory that you get from the OS. This way at least you know that you are starting at the same state as in your desktop computer. For this there is a simple yet useful couple of macros I like.
 
 ```c
-#define mclr(dst, size)      memset((dst), (0), (size))
-#define mclr_struct(s)       mclr((s), sizeof(*(s)))
-#define mclr_array(a)        mclr((a), sizeof(a))
+#define mclr(dst, size) memset((dst), (0), (size))
+#define mclr_struct(s)  mclr((s), sizeof(*(s)))
+#define mclr_array(a)   mclr((a), sizeof(a))
 ```
 
 This is useful by itself but combined with other macros you can make sure to always have cleared memory.
@@ -119,7 +189,7 @@ The numbers in the `crashlog.txt` are 32 bit hexadecimal numbers so to know what
 `0000 0000 0000 0001 0000 0000 0000 0000`
 
 ![CFSR](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/cfsr.png)
-Thanks to this image we know that the first 8 bits correspond to the `UFSR` as they are the only bits with a value let's focus on that.
+Thanks to this image we know that the last 16 bits correspond to the `UFSR` as they are the only bits with a value let's focus on that.
 
 `UFSR` stands for Usage Fault Status Register so we know the crash was not caused by something related to memory access.
 
@@ -130,21 +200,78 @@ Now thanks to this image we know that the second bit means there was a `UNDEFINS
 
 From the article this means that an undefined instruction was executed, this can happen if the stack got corrupted.
 
-One thing that sometimes is usefull is to search for **FreeRTOS** resources [like this one](https://www.freertos.org/Debugging-Hard-Faults-On-Cortex-M-Microcontrollers.html), as this is the operating system the Playdate is using.
+# Reproduce
+
+At this point I will be honest with you, I wasn't thinking completely straight, and became paranoid. The fact that the game would only crash after some random time and then locking the screen made no sense to me.
+
+Thankfully Jp is the best Q.A. tester I have ever met and was able to find that the issue only happened after interacting with a specific entity in the game, we call him the _Nalgón_ which translates to _Big butt guy_ in English.
+
+He is one of our favorite characters from the game and before it was showing his butt and mocking you.
+
+![[nalgon.gif]]
+
+Even though we removed the version of him where it showed it's butt. I started to feel like it was mocking me.
+
+Now that we had an easy way to reproduce the bug, go to the `Nalgón` bump it with the ball and lock the screen, I started commenting code and see if the crash keep happening. The process was painful:
+
+1. Build the game
+2. Launch the simulator
+3. Press `CTRL+U` to send the game to the device
+4. Wait for 3-5 minutes while the game get's copied
+5. Enable the developer cursor
+6. Bump the `Nalgón`
+
+All in all it took around 10 minutes to test each build which quickly helped with my paronia.
+
+I wrote a small script to automate most of the tasks. I had built something similar years ago when working with Pullfrog when the Linux simulator didn't have the **Send to device** command.
 
 ```bash
-λ › python ./firmware_symbolizer.py ./crashlog.txt ./build/playdate/pdex.elf                                                 games/devils-on-the-moon-pinball HEAD
---- crash at 2025/12/10 20:35:08---
-build:e44193e8-3.0.1-release.194549-gitlab-runner
-   r0:00008001    r1:20009b90     r2:38800088    r3: 00000000
-  r12:2000f8d1    lr:24021457     pc:24021456   psr: 410f0000
- cfsr:00010000  hfsr:40000000  mmfar:00000000  bfar: 00000000
-rcccsr:00000000
-heap allocated: 15233952
-Lua totalbytes=0 GCdebt=0 GCestimate=0 stacksize=0
+#!/bin/bash
+set -euo pipefail
 
-lr: 0x24021457 -> 67245143
-arm-none-eabi-addr2line -f -i -p -e ./build/playdate/pdex.elf 0x4021456 0x4021457
-?? ??:0
-?? ??:0
+DESTDIR="build/"
+GAME_NAME="devils-on-the-moon-pinball-dev"
+PD_DEV="/dev/ttyACM0"
+PD_MOUNT="/your/mount/folder"
+SRC_DIR="${DESTDIR}playdate/${GAME_NAME}.pdx"
+DST_DIR="${PD_MOUNT}/Games/${GAME_NAME}.pdx"
+
+
+if [[ -e "$PD_DEV" ]]; then
+  if [[ ! -d "$PD_MOUNT" ]]; then
+    if ! pdutil "$PD_DEV" datadisk; then
+      echo "Failed to enter Data Disk Mode." >&2
+      exit 1
+    fi
+
+    for i in {1..20}; do
+      if [[ -d "$PD_MOUNT" ]]; then
+        break
+      fi
+      sleep 0.5
+    done
+  fi
+elif [[ -d "$PD_MOUNT" ]]; then
+
+else
+  echo "Playdate not connected." >&2
+  exit 1
+fi
+
+if [[ ! -d "$PD_MOUNT" ]]; then
+  echo "Playdate mount did not appear." >&2
+  exit 1
+fi
+
+rsync -azrt --update --modify-window=1 --prune-empty-dirs --delete \
+  --info=name0 --info=progress2 \
+  "${SRC_DIR}/" "${DST_DIR}/"
+
+udiskie-umount --eject /dev/sde1
+sleep 2.0
+pdutil "$PD_DEV" run "Games/${GAME_NAME}.pdx";
 ```
+
+This reduce the effort of testing the build on device by a lot. It only works on Linux and you will need to change variables to make it work in your setup. If you want a similar script for Mac, [Nino](https://ninovanhooff.itch.io/) [has this great script](https://github.com/ninovanhooff/wheelsprung/blob/main/scripts/quickinstall.sh).
+
+One thing that sometimes is usefull is to search for **FreeRTOS** resources [like this one](https://www.freertos.org/Debugging-Hard-Faults-On-Cortex-M-Microcontrollers.html), as this is the operating system the Playdate is using.
