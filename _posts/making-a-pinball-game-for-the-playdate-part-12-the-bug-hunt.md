@@ -24,7 +24,7 @@ It all started with a normal build to device that started crashing, the weird pa
 
 I went to that part of the code and found nothing, literally nothing, I wasn't doing anything at all during that callback. Ok, don't panic, lets see what the `crashlog.txt` says. If you don't know what this file is, consider you lucky. But it's where the Playdate logs hard crashes information and it looks like this.
 
-```
+```bash
 --- crash at 2025/12/10 20:35:08---
 build:e44193e8-3.0.1-release.194549-gitlab-runner
  r0:00008001    r1:20009b90     r2:38800088    r3: 00000000
@@ -99,7 +99,7 @@ So I was sure it wasn't a memory uninitialized problem this time around.
 
 Back to trying to understand the crashlog.txt
 
-```
+```bash
 --- crash at 2025/12/10 20:35:08---
 build:e44193e8-3.0.1-release.194549-gitlab-runner
  r0:00008001    r1:20009b90     r2:38800088    r3: 00000000
