@@ -208,7 +208,7 @@ Thankfully Jp is the best Q.A. tester I have ever met and was able to find that 
 
 He is one of our favorite characters from the game and before it was showing his butt and mocking you.
 
-![[nalgon.gif]]
+![Nalgón](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/nalgon.gif)
 
 Even though we removed the version of him where it showed it's butt. I started to feel like it was mocking me.
 
