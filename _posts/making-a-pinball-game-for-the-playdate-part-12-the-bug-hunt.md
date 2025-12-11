@@ -99,7 +99,7 @@ arm-none-eabi-addr2line -f -i -p -e ./build/playdate/pdex.elf 0x4021456 0x402145
 
 Still, not really helpful. Another tool I have used is the [playdate-symbolize](https://crates.io/crates/playdate-symbolize) crate made in Rust that tends to give more human-readable errors, but sadly in this case it was the same result.
 
-I have found that the really nasty bugs tend to crash on a random function that is not in a helpful region of memory. This can be because the function is a Playdate function and we don't have the map for that, or the address is completely wrong because the stack got corrupted. There are some people at the Playdate Discord that can tell what kind of function made the crash just by looking at the address (shout out to (Scratchminer)[https://github.com/scratchminer]), but every time I see the `?? ??:0` I know I'm in trouble.
+I have found that the really nasty bugs tend to crash on a random function that is not in a helpful region of memory. This can be because the function is a Playdate function and we don't have the map for that, or the address is completely wrong because the stack got corrupted. There are some people at the Playdate Discord that can tell what kind of function made the crash just by looking at the address (shout out to [Scratchminer](https://github.com/scratchminer)), but every time I see the `?? ??:0` I know I'm in trouble.
 
 # Memory suspects
 
