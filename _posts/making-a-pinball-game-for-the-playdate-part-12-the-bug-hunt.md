@@ -2,7 +2,7 @@
 title: 'Making a pinball game for Playdate: Part 12, the bug hunt'
 tags: playdate,devils-on-the-moon,programming,springs,pinball
 excerpt: 'Device crashes are one of the worst things about developing for the Playdate, I hope if you are ever in that situation, this helps.'
-publish: false
+publish: true
 date: 2025/12/11
 cover:
   url: https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/device-info.png
