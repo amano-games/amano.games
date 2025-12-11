@@ -37,7 +37,7 @@ heap allocated: 15233952
 Lua totalbytes=0 GCdebt=0 GCestimate=0 stacksize=0
 ```
 
-The first time I looked at this, I just closed the file and started putting printfs everywhere. But this time I knew that wasn't going to work. So, understanding the crash report it is.
+The first time I looked at this, I just closed the file and started putting logs everywhere. But this time I knew that wasn't going to work. So, understanding the crash report it is.
 
 # The Symbolizer
 
