@@ -37,7 +37,7 @@ heap allocated: 15233952
 Lua totalbytes=0 GCdebt=0 GCestimate=0 stacksize=0
 ```
 
-The first time I looked at this, I just closed the file and started putting `printf`s everywhere. But this time I knew that wasn't going to work. So understanding the crash report it is.
+The first time I looked at this, I just closed the file and started putting printfs everywhere. But this time I knew that wasn't going to work. So, understanding the crash report it is.
 
 # The Symbolizer
 
@@ -202,11 +202,11 @@ At this point I will be honest with you: I wasn't thinking completely straight a
 
 Thankfully, JP is the best QA tester I have ever met and was able to find that the issue only happened after interacting with a specific entity in the game; we call him the _Nalgón_, which translates to _Big butt guy_ in English.
 
-He is one of our favorite characters from the game and before it was showing his butt and mocking you.
+He used to mockingly show his butt and is one of our favorite characters.
 
 ![Nalgón](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/nalgon.gif)
 
-Even though we removed the version of him where it showed his butt. I started to feel like it was mocking me.
+Even though we removed the version of him where he showed his butt. I started to feel like he was mocking me again… now with a bug.
 
 Now that we had an easy way to reproduce the bug, go to the `Nalgón` bump it with the ball and lock the screen. I started commenting code to see if the crash kept happening. The process was painful:
 
