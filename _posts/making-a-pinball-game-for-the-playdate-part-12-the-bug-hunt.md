@@ -37,7 +37,7 @@ Lua totalbytes=0 GCdebt=0 GCestimate=0 stacksize=0
 
 First time I looked at this I just closed the file and started putting `printf`'s everywhere. But this time I knew that wasn't going to work. So understanding the crash report it is.
 
-# Low hanging fruit
+# The Symbolizer
 
 The first step to understand the crash is to run the `firmware_symbolizer.py` script provided on the SDK. This tool tries to tell you where the crash happen.
 
@@ -105,7 +105,9 @@ arm-none-eabi-addr2line -f -i -p -e ./build/playdate/pdex.elf 0x4021456 0x402145
 ?? ??:0
 ```
 
-Still not really helpful. I have found that the really nasty bugs tend to crash on a random function that that it's not on a helpful region of memory this can be because the function is a Playdate function and we don't have the map for that, or the address is completely wrong. There are some people at the Playdate Discord that can tell what kind of function made the crash just by looking at the address (shout out to scratchminer) but every time I see the `?? ??:0` I know I'm in trouble.
+Still not really helpful. Another tool I have used is the [playdate-symbolize](https://crates.io/crates/playdate-symbolize) crate made in Rust, that tends to give more human readable errors, but sadly in this case it was the same result.
+
+I have found that the really nasty bugs tend to crash on a random function that that it's not on a helpful region of memory this can be because the function is a Playdate function and we don't have the map for that, or the address is completely wrong because the stack got corrupted. There are some people at the Playdate Discord that can tell what kind of function made the crash just by looking at the address (shout out to Scratchminer) but every time I see the `?? ??:0` I know I'm in trouble.
 
 # Memory suspects
 
@@ -165,9 +167,9 @@ This way it you would loose performance on your debug build but that's preferabl
 
 So I was sure it wasn't a memory uninitialized problem this time around.
 
-## Mem fault
+## Crash registers
 
-Back to trying to understand the crashlog.txt
+Back to trying to understand the `crashlog.txt`
 
 ```bash
 --- crash at 2025/12/10 20:35:08---
@@ -274,4 +276,46 @@ pdutil "$PD_DEV" run "Games/${GAME_NAME}.pdx";
 
 This reduce the effort of testing the build on device by a lot. It only works on Linux and you will need to change variables to make it work in your setup. If you want a similar script for Mac, [Nino](https://ninovanhooff.itch.io/) [has this great script](https://github.com/ninovanhooff/wheelsprung/blob/main/scripts/quickinstall.sh).
 
-One thing that sometimes is usefull is to search for **FreeRTOS** resources [like this one](https://www.freertos.org/Debugging-Hard-Faults-On-Cortex-M-Microcontrollers.html), as this is the operating system the Playdate is using.
+Well one thing that this particular interaction does is to trigger the gate open/close mechanic on the ramp. For the close to work as we wanted, we needed to split the gate in 3 different entities each with their own collision, events and actions. I removed some of the event system code and the game stopped crashing when I locked the Playdate but kept crashing after bumping a lot of times with the `Nalgón`.
+
+At this point I made the mistake of stop checking the `crashlog.txt` and assume I knew what was happening, again, I was paranoid. So my theory was that I probably did something bad and used a bad pointer somewhere that was pointing to a random memory address and slowly corrupting the stack.
+
+# Sanitize
+
+If you are programming in C there are a couple of tools that can help you catch a footgun at compile and runtime.
+
+First of all I had already turn on a bunch of warning's this is my normal compiler flags
+
+```bash
+WARN_FLAGS += -Werror -Wall -Wextra -pedantic-errors
+WARN_FLAGS += -Wstrict-prototypes
+WARN_FLAGS += -Wshadow
+WARN_FLAGS += -Wundef
+WARN_FLAGS += -Wdouble-promotion
+WARN_FLAGS += -Wno-unused-function
+WARN_FLAGS += -Wno-unused-but-set-variable
+WARN_FLAGS += -Wno-unused-variable
+WARN_FLAGS += -Wno-unused-parameter
+```
+
+Some of them come from [this great post](https://nullprogram.com/blog/2023/04/29/). I like this because I quite inexperience with C at least when I started working on this game, 2 years ago. But this helps you catch bugs at compile time, the worst bugs though are at runtime, _use after free_, _double free_ etc. For that sanitizers are great! since almost the begging I have been using the following:
+
+```bash
+DEBUG_CFLAGS += -fsanitize-trap -fsanitize=address
+```
+
+Sanitize trap make it so when I'm [asserting](https://nullprogram.com/blog/2022/06/26/) something with this macro, the debugger stops right at the line where the assert failed.
+
+```c
+#define dbg_assert(c) if(!(c)) __builtin_trap()
+```
+
+And the address sanitizer inserts some poison memory to detect memory leaks and out of bounds access.
+
+I use them all the time and have cough a lot of bugs using them, I highly recommend enabling them if you can.
+
+Another common sanitizer is the `-fsanitize=undefined` I didn't have it enable because I didn't really understood what was `undefined behaviour` and what wasn't, and [in some code that worked perfectly fine on both platforms](https://developers.redhat.com/articles/2024/12/11/making-memcpynull-null-0-well-defined#motivation) it triggered the sanitizer. But now, full with paranoia I though, surely I'm doing a scary undefined behavior that is corrupting my memory.
+
+So I enable the sanitizer and slowly read about the undefined behaviors I was doing, fixed all of them, ran my scrip to build the game and... It was still crashing.
+
+One thing that sometimes is useful is to search for **FreeRTOS** resources [like this one](https://www.freertos.org/Debugging-Hard-Faults-On-Cortex-M-Microcontrollers.html), as this is the operating system the Playdate is using.
