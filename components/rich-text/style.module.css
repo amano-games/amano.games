@@ -22,7 +22,12 @@
   margin-bottom: var(--margin-06);
 }
 
-.rich-text-container li {
+.rich-text-container ol {
+  list-style-type: decimal;
+  padding-inline-start: var(--margin-06);
+}
+
+.rich-text-container ul li {
   display: flex;
   flex-flow: row;
 }
@@ -46,6 +51,7 @@
   }
 
   .rich-text-container p,
+  .rich-text-container ol,
   .rich-text-container ul {
     font-size: var(--size-500);
   }

@@ -308,7 +308,7 @@ Some of them come from [this great post](https://nullprogram.com/blog/2023/04/29
 DEBUG_CFLAGS += -fsanitize-trap -fsanitize=address
 ```
 
-`-fsanitize-trap` Make it so when I'm [asserting](https://nullprogram.com/blog/2022/06/26/) something with this macro, the debugger stops right at the line where the assert failed.
+`fsanitize-trap` Make it so when I'm [asserting](https://nullprogram.com/blog/2022/06/26/) something with this macro, the debugger stops right at the line where the assert failed.
 
 ```c
 #define dbg_assert(c) if(!(c)) __builtin_trap()
@@ -321,6 +321,8 @@ I use them all the time and have caught a lot of bugs using them. I highly recom
 Another common sanitizer is the `-fsanitize=undefined` I didn't have it enabled because I didn't really understand what was **undefined behavior** and what wasn't, and [in some code that worked perfectly fine on both platforms](https://developers.redhat.com/articles/2024/12/11/making-memcpynull-null-0-well-defined#motivation), it triggered the sanitizer. But now, full of paranoia, I thought, surely I'm doing a scary, undefined behavior that is corrupting my memory.
 
 So I enabled the sanitizer and slowly read about the undefined behaviors I was doing fixed all of them. Ran my script to build the game, and… It was still crashing.
+
+# Out of options
 
 I will save you the next couple of days, but I did refactor everywhere I suspected something could have gone wrong. Five days later I was still getting the crash. At this point I had stopped paying attention to the crash message, as I had marked it as useless long ago. But JP told me after another test, “Still getting the same message, **Stack Overflow,** on the game task.” I froze. How could I miss this?
 
