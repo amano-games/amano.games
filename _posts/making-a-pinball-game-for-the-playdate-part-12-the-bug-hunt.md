@@ -64,7 +64,6 @@ import click
 @click.argument("elf", type=click.Path(exists=True))
 def symbolize(crashlog, elf):
     cl_contents = open(crashlog, "r").read()
-
     cl_blocks = re.split(r"\n\n", cl_contents)
 
     for block in cl_blocks:
