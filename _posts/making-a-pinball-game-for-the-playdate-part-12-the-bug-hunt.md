@@ -59,7 +59,6 @@ import re
 import subprocess
 import click
 
-
 @click.command()
 @click.argument("crashlog", type=click.Path(exists=True))
 @click.argument("elf", type=click.Path(exists=True))
@@ -72,27 +71,19 @@ def symbolize(crashlog, elf):
         matches = re.search(r"lr:([0-9a-f]{8})\s+pc:([0-9a-f]{8})", block)
 
         if matches:
-            print(block, "\n")
-
             lr = matches.group(1)
             pc = matches.group(2)
-
             lr_num = int(lr, 16)
             pc_num = int(pc, 16)
-
             lr_num = lr_num & 0x0FFFFFFF
             pc_num = pc_num & 0x0FFFFFFF
-
             print("lr: {} -> {}".format(hex(int(lr, 16)), lr_num))
-
             lr = hex(lr_num)
             pc = hex(pc_num)
-
             cmd = f"arm-none-eabi-addr2line -f -i -p -e {elf} {pc} {lr}"
             print(cmd)
             stack = subprocess.check_output(cmd, shell=True).decode("ASCII")
             print(stack)
-
 
 if __name__ == "__main__":
     symbolize()
