@@ -20,7 +20,6 @@ function Seo({
 }) {
   const router = useRouter();
   const canonicalUrl = `${url}/${router.asPath}`;
-  console.log('seo', image);
   return (
     <Head>
       <title>{title}</title>

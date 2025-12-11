@@ -13,7 +13,6 @@ import DevlogComments from 'components/devlog-comments';
 import style from './style.module.css';
 
 function SinglePost({ post, allPosts = [] }) {
-  console.log('cover', post.cover);
   return (
     <LayoutDevlog>
       <Seo
