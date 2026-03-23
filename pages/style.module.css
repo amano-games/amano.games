@@ -22,8 +22,8 @@
 }
 
 .games-section {
-  padding-top: var(--margin-08);
-  padding-bottom: var(--margin-08);
+  padding-top: var(--spacing-08);
+  padding-bottom: var(--spacing-08);
   position: relative;
   overflow-x: hidden;
   display: flex;
@@ -37,15 +37,15 @@
 }
 .home-info {
   font-size: 1.2em;
-  padding-left: var(--margin-06);
-  padding-right: var(--margin-06);
+  padding-left: var(--spacing-06);
+  padding-right: var(--spacing-06);
   text-align: center;
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .logo {
   width: 100%;
   max-width: 300px;
   height: auto;
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }

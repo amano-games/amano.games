@@ -11,21 +11,19 @@
 
   --max-width: 800px;
 
-  --margin-q: calc(var(--margin-01) / 4);
-  --margin-h: calc(var(--margin-01) / 2);
-  --margin-01: 8px;
-  --margin-02: calc(var(--margin-01) * 2);
-  --margin-03: calc(var(--margin-01) * 3);
-  --margin-04: calc(var(--margin-01) * 4);
-  --margin-05: calc(var(--margin-01) * 5);
-  --margin-06: calc(var(--margin-01) * 6);
-  --margin-07: calc(var(--margin-01) * 7);
-  --margin-08: calc(var(--margin-01) * 8);
-  --margin-09: calc(var(--margin-01) * 9);
-  --margin-10: calc(var(--margin-01) * 10);
-  --margin-13: calc(var(--margin-01) * 13);
-
-  --max-width-wraper: 100em;
+  --spacing-q: calc(var(--spacing-01) / 4);
+  --spacing-h: calc(var(--spacing-01) / 2);
+  --spacing-01: 8px;
+  --spacing-02: calc(var(--spacing-01) * 2);
+  --spacing-03: calc(var(--spacing-01) * 3);
+  --spacing-04: calc(var(--spacing-01) * 4);
+  --spacing-05: calc(var(--spacing-01) * 5);
+  --spacing-06: calc(var(--spacing-01) * 6);
+  --spacing-07: calc(var(--spacing-01) * 7);
+  --spacing-08: calc(var(--spacing-01) * 8);
+  --spacing-09: calc(var(--spacing-01) * 9);
+  --spacing-10: calc(var(--spacing-01) * 10);
+  --spacing-13: calc(var(--spacing-01) * 13);
 
   --size-300: 0.75rem;
   --size-400: 1rem;

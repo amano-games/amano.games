@@ -10,12 +10,12 @@
 }
 
 .contact-wrapper {
-  padding-top: var(--margin-10);
-  padding-bottom: var(--margin-10);
+  padding-top: var(--spacing-10);
+  padding-bottom: var(--spacing-10);
 }
 
 .contact-message-wrapper {
-  margin-bottom: var(--margin-04);
+  margin-bottom: var(--spacing-04);
   display: flex;
   flex-flow: column;
   align-items: center;

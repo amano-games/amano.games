@@ -12,7 +12,7 @@
 .post-image {
   width: 100%;
   height: 200px;
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .post-image img {
@@ -21,7 +21,7 @@
   object-fit: cover;
   overflow: hidden;
   margin: auto;
-  border-radius: var(--margin-02);
+  border-radius: var(--spacing-02);
 }
 
 .post-title {
@@ -30,11 +30,11 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .post-header {
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .post-excerpt {
@@ -43,18 +43,18 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .post-footer {
   color: var(--gray);
   font-size: var(--size-500);
   border-top: 2px dashed var(--border-color);
-  padding-top: var(--margin-02);
+  padding-top: var(--spacing-02);
 }
 
 .post-footer > *:not(:last-child) {
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .post-info {
@@ -62,7 +62,7 @@
   flex-flow: row;
   align-items: center;
   justify-content: flex-start;
-  gap: var(--margin-01);
+  gap: var(--spacing-01);
 }
 
 .post-author {
@@ -79,7 +79,7 @@
 
 .post-tags span {
   white-space: nowrap;
-  margin-right: var(--margin-01);
+  margin-right: var(--spacing-01);
 }
 
 @supports (aspect-ratio: 1) {

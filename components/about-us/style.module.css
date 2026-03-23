@@ -1,7 +1,7 @@
 .about-us {
   width: 100%;
-  padding-top: var(--margin-10);
-  padding-bottom: var(--margin-10);
+  padding-top: var(--spacing-10);
+  padding-bottom: var(--spacing-10);
   background: var(--yellow);
   overflow: hidden;
   position: relative;
@@ -17,12 +17,12 @@
 
 .about-us-text {
   margin: auto;
-  margin-bottom: var(--margin-06);
+  margin-bottom: var(--spacing-06);
   text-align: center;
 }
 
 .about-us-header {
-  margin-bottom: var(--margin-06);
+  margin-bottom: var(--spacing-06);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,5 +30,5 @@
 }
 
 .about-us-header > *:not(:last-child) {
-  margin-right: var(--margin-03);
+  margin-right: var(--spacing-03);
 }

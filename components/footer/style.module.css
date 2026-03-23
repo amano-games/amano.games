@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  padding-top: var(--margin-05);
+  padding-top: var(--spacing-05);
   min-height: 50vh;
 }
 
@@ -19,7 +19,7 @@
   width: 40%;
   max-width: 500px;
   align-self: flex-end;
-  margin-right: var(--margin-02);
+  margin-right: var(--spacing-02);
 }
 
 .footer-info {
@@ -31,7 +31,7 @@
 }
 
 .footer-info > *:last-child {
-  margin-top: var(--margin-01);
+  margin-top: var(--spacing-01);
 }
 
 @media screen and (max-width: 900px) {

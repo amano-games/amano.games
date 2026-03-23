@@ -11,7 +11,7 @@
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
-  gap: var(--margin-02);
+  gap: var(--spacing-02);
 }
 
 .header-navigation {

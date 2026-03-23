@@ -1,6 +1,6 @@
 .code-wrapper {
-  border-radius: var(--margin-01);
-  padding: var(--margin-01) var(--margin-02);
+  border-radius: var(--spacing-01);
+  padding: var(--spacing-01) var(--spacing-02);
 }
 
 .spoiler summary {

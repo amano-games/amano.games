@@ -1,18 +1,18 @@
 .presskit-wrapper {
   width: 100%;
-  max-width: max-content;
+  max-width: var(--max-width);
   margin: auto;
   display: flex;
   flex-flow: column;
-  gap: var(--margin-04);
-  padding-top: var(--margin-04);
-  padding-bottom: var(--margin-04);
+  gap: var(--spacing-04);
+  padding-top: var(--spacing-04);
+  padding-bottom: var(--spacing-04);
 }
 
 .presskit-header {
   background: var(--yellow);
-  padding-top: var(--margin-04);
-  padding-bottom: var(--margin-04);
+  padding-top: var(--spacing-04);
+  padding-bottom: var(--spacing-04);
 }
 
 .presskit-header-wrapper {
@@ -23,7 +23,7 @@
   flex-flow: row;
   align-items: center;
   justify-content: flex-start;
-  gap: var(--margin-02);
+  gap: var(--spacing-02);
 }
 
 .presskit-cover {

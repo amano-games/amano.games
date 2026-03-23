@@ -1,11 +1,11 @@
 .presskit-info {
   display: flex;
   flex-flow: column;
-  gap: var(--margin-02);
+  gap: var(--spacing-02);
 }
 
 .presskit-info dt:not(:first-of-type) {
-  margin-top: var(--margin-02);
+  margin-top: var(--spacing-02);
 }
 
 .presskit-info dd a {
@@ -15,11 +15,11 @@
 .presskit-assets {
   display: flex;
   flex-flow: column;
-  gap: var(--margin-02);
+  gap: var(--spacing-02);
 }
 
 .presskit-assets dt:not(:first-of-type) {
-  margin-top: var(--margin-02);
+  margin-top: var(--spacing-02);
 }
 
 .presskit-assets dd a {

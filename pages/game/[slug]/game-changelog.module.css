@@ -22,7 +22,7 @@
 }
 
 .game-changelog-header-wrapper {
-  padding: var(--margin-04) 0;
+  padding: var(--spacing-04) 0;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -30,18 +30,18 @@
 }
 
 .game-changelog-content {
-  padding: var(--margin-04) 1.5rem;
+  padding: var(--spacing-04) 1.5rem;
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
-  gap: var(--margin-04);
+  gap: var(--spacing-04);
 }
 
 .game-changelog-cover {
   width: 100%;
   max-width: 800px;
-  border-radius: var(--margin-02);
+  border-radius: var(--spacing-02);
 }
 
 .game-changelog-text {

@@ -1,8 +1,8 @@
 .box {
   --border-color: var(--black);
 
-  padding: var(--margin-02);
-  border-radius: var(--margin-03);
+  padding: var(--spacing-02);
+  border-radius: var(--spacing-03);
   border: 2px dashed var(--border-color);
 }
 

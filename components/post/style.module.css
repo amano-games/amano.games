@@ -1,5 +1,5 @@
 .post-header {
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 .post-title {
   width: 100%;
@@ -11,7 +11,7 @@
 }
 
 .post-content {
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .post-content a {
@@ -24,7 +24,7 @@
 }
 
 .post-footer > *:not(:last-child) {
-  margin-bottom: var(--margin-02);
+  margin-bottom: var(--spacing-02);
 }
 
 .post-info {
@@ -32,7 +32,7 @@
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
-  gap: var(--margin-01);
+  gap: var(--spacing-01);
 }
 
 .post-tags {
@@ -43,7 +43,7 @@
   flex-flow: row wrap;
   align-items: center;
   justify-content: flex-start;
-  gap: var(--margin-01);
+  gap: var(--spacing-01);
 }
 
 @media screen and (max-width: 900px) {

@@ -1,7 +1,7 @@
 .devlog-keep-reading-wrapper {
   display: flex;
   flex-flow: column;
-  gap: var(--margin-02);
+  gap: var(--spacing-02);
 }
 
 .devlog-keep-reading {
@@ -16,7 +16,7 @@
 .devlog-keep-reading-header {
   display: flex;
   flex-flow: row;
-  gap: var(--margin-01);
+  gap: var(--spacing-01);
   align-items: center;
   justify-content: center;
 }
@@ -24,7 +24,7 @@
 .devlog-keep-reading-title {
   max-width: none;
   color: var(--yellow);
-  margin-bottom: var(--margin-01);
+  margin-bottom: var(--spacing-01);
 }
 
 .devlog-keep-reading-archive {
@@ -36,8 +36,8 @@
   text-align: center;
   color: var(--black);
   background-color: var(--yellow);
-  border-radius: var(--margin-04);
-  padding: var(--margin-01) var(--margin-02);
+  border-radius: var(--spacing-04);
+  padding: var(--spacing-01) var(--spacing-02);
   transition: background-color 0.2s ease;
 }
 
@@ -47,7 +47,7 @@
 
 .devlog-posts-grid {
   display: grid;
-  grid-gap: var(--margin-04);
+  grid-gap: var(--spacing-04);
   grid-template-columns: repeat(auto-fill, minmax(415px, 1fr));
 }
 

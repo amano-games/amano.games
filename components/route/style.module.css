@@ -10,8 +10,8 @@
   display: block;
   width: 100%;
   text-align: center;
-  padding-right: var(--margin-02);
-  padding-left: var(--margin-02);
+  padding-right: var(--spacing-02);
+  padding-left: var(--spacing-02);
 }
 
 .route::marker {
@@ -21,7 +21,7 @@
 .route::before {
   display: flex;
   content: '';
-  height: var(--margin-01);
+  height: var(--spacing-01);
   width: 100%;
   transform: scaleY(0);
   transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -43,13 +43,13 @@
 .route:hover::before,
 .route[data-active='true']::before,
 .route[data-in-view='true']::before {
-  height: var(--margin-02);
+  height: var(--spacing-02);
   transform: scaleY(1);
 }
 
 @media screen and (max-width: 450px) {
   .route > span {
-    padding-right: var(--margin-h);
-    padding-left: var(--margin-h);
+    padding-right: var(--spacing-h);
+    padding-left: var(--spacing-h);
   }
 }

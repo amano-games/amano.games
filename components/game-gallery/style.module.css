@@ -3,7 +3,7 @@
 
 .game-gallery-header {
   color: var(--yellow);
-  margin-bottom: var(--margin-06);
+  margin-bottom: var(--spacing-06);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -11,7 +11,7 @@
 }
 
 .game-gallery-header > *:not(:last-child) {
-  margin-right: var(--margin-03);
+  margin-right: var(--spacing-03);
 }
 
 .game-gallery-fire {
@@ -22,7 +22,7 @@
 .game-gallery-grid {
   width: 100%;
   display: grid;
-  grid-gap: var(--margin-04);
+  grid-gap: var(--spacing-04);
   grid-template-columns: repeat(auto-fill, minmax(415px, 1fr));
 }
 

@@ -5,12 +5,12 @@
 
 .add-eye {
   position: fixed;
-  bottom: var(--margin-02);
-  right: var(--margin-02);
+  bottom: var(--spacing-02);
+  right: var(--spacing-02);
   z-index: 100;
   display: flex;
   flex-flow: row;
-  gap: var(--margin-02);
+  gap: var(--spacing-02);
 }
 
 .add-eye a,
@@ -19,8 +19,8 @@
   background: var(--yellow);
   font: sans-serif;
   border: 2px solid var(--black);
-  padding: var(--margin-01) var(--margin-02);
-  border-radius: var(--margin-02);
+  padding: var(--spacing-01) var(--spacing-02);
+  border-radius: var(--spacing-02);
   cursor: pointer;
   transition: all 0.2s ease;
   text-transform: uppercase;
