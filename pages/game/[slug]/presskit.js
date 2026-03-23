@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getAboutUs, getGames } from 'utils/notion';
 import { presskitBySlugGet, presskitsAllGet } from 'lib/api';
 import { getImageMeta } from 'lib/img';
+import { url } from 'lib/site';
 
 import Seo from 'components/seo';
 import Header from 'components/header';
@@ -15,10 +16,27 @@ function PresskitPage({ presskit, game, aboutUs }) {
   return (
     <>
       <Seo />
-      <Header />
+      <Header
+        image={presskit.cover ? presskit.cover.url : `${url}/preview.png`}
+      />
+      <header className={styles['presskit-header']}>
+        <div className={`${styles['presskit-header-wrapper']} wrapper`}>
+          {presskit.cover ? (
+            <img
+              className={`${styles['presskit-cover']}`}
+              src={presskit.cover.url}
+              alt={game.name}
+            />
+          ) : null}
+        </div>
+      </header>
       <div className={`${styles['presskit-wrapper']} wrapper`}>
         <PresskitInfo {...presskit} title={game.name} aboutDev={aboutUs[0]} />
-        <PresskitAssets videos={presskit.videos} images={presskit.images} />
+        <PresskitAssets
+          videos={presskit.videos}
+          images={presskit.images}
+          bundle={presskit.assets_bundle}
+        />
       </div>
       <Footer showSocial />
     </>
@@ -28,6 +46,9 @@ function PresskitPage({ presskit, game, aboutUs }) {
 PresskitPage.propTypes = {
   aboutUs: PropTypes.arrayOf(PropTypes.string).isRequired,
   presskit: PropTypes.shape({
+    cover: PropTypes.shape({
+      url: PropTypes.string,
+    }),
     genre: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     platforms: PropTypes.arrayOf(
@@ -50,6 +71,7 @@ PresskitPage.propTypes = {
     bsky: PropTypes.string,
     twitter: PropTypes.string,
     youtube: PropTypes.string,
+    assets_bundle: PropTypes.string,
     videos: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -62,6 +84,7 @@ PresskitPage.propTypes = {
         items: PropTypes.arrayOf(
           PropTypes.shape({
             name: PropTypes.string.isRequired,
+            collpase: PropTypes.boolean,
             url: PropTypes.string.isRequired,
           })
         ),
@@ -114,6 +137,7 @@ export async function getStaticProps(context) {
       'images',
       'videos',
       'cover',
+      'assets_bundle',
     ]);
 
     if (presskit.images) {

@@ -1,5 +1,6 @@
 ---
-publish: true
+cover:
+  url: https://media.amano.games/presskit/devils-on-the-moon-pinball/logo.png
 genre: Pinball
 platforms:
   - name: Playdate
@@ -9,25 +10,53 @@ platforms:
 releases:
   - name: Playdate
     date: 2026/03/26
+    url: https://play.date/games/devils-on-the-moon-pinball/
   - name: Steam
     date: 2027
+    url: https://store.steampowered.com/app/4502910/Devils_on_the_Moon_Pinball/
 playersNum: 1
 tagline: An esoteric pinball game
 website: https://play.date/games/devils-on-the-moon-pinball/
-cover:
-  url: https://media.amano.games/devlog/about-amano-collision-conundrum/11-about-amano.gif
+assets_bundle: https://media.amano.games/presskit/devils-on-the-moon-pinball/devils-on-the-moon-pinblal-presskit.zip
 videos:
-  - name: Trailer (00:00:41)
-    youtube: 0G-2YyyXJKA
 images:
   - title: Logos
     items:
+      - name: Logo, transparent background
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/logo.png
       - name: Amano logo
         url: https://media.amano.games/presskit/amano/amano-logo.svg
       - name: Amano logo, hand
         url: https://media.amano.games/presskit/amano/amano-logo-hand.svg
       - name: Amano logo, text
         url: https://media.amano.games/presskit/amano/amano-logo-text.svg
+  - title: Key art
+    items:
+      - name: Key art, Color
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/key-art.png
+      - name: Key art, Black and white
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/Device%20Key%20Art.png
+  - title: Misc
+    items:
+      - name: Board layout
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/board-art.png
+  - title: Animated GIFs
+    items:
+      - name: Gameplay 1
+        collapse: true
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03:09:41-b.gif
+      - name: Gameplay 2
+        collapse: true
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03:09:41.gif
+      - name: Gameplay 3
+        collapse: true
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03:15:52.gif
+      - name: Gameplay 4
+        collapse: true
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03:21:49.gif
+      - name: Gameplay 5
+        collapse: true
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03:29:51.gif
 ---
 
 Themed on the astrologically Occult, Devils on the Moon is a Single board VG-Pinball Heavily inspired by all the great Pinball games of the past and some modern ones as well.

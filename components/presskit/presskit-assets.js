@@ -16,7 +16,7 @@ function formatBytes(bytes, decimals = 1) {
   return `${value.toFixed(decimals)} ${sizes[i]}`;
 }
 
-function PresskitAssets({ className, videos = [], images = [] }) {
+function PresskitAssets({ className, videos = [], images = [], bundle }) {
   const customClassName = classNames(
     styles['presskit-assets'],
     'presskit-assets',
@@ -29,6 +29,14 @@ function PresskitAssets({ className, videos = [], images = [] }) {
       <header>
         <h1>Assets</h1>
       </header>
+      {bundle ? (
+        <dl>
+          <dt>Download all</dt>
+          <dd>
+            <a href={bundle}>{bundle}</a>
+          </dd>
+        </dl>
+      ) : null}
 
       {videos.length > 0 ? (
         <>
@@ -65,21 +73,56 @@ function PresskitAssets({ className, videos = [], images = [] }) {
                   {section.items.map((item) => {
                     return (
                       <Fragment key={item.url}>
-                        <dt>
-                          <a href={item.url}>{item.name}</a>
-                        </dt>
-                        <dd>
-                          <img loading="lazy" src={item.url} alt={item.name} />
-                        </dd>
-                        <dd>
-                          {formatBytes(item.bytes)}{' '}
-                          <span className={styles['img-format']}>
-                            {item.format}
-                          </span>
-                        </dd>
-                        <dd>
-                          {item.width} x {item.height}
-                        </dd>
+                        {!item.collapse ? (
+                          <>
+                            <dt>
+                              <a href={item.url}>{item.name}</a>
+                            </dt>
+                            <dd>
+                              <img
+                                loading="lazy"
+                                src={item.url}
+                                alt={item.name}
+                              />
+                            </dd>
+                            <dd>
+                              {formatBytes(item.bytes)}{' '}
+                              <span className={styles['img-format']}>
+                                {item.format}
+                              </span>
+                            </dd>
+                            <dd>
+                              {item.width} x {item.height}
+                            </dd>
+                          </>
+                        ) : (
+                          <dd>
+                            <details>
+                              <summary>
+                                {item.name} (
+                                <a href={item.url}>
+                                  <span>
+                                    {item.width} x {item.height}{' '}
+                                  </span>
+                                  <span>{formatBytes(item.bytes)} </span>
+                                  <span className={styles['img-format']}>
+                                    {item.format}
+                                  </span>
+                                </a>
+                                )
+                              </summary>
+                              <figure>
+                                <a href={item.url}>
+                                  <img
+                                    loading="lazy"
+                                    src={item.url}
+                                    alt={item.name}
+                                  />
+                                </a>
+                              </figure>
+                            </details>
+                          </dd>
+                        )}
                       </Fragment>
                     );
                   })}
@@ -97,6 +140,7 @@ PresskitAssets.propTypes = {
   className: PropTypes.string,
   videos: PropTypes.arrayOf(PropTypes.shape({})),
   images: PropTypes.arrayOf(PropTypes.shape({})),
+  bundle: PropTypes.string,
 };
 
 export default PresskitAssets;

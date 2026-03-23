@@ -137,6 +137,20 @@ svg.catalog-badge {
   position: relative;
 }
 
+.game-actions-links .game-presskit {
+  white-space: nowrap;
+  background: var(--white);
+  color: var(--black);
+  padding: var(--margin-q) var(--margin-02);
+  border-radius: var(--margin-01);
+  text-decoration: none;
+}
+
+.game-actions-links .game-presskit:hover {
+  background: var(--yellow);
+  color: var(--black);
+}
+
 .game-call-to-action::after {
   content: '';
   position: absolute;

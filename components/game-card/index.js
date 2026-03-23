@@ -32,6 +32,7 @@ function GameCard({
   description,
   trailer = null,
   itch = null,
+  presskit = null,
   newgrounds = null,
   lexaloffle = null,
   steam = null,
@@ -128,6 +129,11 @@ function GameCard({
                       </a>
                     );
                   })}
+                  {presskit ? (
+                    <a className={style['game-presskit']} href={presskit}>
+                      Presskit
+                    </a>
+                  ) : null}
                 </div>
               </div>
             ) : null}
@@ -151,6 +157,7 @@ GameCard.propTypes = {
   className: PropTypes.string,
   trailer: PropTypes.string,
   itch: PropTypes.string,
+  presskit: PropTypes.string,
   wishlist: PropTypes.string,
   newgrounds: PropTypes.string,
   lexaloffle: PropTypes.string,
