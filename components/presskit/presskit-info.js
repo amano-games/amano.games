@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import Markdown from 'components/markdown';
+import { parseMastodonHandle } from 'lib/mastodon';
 
 import {
   bsky as defaultBsky,
   twitter as defaultTwitter,
   youtube as defaultYoutube,
+  mastodon as defaultMastodon,
 } from 'lib/site';
 
 import styles from './styles.module.css';
@@ -24,6 +26,7 @@ function PresskitInfo({
   legalLine,
   website,
   aboutDev,
+  mastodon = defaultMastodon,
   bsky = defaultBsky,
   twitter = defaultTwitter,
   youtube = defaultYoutube,
@@ -34,6 +37,7 @@ function PresskitInfo({
     '-inverted',
     className
   );
+  const mastodonData = parseMastodonHandle(mastodon);
 
   return (
     <section className={customClassName}>
@@ -113,6 +117,15 @@ function PresskitInfo({
           <a href={`https://bsky.app/profile/${bsky}`}>@{bsky}</a>
         </dd>
 
+        <dt>Mastodon</dt>
+        <dd>
+          <a
+            href={`https://${mastodonData.instance}/@${mastodonData.username}`}
+          >
+            {mastodon}
+          </a>
+        </dd>
+
         <dt>Twitter</dt>
         <dd>
           <a href={`https://twitter.com/${twitter}`}>@{twitter}</a>
@@ -150,6 +163,7 @@ PresskitInfo.propTypes = {
   tagline: PropTypes.string.isRequired,
   legalLine: PropTypes.string,
   website: PropTypes.string,
+  mastodon: PropTypes.string,
   bsky: PropTypes.string,
   twitter: PropTypes.string,
   youtube: PropTypes.string,

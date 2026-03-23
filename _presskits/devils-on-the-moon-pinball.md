@@ -54,4 +54,4 @@ images:
         url: https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03:29:51.gif
 ---
 
-Themed on the astrologically Occult, Devils on the Moon is a Single board VG-Pinball Heavily inspired by all the great Pinball games of the past and some modern ones as well.
+Devils on the Moon is an occult themed Pinball inspired by classic handhelds like "Devil’s crush” “Revenge of the Gator" and "Pokemon Pinball". It features three distinct areas with their own objectives, five bonus mini-tables, and a creature collecting mechanic. It has so many little interactions and animations to discover. We think it’s super fun to play, even more fun to master and we can’t wait for you to try it.
