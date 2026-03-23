@@ -35,6 +35,8 @@ assets:
     items:
       - name: Instruction Booklet
         url: https://media.amano.games/presskit/devils-on-the-moon-pinball/DotM-Booklet.pdf
+      - name: Instruction Booklet, Scan
+        url: https://media.amano.games/presskit/devils-on-the-moon-pinball/Dotm-Booklet-Scan.pdf
       - name: Board layout
         url: https://media.amano.games/presskit/devils-on-the-moon-pinball/board-art.png
   - title: Animated GIFs
