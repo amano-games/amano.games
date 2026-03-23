@@ -5,15 +5,10 @@ genre: Pinball
 platforms:
   - name: Playdate
     url: https://play.date/games/devils-on-the-moon-pinball/
-  - name: Steam
-    url: https://store.steampowered.com/app/4502910/Devils_on_the_Moon_Pinball/
 releases:
   - name: Playdate
     date: 2026/03/26
     url: https://play.date/games/devils-on-the-moon-pinball/
-  - name: Steam
-    date: 2027
-    url: https://store.steampowered.com/app/4502910/Devils_on_the_Moon_Pinball/
 playersNum: 1
 tagline: An esoteric pinball game
 website: https://play.date/games/devils-on-the-moon-pinball/
