@@ -34,7 +34,7 @@ function PresskitPage({ presskit, game, aboutUs }) {
         <PresskitInfo {...presskit} title={game.name} aboutDev={aboutUs[0]} />
         <PresskitAssets
           videos={presskit.videos}
-          images={presskit.images}
+          assets={presskit.assets}
           bundle={presskit.assets_bundle}
         />
       </div>
@@ -78,7 +78,7 @@ PresskitPage.propTypes = {
         youtube: PropTypes.string,
       })
     ),
-    images: PropTypes.arrayOf(
+    assets: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
         items: PropTypes.arrayOf(
@@ -134,14 +134,14 @@ export async function getStaticProps(context) {
       'playersNum',
       'tagline',
       'website',
-      'images',
+      'assets',
       'videos',
       'cover',
       'assets_bundle',
     ]);
 
-    if (presskit.images) {
-      const groups = presskit.images;
+    if (presskit.assets) {
+      const groups = presskit.assets;
       const enrichedGroups = await Promise.all(
         groups.map(async (group) => {
           const enrichedItems = await Promise.all(
@@ -153,9 +153,10 @@ export async function getStaticProps(context) {
                   ...meta,
                 };
               } catch (err) {
+                console.error(err);
                 return {
                   ...img,
-                  error: err,
+                  error: err.message,
                 };
               }
             })
@@ -168,7 +169,7 @@ export async function getStaticProps(context) {
         })
       );
 
-      presskit.images = enrichedGroups;
+      presskit.assets = enrichedGroups;
     }
 
     return {

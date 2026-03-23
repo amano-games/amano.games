@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Fragment } from 'react';
 
+import { isFormatImage } from 'lib/img';
 import styles from './styles.module.css';
 
 function formatBytes(bytes, decimals = 1) {
@@ -16,7 +17,7 @@ function formatBytes(bytes, decimals = 1) {
   return `${value.toFixed(decimals)} ${sizes[i]}`;
 }
 
-function PresskitAssets({ className, videos = [], images = [], bundle }) {
+function PresskitAssets({ className, videos = [], assets = [], bundle }) {
   const customClassName = classNames(
     styles['presskit-assets'],
     'presskit-assets',
@@ -63,14 +64,15 @@ function PresskitAssets({ className, videos = [], images = [], bundle }) {
           })}
         </>
       ) : null}
-      {images.length > 0 ? (
+      {assets.length > 0 ? (
         <>
-          {images.map((section) => {
+          {assets.map((section) => {
             return (
               <section key={section.title}>
                 <h2>{section.title}</h2>
                 <dl>
                   {section.items.map((item) => {
+                    const isImg = isFormatImage(item.format);
                     return (
                       <Fragment key={item.url}>
                         {!item.collapse ? (
@@ -78,22 +80,26 @@ function PresskitAssets({ className, videos = [], images = [], bundle }) {
                             <dt>
                               <a href={item.url}>{item.name}</a>
                             </dt>
-                            <dd>
-                              <img
-                                loading="lazy"
-                                src={item.url}
-                                alt={item.name}
-                              />
-                            </dd>
+                            {isImg ? (
+                              <dd>
+                                <img
+                                  loading="lazy"
+                                  src={item.url}
+                                  alt={item.name}
+                                />
+                              </dd>
+                            ) : null}
                             <dd>
                               {formatBytes(item.bytes)}{' '}
-                              <span className={styles['img-format']}>
+                              <span className={styles['asset-format']}>
                                 {item.format}
                               </span>
                             </dd>
-                            <dd>
-                              {item.width} x {item.height}
-                            </dd>
+                            {isImg ? (
+                              <dd>
+                                {item.width} x {item.height}
+                              </dd>
+                            ) : null}
                           </>
                         ) : (
                           <dd>
@@ -105,7 +111,7 @@ function PresskitAssets({ className, videos = [], images = [], bundle }) {
                                     {item.width} x {item.height}{' '}
                                   </span>
                                   <span>{formatBytes(item.bytes)} </span>
-                                  <span className={styles['img-format']}>
+                                  <span className={styles['asset-format']}>
                                     {item.format}
                                   </span>
                                 </a>
@@ -113,11 +119,15 @@ function PresskitAssets({ className, videos = [], images = [], bundle }) {
                               </summary>
                               <figure>
                                 <a href={item.url}>
-                                  <img
-                                    loading="lazy"
-                                    src={item.url}
-                                    alt={item.name}
-                                  />
+                                  {isImg ? (
+                                    <img
+                                      loading="lazy"
+                                      src={item.url}
+                                      alt={item.name}
+                                    />
+                                  ) : (
+                                    <span>{item.url}</span>
+                                  )}
                                 </a>
                               </figure>
                             </details>
@@ -139,7 +149,7 @@ function PresskitAssets({ className, videos = [], images = [], bundle }) {
 PresskitAssets.propTypes = {
   className: PropTypes.string,
   videos: PropTypes.arrayOf(PropTypes.shape({})),
-  images: PropTypes.arrayOf(PropTypes.shape({})),
+  assets: PropTypes.arrayOf(PropTypes.shape({})),
   bundle: PropTypes.string,
 };
 
