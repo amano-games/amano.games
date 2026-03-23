@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { getAllPosts } from 'lib/api';
+import { postsAllGet } from 'lib/api';
 import { generateRssFeed } from 'lib/rss';
 import { url } from 'lib/site';
 
@@ -32,7 +32,7 @@ Devlog.propTypes = {
 };
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts([
+  const allPosts = postsAllGet([
     'publish',
     'title',
     'date',

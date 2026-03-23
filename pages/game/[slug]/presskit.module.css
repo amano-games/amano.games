@@ -1,0 +1,10 @@
+.presskit-wrapper {
+  width: 100%;
+  max-width: max-content;
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-04);
+  padding-top: var(--margin-04);
+  padding-bottom: var(--margin-04);
+}

@@ -1,7 +1,7 @@
 /* eslint filenames/match-exported: 0 */
 import PropTypes from 'prop-types';
 
-import { getAllPosts, getPostBySlug } from 'lib/api';
+import { postsAllGet, postBySlugGet } from 'lib/api';
 import { url } from 'lib/site';
 
 import Seo from 'components/seo';
@@ -58,7 +58,7 @@ SinglePost.propTypes = {
 
 export async function getStaticProps(context) {
   try {
-    const allPosts = getAllPosts([
+    const allPosts = postsAllGet([
       'publish',
       'title',
       'date',
@@ -68,7 +68,7 @@ export async function getStaticProps(context) {
       'tags',
       'cover',
     ]);
-    const post = getPostBySlug(context.params.slug, [
+    const post = postBySlugGet(context.params.slug, [
       'slug',
       'title',
       'date',
@@ -94,7 +94,7 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = getAllPosts(['slug']).map(({ slug }) => ({
+  const paths = postsAllGet(['slug']).map(({ slug }) => ({
     params: { slug },
   }));
 

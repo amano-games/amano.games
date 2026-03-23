@@ -116,6 +116,23 @@ ol:not([class]) ol {
   padding-left: 1em;
 }
 
+dl {
+  display: flex;
+  flex-flow: column;
+  gap: var(--margin-h);
+  font-size: 1.3em;
+  line-height: 1.3em;
+}
+
+dt {
+  font-weight: bold;
+  font-family: var(--font-serif);
+}
+
+dd {
+  margin-left: var(--margin-02);
+}
+
 time {
   font-feature-settings: 'tnum';
   font-variant-numeric: tabular-nums;

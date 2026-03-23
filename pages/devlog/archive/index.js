@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import { getAllPosts } from 'lib/api';
+import { postsAllGet } from 'lib/api';
 import { url } from 'lib/site';
 
 import { LayoutDevlog } from 'components/layouts';
@@ -97,7 +97,7 @@ Archive.propTypes = {
 };
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts([
+  const allPosts = postsAllGet([
     'publish',
     'title',
     'date',

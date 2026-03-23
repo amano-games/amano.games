@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { bsky, email, itch } from 'lib/site';
+import { bsky, email, itch, mastodonHandle, mastodonInstance } from 'lib/site';
 
 import Itch from 'svg/itch.svg';
 import Mail from 'svg/mail.svg';
@@ -13,7 +13,7 @@ import style from './style.module.css';
 const social = [
   {
     label: 'fediverse',
-    href: `https://mastodon.gamedev.place/@amano`,
+    href: `https://${mastodonInstance}/@${mastodonHandle}`,
     icon: <Fediverse />,
   },
   {
