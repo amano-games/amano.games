@@ -42,47 +42,49 @@ function PresskitAssets({ className, videos = [], assets = [], bundle }) {
       {videos.length > 0 ? (
         <>
           <h2>Videos</h2>
-          {videos.map((item) => {
-            return (
-              <Fragment key={item.name}>
-                <dt>{item.name}</dt>
-                {item.youtube ? (
-                  <dd className={styles['yt-iframe-wrapper']}>
-                    <iframe
-                      className={styles['yt-iframe']}
-                      title={item.name}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      src={`https://www.youtube.com/embed/${item.youtube}`}
-                      referrerpolicy="strict-origin-when-cross-origin"
-                      frameborder="0"
-                      allowfullscreen
-                    />
-                  </dd>
-                ) : null}
-                {item.downloads?.length > 0 ? (
-                  <dd>
-                    <dl>
-                      Download:
-                      <ul>
-                        {item.downloads?.map((download) => {
-                          return (
-                            <li key={download.url}>
-                              <a href={download.url}>{download.name}</a> (
-                              {formatBytes(download.bytes)}{' '}
-                              <span className={styles['asset-format']}>
-                                {download.format}
-                              </span>
-                              )
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </dl>
-                  </dd>
-                ) : null}
-              </Fragment>
-            );
-          })}
+          <dl>
+            {videos.map((item) => {
+              return (
+                <Fragment key={item.name}>
+                  <dt>{item.name}</dt>
+                  {item.youtube ? (
+                    <dd className={styles['yt-iframe-wrapper']}>
+                      <iframe
+                        className={styles['yt-iframe']}
+                        title={item.name}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        src={`https://www.youtube.com/embed/${item.youtube}`}
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        frameborder="0"
+                        allowfullscreen
+                      />
+                    </dd>
+                  ) : null}
+                  {item.downloads?.length > 0 ? (
+                    <>
+                      <dt>Download:</dt>
+                      <dd>
+                        <ul>
+                          {item.downloads?.map((download) => {
+                            return (
+                              <li key={download.url}>
+                                <a href={download.url}>{download.name}</a> (
+                                {formatBytes(download.bytes)}{' '}
+                                <span className={styles['asset-format']}>
+                                  {download.format}
+                                </span>
+                                )
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </dd>
+                    </>
+                  ) : null}
+                </Fragment>
+              );
+            })}
+          </dl>
         </>
       ) : null}
       {assets.length > 0 ? (
@@ -127,6 +129,11 @@ function PresskitAssets({ className, videos = [], assets = [], bundle }) {
                               <dd>
                                 <img
                                   loading="lazy"
+                                  style={
+                                    item.style_width
+                                      ? { maxWidth: item.style_width }
+                                      : null
+                                  }
                                   src={item.url}
                                   alt={item.name}
                                 />
@@ -165,6 +172,11 @@ function PresskitAssets({ className, videos = [], assets = [], bundle }) {
                                   {isImg ? (
                                     <img
                                       loading="lazy"
+                                      style={
+                                        item.style_width
+                                          ? { maxWidth: item.style_width }
+                                          : null
+                                      }
                                       src={item.url}
                                       alt={item.name}
                                     />

@@ -120,13 +120,14 @@ dl {
   display: flex;
   flex-flow: column;
   gap: var(--spacing-h);
+  font-family: var(--font-serif);
   font-size: 1.3em;
   line-height: 1.3em;
 }
 
 dt {
   font-weight: bold;
-  font-family: var(--font-serif);
+  color: var(--yellow);
 }
 
 dd {
