@@ -14,6 +14,8 @@ tagline: An esoteric pinball game
 website: https://play.date/games/devils-on-the-moon-pinball/
 assets_bundle: https://media.amano.games/presskit/devils-on-the-moon-pinball/devils-on-the-moon-pinblal-presskit.zip
 videos:
+  - name: Release Trailer
+    youtube: 0O2rZUHNEdI
 assets:
   - title: Logos
     items:
