@@ -24,6 +24,7 @@ function GameGallery({ games, ...rest }) {
         <div className={style['game-gallery-grid']}>
           {games
             .filter((game) => game.publish === true)
+            .sort((a, b) => Number(b.featured) - Number(a.featured))
             .map((game) => {
               return <GameCard {...game} key={game.name} />;
             })}
