@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Fragment } from 'react';
 
-import { isFormatImage } from 'lib/img';
+import { isFormatImage } from 'lib/assets';
 import styles from './styles.module.css';
 
 function formatBytes(bytes, decimals = 1) {
@@ -59,6 +59,27 @@ function PresskitAssets({ className, videos = [], assets = [], bundle }) {
                     />
                   </dd>
                 ) : null}
+                {item.downloads?.length > 0 ? (
+                  <dd>
+                    <dl>
+                      Download:
+                      <ul>
+                        {item.downloads?.map((download) => {
+                          return (
+                            <li key={download.url}>
+                              <a href={download.url}>{download.name}</a> (
+                              {formatBytes(download.bytes)}{' '}
+                              <span className={styles['asset-format']}>
+                                {download.format}
+                              </span>
+                              )
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </dl>
+                  </dd>
+                ) : null}
               </Fragment>
             );
           })}
@@ -67,6 +88,28 @@ function PresskitAssets({ className, videos = [], assets = [], bundle }) {
       {assets.length > 0 ? (
         <>
           {assets.map((section) => {
+            if (section.grid) {
+              return (
+                <section key={section.title}>
+                  <h2>{section.title}</h2>
+                  <ul className={styles['presskit-assets-grid']}>
+                    {section.items.map((item) => {
+                      return (
+                        <li key={item.url}>
+                          <a href={item.url}>
+                            <img
+                              loading="lazy"
+                              src={item.url}
+                              alt={item.name}
+                            />
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              );
+            }
             return (
               <section key={section.title}>
                 <h2>{section.title}</h2>

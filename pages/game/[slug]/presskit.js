@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { getAboutUs, getGames } from 'utils/notion';
 import { presskitBySlugGet, presskitsAllGet } from 'lib/api';
-import { getImageMeta } from 'lib/img';
+import { getImageMeta, getAssetMeta } from 'lib/assets';
 import { url } from 'lib/site';
 
 import Seo from 'components/seo';
@@ -76,11 +76,18 @@ PresskitPage.propTypes = {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         youtube: PropTypes.string,
+        downloads: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            url: PropTypes.string.isRequired,
+          })
+        ),
       })
     ),
     assets: PropTypes.arrayOf(
       PropTypes.shape({
         title: PropTypes.string.isRequired,
+        grid: PropTypes.boolean,
         items: PropTypes.arrayOf(
           PropTypes.shape({
             name: PropTypes.string.isRequired,
@@ -145,17 +152,17 @@ export async function getStaticProps(context) {
       const enrichedGroups = await Promise.all(
         groups.map(async (group) => {
           const enrichedItems = await Promise.all(
-            group.items.map(async (img) => {
+            group.items.map(async (asset) => {
               try {
-                const meta = await getImageMeta(img.url);
+                const meta = await getImageMeta(asset.url);
                 return {
-                  ...img,
+                  ...asset,
                   ...meta,
                 };
               } catch (err) {
                 console.error(err);
                 return {
-                  ...img,
+                  ...asset,
                   error: err.message,
                 };
               }
@@ -170,6 +177,38 @@ export async function getStaticProps(context) {
       );
 
       presskit.assets = enrichedGroups;
+    }
+
+    if (presskit.videos) {
+      const { videos } = presskit;
+      const enrichedVideos = await Promise.all(
+        videos.map(async (video) => {
+          const enrichedDownloads = await Promise.all(
+            video.downloads.map(async (asset) => {
+              try {
+                const meta = await getAssetMeta(asset.url);
+                return {
+                  ...asset,
+                  ...meta,
+                };
+              } catch (err) {
+                console.error(err);
+                return {
+                  ...asset,
+                  error: err.message,
+                };
+              }
+            })
+          );
+
+          return {
+            ...video,
+            downloads: enrichedDownloads,
+          };
+        })
+      );
+
+      presskit.videos = enrichedVideos;
     }
 
     return {

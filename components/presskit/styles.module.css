@@ -44,6 +44,25 @@
     -10px 0px;
 }
 
+.presskit-assets-grid {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  display: grid;
+  grid-gap: var(--spacing-02);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.presskit-assets-grid img {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  .presskit-assets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .yt-iframe-wrapper {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 */
