@@ -19,9 +19,9 @@ function toMetaDescription(section) {
 
 function GameDetails({ game = {}, changelog }) {
   const changelogText = changelog ? changelog.join('\n\n') : null;
-  const firstSection = toMetaDescription(
-    changelogText.split('\n---\n')[0].trim()
-  );
+  const firstSection = changelogText
+    ? toMetaDescription(changelogText.split('\n---\n')[0].trim())
+    : null;
 
   return (
     <>
