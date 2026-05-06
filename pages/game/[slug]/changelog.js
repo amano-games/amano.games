@@ -10,15 +10,25 @@ import Markdown from 'components/markdown';
 
 import styles from './game-changelog.module.css';
 
+function toMetaDescription(section) {
+  return section
+    .replace(/[#_*`>-]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function GameDetails({ game = {}, changelog }) {
   const changelogText = changelog ? changelog.join('\n\n') : null;
+  const firstSection = toMetaDescription(
+    changelogText.split('\n---\n')[0].trim()
+  );
 
   return (
     <>
       <Seo
         title={`${game.name} | Changelog`}
-        description={game.description}
-        image={`${url}/${game.slug}.png`}
+        description={firstSection}
+        image={`${url}/games/${game.slug}.png`}
       />
       <Header />
       <section className={styles['game-changelog-wrapper']}>
