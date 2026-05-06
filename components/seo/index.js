@@ -35,6 +35,7 @@ function Seo({
       <meta property="og:type" content="website" />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={image} />
+      <meta property="og:description" content={description} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={`@${twitter}`} />
