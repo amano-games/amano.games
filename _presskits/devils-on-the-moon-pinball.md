@@ -3,6 +3,8 @@ cover:
   url: https://media.amano.games/presskit/devils-on-the-moon-pinball/logo.png
 genre: Pinball
 platforms:
+  - name: Steam
+    url: https://store.steampowered.com/app/4502910/Devils_on_the_Moon_Pinball/
   - name: Playdate
     url: https://play.date/games/devils-on-the-moon-pinball/
 releases:
