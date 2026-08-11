@@ -15,7 +15,7 @@ import styles from './presskit.module.css';
 function PresskitPage({ presskit, game, aboutUs }) {
   return (
     <>
-      <Seo />
+      <Seo title={`Presskit ${game.name}`} />
       <Header
         image={presskit.cover ? presskit.cover.url : `${url}/preview.png`}
       />
