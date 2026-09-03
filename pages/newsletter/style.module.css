@@ -49,6 +49,17 @@
   border-radius: var(--spacing-01);
 }
 
+.newsletter-form global(.altcha) {
+  max-width: 100% !important;
+  border-radius: 0.65rem !important;
+  background: white;
+  color: black;
+  display: flex;
+  flex-flow: row;
+  align-items: space-between;
+  justify-content: space-between;
+}
+
 .newsletter-form ::selection {
   color: var(--yellow);
   background: var(--black);
