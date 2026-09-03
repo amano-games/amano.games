@@ -172,7 +172,7 @@ time {
 
 .altcha {
   max-width: 100% !important;
-  border-radius: 0.65rem !important;
+  border-radius: var(--spacing-01) !important;
   background: white;
   color: black;
   display: flex;
