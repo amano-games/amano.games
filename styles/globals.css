@@ -170,6 +170,17 @@ time {
   width: 1.25em;
 }
 
+.altcha {
+  max-width: 100% !important;
+  border-radius: 0.65rem !important;
+  background: white;
+  color: black;
+  display: flex;
+  flex-flow: row;
+  align-items: space-between;
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 900px) {
   .wrapper {
     padding-left: 0.5rem;
