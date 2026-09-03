@@ -3,6 +3,7 @@
   display: flex;
   flex-flow: column;
   gap: var(--spacing-h);
+  align-items: flex-end;
 }
 
 .newsletter-signup-form .fields-wrapper {

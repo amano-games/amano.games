@@ -182,6 +182,10 @@ time {
   justify-content: space-between !important;
 }
 
+.altcha-main {
+  padding: 0 !important;
+}
+
 @media screen and (max-width: 900px) {
   .wrapper {
     padding-left: 0.5rem;
