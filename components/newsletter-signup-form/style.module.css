@@ -1,4 +1,12 @@
 .newsletter-signup-form {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-h);
+}
+
+.newsletter-signup-form .fields-wrapper {
+  width: 100%;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -9,10 +17,9 @@
   border: none;
   border-radius: var(--spacing-01);
   padding: var(--spacing-01);
-  width: 100%;
 }
 
-.newsletter-signup-form label {
+.newsletter-signup-form .fields-wrapper label {
   display: flex;
   flex-flow: column;
   align-items: flex-start;
