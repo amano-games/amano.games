@@ -54,7 +54,11 @@ function Newsletter() {
               <span>Name (optional):</span>
               <input id="name" name="name" type="text" placeholder="Mario C." />
             </label>
-            <altcha-widget challengeurl="https://news.amano.games/api/public/captcha/altcha" />
+            <altcha-widget
+              hideLogo
+              hideFooter
+              challengeurl="https://news.amano.games/api/public/captcha/altcha"
+            />
             <script
               type="module"
               src="https://news.amano.games/public/static/altcha.umd.js"

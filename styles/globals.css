@@ -173,12 +173,13 @@ time {
 .altcha {
   max-width: 100% !important;
   border-radius: var(--spacing-01) !important;
-  background: white;
-  color: black;
-  display: flex;
-  flex-flow: row;
-  align-items: space-between;
-  justify-content: space-between;
+  border: none !important;
+  padding: 0px !important;
+  /* background: white; */
+  /* color: black; */
+  display: flex !important;
+  flex-flow: row !important;
+  justify-content: space-between !important;
 }
 
 @media screen and (max-width: 900px) {
