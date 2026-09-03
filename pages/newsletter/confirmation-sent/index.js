@@ -4,19 +4,19 @@ import Seo from 'components/seo';
 
 import styles from './style.module.css';
 
-function Newsletter() {
+function NewsletterConfirmation() {
   return (
     <>
       <Seo title="Amano Newsletter" />
       <Header />
-      <main
-        className={`${styles['p-newsletter-subscribed']} -inverted`}
-        id="newsletter"
-      >
+      <main className={`${styles['p-newsletter-subscribed']} -inverted`}>
         <div className={`${styles['p-newsletter-subscribed-wrapper']} wrapper`}>
           <div className={styles['p-newsletter-subscribed-info']}>
-            <h1>Newsletter</h1>
-            <p>Subscribed successfully!</p>
+            <h1>Almost there...</h1>
+            <p>
+              We’ve sent you an email. Open it and tap{' '}
+              <strong>confirm subscription</strong> to complete sign-up.
+            </p>
           </div>
         </div>
       </main>
@@ -25,6 +25,6 @@ function Newsletter() {
   );
 }
 
-Newsletter.propTypes = {};
+NewsletterConfirmation.propTypes = {};
 
-export default Newsletter;
+export default NewsletterConfirmation;

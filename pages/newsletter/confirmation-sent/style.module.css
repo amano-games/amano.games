@@ -31,3 +31,7 @@
 .p-newsletter-subscribed-info p {
   max-width: none;
 }
+
+.p-newsletter-subscribed-info strong {
+  color: var(--yellow);
+}

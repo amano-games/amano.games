@@ -44,7 +44,6 @@
   flex-flow: column;
   align-items: center;
   gap: var(--spacing-01);
-  display: none;
 }
 
 .home-newsletter-form {

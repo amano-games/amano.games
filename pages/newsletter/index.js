@@ -30,7 +30,7 @@ function Newsletter() {
             <input
               type="hidden"
               name="next"
-              value="https://amano.games/newsletter/subscribed"
+              value="https://amano.games/newsletter/confirmation-sent"
             />
             <input
               id="3d2ed"
