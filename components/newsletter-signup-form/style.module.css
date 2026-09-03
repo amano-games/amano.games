@@ -1,0 +1,44 @@
+.newsletter-signup-form {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-01);
+  color: var(--white);
+  background: var(--black);
+  border: none;
+  border-radius: var(--spacing-01);
+  padding: var(--spacing-01);
+  width: 100%;
+}
+
+.newsletter-signup-form label {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+  gap: var(--spacing-h);
+}
+
+.newsletter-signup-form input {
+  width: 100%;
+  color: var(--white);
+  flex: 1 1 auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: var(--spacing-h) var(--spacing-01);
+}
+
+.newsletter-signup-form button {
+  width: max-content;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  border-radius: var(--spacing-h);
+  padding: var(--spacing-h) var(--spacing-01);
+  transition: background-color 0.2s ease;
+}
+
+.newsletter-signup-form button:hover {
+  background-color: var(--yellow);
+}

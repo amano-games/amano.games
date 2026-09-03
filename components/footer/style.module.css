@@ -1,7 +1,6 @@
 .footer {
   width: 100%;
   overflow: hidden;
-  font-size: 2em;
   background: var(--yellow);
 }
 
@@ -22,16 +21,32 @@
   margin-right: var(--spacing-02);
 }
 
+.footer-info-wrapper {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
+}
+
 .footer-info {
   display: flex;
   flex-flow: column;
+  gap: var(--spacing-01);
   align-items: flex-end;
   justify-content: center;
   text-align: right;
+  font-size: 2em;
+  line-height: 1em;
 }
 
-.footer-info > *:last-child {
-  margin-top: var(--spacing-01);
+.footer-newsletter-wrapper {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  gap: var(--spacing-01);
+}
+
+.footer-newsletter-form {
+  max-width: 22rem;
 }
 
 @media screen and (max-width: 900px) {

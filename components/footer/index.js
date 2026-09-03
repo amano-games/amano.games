@@ -13,14 +13,22 @@ function Footer({ showSocial = true }) {
     <footer id="footer" className={`${style.footer}`}>
       <div className={`${style['footer-wrapper']} wrapper`}>
         <Fingers className={style['footer-hand']} />
-        <div className={style['footer-info']}>
-          <p className={style['footer-copy']}>
-            © <time>{year}</time> by Amano
-          </p>
-          <Link href="/devlog" className={style['footer-devlog']}>
-            Devlog
-          </Link>
-          {showSocial ? <Social className={style['footer-social']} /> : null}
+        <div className={style['footer-info-wrapper']}>
+          <div className={style['footer-info']}>
+            <p className={style['footer-copy']}>
+              © <time>{year}</time> by Amano
+            </p>
+            <Link
+              href="/newsletter"
+              className={style['footer-newsletter-link']}
+            >
+              Newsletter
+            </Link>
+            <Link href="/devlog" className={style['footer-devlog']}>
+              Devlog
+            </Link>
+            {showSocial ? <Social className={style['footer-social']} /> : null}
+          </div>
         </div>
       </div>
     </footer>

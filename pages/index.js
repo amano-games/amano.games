@@ -14,6 +14,7 @@ import Scene from 'components/scene';
 import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
 import Contact from 'components/contact';
+import NewsletterSignupForm from 'components/newsletter-signup-form';
 
 import { getManitas, getGames, getAboutUs } from 'utils/notion';
 
@@ -47,6 +48,16 @@ export default function Home({ manitas, games, aboutUs }) {
           </div>
 
           <Social className={styles['home-social']} />
+          <div className={styles['home-newsletter-wrapper']}>
+            <NewsletterSignupForm className={styles['home-newsletter-form']} />
+            <div className={styles['home-newsletter-info']}>
+              <p>
+                Subscribe to our <Link href="/newsletter">newsletter</Link> and
+                get one email whenever we do something important, which tends to
+                happend at most twice a year.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <main className={styles['home-wrapper']}>

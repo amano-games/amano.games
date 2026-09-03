@@ -8,7 +8,7 @@
 }
 
 .hero-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -34,13 +34,33 @@
 
 .home-info-wrapper {
   flex: 1 1 auto;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-02);
 }
+
+.home-newsletter-wrapper {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--spacing-01);
+}
+
+.home-newsletter-form {
+  max-width: 22rem;
+}
+
+.home-newsletter-info {
+  font-size: 0.875rem;
+  max-width: 25rem;
+  text-align: center;
+}
+
 .home-info {
   font-size: 1.2em;
   padding-left: var(--spacing-06);
   padding-right: var(--spacing-06);
   text-align: center;
-  margin-bottom: var(--spacing-02);
 }
 
 .logo {

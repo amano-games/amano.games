@@ -1,0 +1,33 @@
+.p-newsletter-subscribed {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-newsletter-subscribed-wrapper {
+  max-width: 60ch;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
+  align-items: center;
+}
+
+.p-newsletter-subscribed-info {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
+  margin-bottom: var(--spacing-01);
+  align-items: center;
+  width: 100%;
+}
+
+.p-newsletter-subscribed-info h1 {
+  width: 100%;
+  max-width: none;
+}
+
+.p-newsletter-subscribed-info p {
+  max-width: none;
+}
