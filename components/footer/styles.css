@@ -34,7 +34,7 @@
   align-items: flex-end;
   justify-content: center;
   text-align: right;
-  font-size: 2em;
+  font-size: 1.5em;
   line-height: 1em;
 }
 
@@ -50,9 +50,6 @@
 }
 
 @media screen and (max-width: 900px) {
-  .c-footer {
-    font-size: 1.5em;
-  }
   .c-footer-wrapper {
     min-height: 0;
   }
