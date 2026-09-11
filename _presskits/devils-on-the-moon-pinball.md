@@ -21,6 +21,11 @@ videos:
     downloads:
       - name: 1080p
         url: https://media.amano.games/presskit/devils-on-the-moon-pinball/DotM-Trailer-mp4.mp4
+  - name: Steam Trailer
+    youtube: 3k0wUzeA71Y
+  - name: Dev commentary
+    youtube: bvxhHURZc8M
+
 assets:
   - title: Key art
     items:
@@ -109,6 +114,6 @@ assets:
         style_width: 200px
 ---
 
-Devils on the Moon is an occult themed Pinball inspired by classic handhelds like "Devil’s crush” “Revenge of the Gator" and "Pokemon Pinball". It features three distinct areas with their own objectives, five bonus mini-tables, and a creature collecting mechanic. It has so many little interactions and animations to discover. We think it’s super fun to play, even more fun to master and we can’t wait for you to try it.
+A classic-style Creature Collecting Pinball game based on old school masterpieces with modernized gameplay. Pixel-crafted in full monochromatic glory.
 
 ![https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03_09_41-b2x.gif](https://media.amano.games/presskit/devils-on-the-moon-pinball/gifs/luna-2026-02-10_03_09_41-b2x.gif)
