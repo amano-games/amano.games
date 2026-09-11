@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://amano.games</id>
     <title>AMANO</title>
-    <updated>2025-06-24T20:47:22.820Z</updated>
+    <updated>2026-09-11T18:43:25.778Z</updated>
     <generator>Next.js using Feed for Node.js</generator>
     <author>
         <name>Amano</name>
@@ -14,19 +14,503 @@
     <subtitle>Two friends making games by hand.</subtitle>
     <logo>https://amano.games/favicon.svg</logo>
     <icon>https://amano.games/favicon.ico</icon>
-    <rights>All rights reserved 2025, Amano Games</rights>
+    <rights>All rights reserved 2026, Amano Games</rights>
+    <entry>
+        <title type="html"><![CDATA[Making a pinball game for Playdate: Part 12, the bug hunt]]></title>
+        <id>https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt</id>
+        <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt"/>
+        <updated>2025-12-11T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Device crashes are one of the worst things about developing for the Playdate, I hope if you are ever in that situation, this helps.]]></summary>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/device-info.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/cfsr.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/ufsr.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/nalgon.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+<p>This is a story of how we lost almost two full weeks of work while chasing a crash that only happened on the Playdate device randomly after some time of playing.</p>
+<p>It all started with a normal build to device that crashed; the weird part was that the game only crashed when putting the device to sleep.</p>
+<p>I went to that part of the code and found nothing, literally nothing. I wasn&#x27;t doing anything at all during that callback.</p>
+<p>Ok, don&#x27;t panic. Let&#x27;s see what the <code node="[object Object]">crashlog.txt</code> says. If you don&#x27;t know what this file is, consider yourself lucky. But it&#x27;s where the Playdate logs hard crash information, and it looks like this.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-bash" style="white-space:pre"><span>--- crash at 2025/12/10 20:35:08---
+</span>build:e44193e8-3.0.1-release.194549-gitlab-runner
+   r0:00008001    r1:20009b90     r2:38800088    r3: 00000000
+  r12:2000f8d1    lr:24021457     pc:24021456   psr: 410f0000
+ cfsr:00010000  hfsr:40000000  mmfar:00000000  bfar: 00000000
+rcccsr:00000000
+heap allocated: 15233952
+Lua totalbytes=0 GCdebt=0 GCestimate=0 stacksize=0</code></div></pre>
+<p>The first time I looked at this, I just closed the file and started putting logs everywhere. But this time I knew that wasn&#x27;t going to work. So, understanding the crash report it is.</p>
+<h1>The Symbolizer</h1>
+<p>The first step to understand the crash is to run the <code node="[object Object]">firmware_symbolizer.py</code> script provided by the SDK. This tool tries to tell you where the crash happened.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-bash" style="white-space:pre"><span>python $(PLAYDATE_SDK)/bin/firmware_symbolizer.py ./crashlog.txt build/playdate/pdex.elf
+</span>
+?? ??:0
+?? ??:0</code></div></pre>
+<p>Well, that is not helpful, but this will happen a lot of times; the bad crashes tend to crash so badly that the <strong>symbolizer</strong> is unable to tell where the crash happened.</p>
+<p>There are some things that have helped me, though. One is that I use a modified version of the <strong>symbolizer</strong> that prints the actual command used to get the line of code.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-python" style="white-space:pre"><span style="color:#fb4934">import</span><span> re
+</span><span></span><span style="color:#fb4934">import</span><span> subprocess
+</span><span></span><span style="color:#fb4934">import</span><span> click
+</span>
+<span></span><span style="color:#fe8019">@click.command()</span><span>
+</span><span></span><span style="color:#fe8019">@click.argument(</span><span style="color:#b8bb26">&quot;crashlog&quot;</span><span style="color:#fabd2f">, </span><span style="color:#83a598">type</span><span style="color:#fabd2f">=click.Path(</span><span style="color:#fabd2f">exists=</span><span style="color:#d3869b">True</span><span style="color:#fabd2f">)</span><span style="color:#fe8019">)</span><span>
+</span><span></span><span style="color:#fe8019">@click.argument(</span><span style="color:#b8bb26">&quot;elf&quot;</span><span style="color:#fabd2f">, </span><span style="color:#83a598">type</span><span style="color:#fabd2f">=click.Path(</span><span style="color:#fabd2f">exists=</span><span style="color:#d3869b">True</span><span style="color:#fabd2f">)</span><span style="color:#fe8019">)</span><span>
+</span><span></span><span style="color:#fb4934">def</span><span style="color:#8ec07c"> </span><span style="color:#83a598">symbolize</span><span style="color:#8ec07c">(</span><span style="color:#fabd2f">crashlog, elf</span><span style="color:#8ec07c">):</span><span>
+</span><span>    cl_contents = </span><span style="color:#83a598">open</span><span>(crashlog, </span><span style="color:#b8bb26">&quot;r&quot;</span><span>).read()
+</span><span>    cl_blocks = re.split(</span><span style="color:#b8bb26">r&quot;\n\n&quot;</span><span>, cl_contents)
+</span>
+<span>    </span><span style="color:#fb4934">for</span><span> block </span><span style="color:#fb4934">in</span><span> cl_blocks:
+</span><span>        matches = re.search(</span><span style="color:#b8bb26">r&quot;lr:([0-9a-f]{8})\s+pc:([0-9a-f]{8})&quot;</span><span>, block)
+</span>
+<span>        </span><span style="color:#fb4934">if</span><span> matches:
+</span><span>            lr = matches.group(</span><span style="color:#d3869b">1</span><span>)
+</span><span>            pc = matches.group(</span><span style="color:#d3869b">2</span><span>)
+</span><span>            lr_num = </span><span style="color:#83a598">int</span><span>(lr, </span><span style="color:#d3869b">16</span><span>)
+</span><span>            pc_num = </span><span style="color:#83a598">int</span><span>(pc, </span><span style="color:#d3869b">16</span><span>)
+</span><span>            lr_num = lr_num &amp; </span><span style="color:#d3869b">0x0FFFFFFF</span><span>
+</span><span>            pc_num = pc_num &amp; </span><span style="color:#d3869b">0x0FFFFFFF</span><span>
+</span><span>            </span><span style="color:#83a598">print</span><span>(</span><span style="color:#b8bb26">&quot;lr: {} -&gt; {}&quot;</span><span>.</span><span style="color:#83a598">format</span><span>(</span><span style="color:#83a598">hex</span><span>(</span><span style="color:#83a598">int</span><span>(lr, </span><span style="color:#d3869b">16</span><span>)), lr_num))
+</span><span>            lr = </span><span style="color:#83a598">hex</span><span>(lr_num)
+</span><span>            pc = </span><span style="color:#83a598">hex</span><span>(pc_num)
+</span><span>            cmd = </span><span style="color:#b8bb26">f&quot;arm-none-eabi-addr2line -f -i -p -e </span><span style="color:#ebdbb2">{elf}</span><span style="color:#b8bb26"> </span><span style="color:#ebdbb2">{pc}</span><span style="color:#b8bb26"> </span><span style="color:#ebdbb2">{lr}</span><span style="color:#b8bb26">&quot;</span><span>
+</span><span>            </span><span style="color:#83a598">print</span><span>(cmd)
+</span><span>            stack = subprocess.check_output(cmd, shell=</span><span style="color:#d3869b">True</span><span>).decode(</span><span style="color:#b8bb26">&quot;ASCII&quot;</span><span>)
+</span><span>            </span><span style="color:#83a598">print</span><span>(stack)
+</span>
+<span></span><span style="color:#fb4934">if</span><span> __name__ == </span><span style="color:#b8bb26">&quot;__main__&quot;</span><span>:
+</span>    symbolize()</code></div></pre>
+<p>What the <strong>symbolizer</strong> is doing is calling the command <code node="[object Object]">arm-none-eabi-addr2line</code> and passing the address that caused the crash. Your code lives in RAM memory, the same as your runtime allocations, and it&#x27;s stored in a memory address. The <code node="[object Object]">PC</code> and <code node="[object Object]">LR</code> registers store the memory address where the function that caused the crash is stored. The only problem is that the address is not mapped one to one to your <code node="[object Object]">elf</code> file because the Playdate stores it on a different offset depending on if it&#x27;s a <code node="[object Object]">Rev A</code> or <code node="[object Object]">Rev B</code> Playdate. So the symbolizer also converts the memory you get from the <code node="[object Object]">crashlog.txt</code> to the correct one on the <code node="[object Object]">elf file</code></p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-bash" style="white-space:pre"><span>lr: 0x24021457 -&gt; 67245143
+</span>arm-none-eabi-addr2line -f -i -p -e ./build/playdate/pdex.elf 0x4021456 0x4021457
+?? ??:0
+?? ??:0</code></div></pre>
+<p>Still, not really helpful. Another tool I have used is the <a href="https://crates.io/crates/playdate-symbolize">playdate-symbolize</a> crate made in Rust that tends to give more human-readable errors, but sadly in this case it was the same result.</p>
+<p>I have found that the really nasty bugs tend to crash on a random function that is not in a helpful region of memory. This can be because the function is a Playdate function and we don&#x27;t have the map for that, or the address is completely wrong because the stack got corrupted. There are some people at the Playdate Discord that can tell what kind of function made the crash just by looking at the address (shout out to <a href="https://github.com/scratchminer">Scratchminer</a>), but every time I see the <code node="[object Object]">?? ??:0</code> I know I&#x27;m in trouble.</p>
+<h1>Memory suspects</h1>
+<p>One thing that may help right out of the bat is the heap allocated field; this might be relevant, especially for LUA-based projects, as if it&#x27;s a high number, it probably means you have a memory leak and the device ran out of memory.</p>
+<h2>Out of memory</h2>
+<p>Well, here we have <code node="[object Object]">15232096</code> that number represents the amount of memory your game has allocated in bytes. If we convert it to megabytes, we have <code node="[object Object]">15.2MB</code>. Well, the Playdate has <code node="[object Object]">16MB</code> of RAM, so that would be a pretty close call. In our case, though, what I&#x27;m doing is reserving as much memory as possible at the beginning of the game (<code node="[object Object]">15.2MB</code>) and then using that memory through my own custom memory allocator. <a href="https://nullprogram.com/blog/2023/09/27/">A simple</a> <a href="https://www.rfleury.com/p/enter-the-arena-talk">memory</a> <a href="https://www.gingerbill.org/article/2019/02/08/memory-allocation-strategies-002/">arena</a>. So I knew this was the cause of the crash here. If you are having memory leaks, though, a really useful tool is the device info window in the Playdate SDK.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/device-info.png" alt="Device Info"/>
+<p>As you can see here, the memory stays the same the whole time. Once you are using your own memory allocator, you can do a lot of cool stuff, like setting a custom limit and letting you know on a simulator build if you are getting past it. You can also use the <code node="[object Object]">malloc pool</code> feature on the simulator and limit the <code node="[object Object]">16MB</code> memory your game has available.</p>
+<h2>Memory initialization</h2>
+<p>So it wasn&#x27;t a memory leak. Another thing that may cause something to crash on a device and not in the simulator is that if you are using a low-level language like C, the memory can have trash values when you get it, causing a bunch of issues if you are not careful initializing things.</p>
+<p>It happened to me a bunch of times that on the simulator build of the game, all the memory I got from the OS was zeroed out, but when I tried it on the device, it would crash because some trash value I assumed would be 0. I&#x27;m not sure, but I think the memory you get is actually just the memory from the previous process that was running, and if you just relaunched your game from a crash a lot of times, this is your own game. So what would happen to me is that the game would crash when starting from the launcher but wouldn&#x27;t when starting using the <code node="[object Object]">pdc</code> tool.</p>
+<p>To fix this, there are a couple of things you can do. One is to make sure to clear out any memory that you get from the OS. This way at least you know that you are starting at the same state as in your desktop computer. For this, there are a couple of simple yet useful macros I like.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fe8019">#</span><span style="color:#8ec07c">define</span><span style="color:#fe8019"> mclr(dst, size) memset((dst), (0), (size))</span><span>
+</span><span></span><span style="color:#fe8019">#</span><span style="color:#8ec07c">define</span><span style="color:#fe8019"> mclr_struct(s)  mclr((s), sizeof(*(s)))</span><span>
+</span><span></span><span style="color:#fe8019">#</span><span style="color:#8ec07c">define</span><span style="color:#fe8019"> mclr_array(a)   mclr((a), sizeof(a))</span></code></div></pre>
+<p>This is useful by itself, but combined with other macros, you can make sure to always have cleared memory.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fe8019">#</span><span style="color:#8ec07c">define</span><span style="color:#fe8019"> alloc_struct(alloc, ptr)     (__typeof__(ptr))alloc_size(alloc, sizeof(*(ptr)), false)</span><span>
+</span><span></span><span style="color:#fe8019">#</span><span style="color:#8ec07c">define</span><span style="color:#fe8019"> alloc_struct_clr(alloc, ptr) (__typeof__(ptr))alloc_size(alloc, sizeof(*(ptr)), true)</span><span>
+</span>
+<span></span><span style="color:#fb4934">void</span><span style="color:#8ec07c"> *
+</span><span style="color:#8ec07c"></span><span style="color:#83a598">alloc_size</span><span style="color:#fabd2f">(struct alloc alloc, ssize mem_size, b32 clr)</span><span style="color:#8ec07c">
+</span><span style="color:#8ec07c"></span><span>{
+</span><span>	</span><span style="color:#fb4934">void</span><span> *mem = alloc.allocf(alloc.ctx, mem_size);
+</span><span>	</span><span style="color:#fb4934">if</span><span>(clr) { mclr(mem, mem_size); };
+</span><span>	</span><span style="color:#fb4934">return</span><span> mem;
+</span>}
+...
+<span></span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">game</span><span style="color:#8ec07c"> *</span><span style="color:#83a598">game</span><span style="color:#8ec07c"> =</span><span> alloc_struct_clr(alloc, game);</span></code></div></pre>
+<p>The problem is that clearing memory is fast but is not free; it takes some cycles to do it, so you don&#x27;t want to do it everywhere. Well, another thing you can do is to poison your memory on the simulator.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fe8019">#</span><span style="color:#8ec07c">define</span><span style="color:#fe8019"> MEM_POISON_PATTERN 0xCD</span><span>
+</span><span></span><span style="color:#fe8019">#</span><span style="color:#8ec07c">if</span><span style="color:#fe8019"> defined(DEBUG)</span><span>
+</span><span></span><span style="color:#83a598">memset</span><span>(mem-&gt;buffer, MEM_POISON_PATTERN, mem-&gt;size);
+</span><span></span><span style="color:#fe8019">#</span><span style="color:#8ec07c">endif</span></code></div></pre>
+<p>I think this is done by default on Visual Studio on debug builds.</p>
+<p>This way you would lose performance on your debug build, but that&#x27;s preferable to losing it on the release version. This pattern has helped me tremendously and removed one common cause of bugs in my code.</p>
+<p>So I was sure it wasn&#x27;t a memory uninitialized problem this time around.</p>
+<h2>Crash registers</h2>
+<p>Back to trying to understand the <code node="[object Object]">crashlog.txt</code></p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-bash" style="white-space:pre"><span>--- crash at 2025/12/10 20:35:08---
+</span>build:e44193e8-3.0.1-release.194549-gitlab-runner
+ r0:00008001    r1:20009b90     r2:38800088    r3: 00000000
+r12:2000f8d1    lr:24021457     pc:24021456   psr: 410f0000
+cfsr:00010000  hfsr:40000000  mmfar:00000000  bfar: 00000000
+rcccsr:00000000
+heap allocated: 15233952
+Lua totalbytes=0 GCdebt=0 GCestimate=0 stacksize=0</code></div></pre>
+<p>Thankfully there is excellent, albeit technical, documentation about this <a href="https://interrupt.memfault.com/blog/cortex-m-hardfault-debug#how-to-debug-a-hardfault-on-an-arm-cortex-m-mcu">How to debug a HardFault on an ARM Cortex-M MCU</a>.</p>
+<p>One source of documentation that sometimes is useful is to search for <strong>FreeRTOS</strong>, <a href="https://www.freertos.org/Debugging-Hard-Faults-On-Cortex-M-Microcontrollers.html">like this article</a>, as this is the operating system the Playdate is using.</p>
+<p>The first thing I noticed is that the <code node="[object Object]">cfsr</code> has a value set because it&#x27;s not all zeros. So how it works is that the <code node="[object Object]">cfsr</code> or Configurable Fault Status Registers stores information about the crash, turning on bits in a <em>32-bit</em> register.</p>
+<p>The numbers in the <code node="[object Object]">crashlog.txt</code> are 32-bit hexadecimal numbers, so to know what register was turned on, we have to convert it to binary. Our value here of <code node="[object Object]">00010000</code> converts to:</p>
+<p><code node="[object Object]">0000 0000 0000 0001 0000 0000 0000 0000</code></p>
+<p><img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/cfsr.png" alt="CFSR"/>
+Thanks to this image, we know that the last 16 bits correspond to the <code node="[object Object]">UFSR</code> as they are the only bits with a value. Let&#x27;s focus on that.</p>
+<p><code node="[object Object]">UFSR</code> stands for Usage Fault Status Register, so we know the crash was not caused by something related to memory access.</p>
+<p>Now, thanks to this image, we know that the second bit means there was a <code node="[object Object]">UNDEFINSTR</code></p>
+<p><code node="[object Object]">0000 0000 0000 0001</code>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-12-the-bug-hunt/ufsr.png" alt="UFSR"/></p>
+<p>From the article, this means that an undefined instruction was executed; this can happen if the stack got corrupted.</p>
+<h1>Reproduce</h1>
+<p>At this point I will be honest with you: I wasn&#x27;t thinking completely straight and became paranoid. The fact that the game would only crash after some random time and then lock the screen made no sense to me.</p>
+<p>Thankfully, JP is the best QA tester I have ever met and was able to find that the issue only happened after interacting with a specific entity in the game; we call him the <em>Nalgón</em>, which translates to <em>Big butt guy</em> in English.</p>
+<p>He used to mockingly show his butt and is one of our favorite characters.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/nalgon.gif" alt="Nalgón"/>
+<p>Even though we removed the version of him where he showed his butt. I started to feel like he was mocking me again… now with a bug.</p>
+<p>Now that we had an easy way to reproduce the bug, go to the <code node="[object Object]">Nalgón</code> bump it with the ball and lock the screen. I started commenting code to see if the crash kept happening. The process was painful:</p>
+<ol>
+<li>Build the game</li>
+<li>Launch the simulator</li>
+<li>Press <code node="[object Object]">CTRL+U</code> to send the game to the device</li>
+<li>Wait for 3-5 minutes while the game get&#x27;s copied</li>
+<li>Enable the developer cursor</li>
+<li>Bump the <code node="[object Object]">Nalgón</code></li>
+</ol>
+<p>All in all, it took around 10 minutes to test each build, which quickly helped with my paranoia.</p>
+<p>I wrote a small script to automate most of the tasks. I had built something similar years ago when working with Pullfrog when the Linux simulator didn&#x27;t have the <strong>Send to Device</strong> command.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-bash" style="white-space:pre"><span style="color:#fe8019">#!/bin/bash</span><span>
+</span><span></span><span style="color:#83a598">set</span><span> -euo pipefail
+</span>
+<span>DESTDIR=</span><span style="color:#b8bb26">&quot;build/&quot;</span><span>
+</span><span>GAME_NAME=</span><span style="color:#b8bb26">&quot;devils-on-the-moon-pinball-dev&quot;</span><span>
+</span><span>PD_DEV=</span><span style="color:#b8bb26">&quot;/dev/ttyACM0&quot;</span><span>
+</span><span>PD_MOUNT=</span><span style="color:#b8bb26">&quot;/your/mount/folder&quot;</span><span>
+</span><span>SRC_DIR=</span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">${DESTDIR}</span><span style="color:#b8bb26">playdate/</span><span style="color:#83a598">${GAME_NAME}</span><span style="color:#b8bb26">.pdx&quot;</span><span>
+</span><span>DST_DIR=</span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">${PD_MOUNT}</span><span style="color:#b8bb26">/Games/</span><span style="color:#83a598">${GAME_NAME}</span><span style="color:#b8bb26">.pdx&quot;</span><span>
+</span>
+
+<span></span><span style="color:#fb4934">if</span><span> [[ -e </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">$PD_DEV</span><span style="color:#b8bb26">&quot;</span><span> ]]; </span><span style="color:#fb4934">then</span><span>
+</span><span>  </span><span style="color:#fb4934">if</span><span> [[ ! -d </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">$PD_MOUNT</span><span style="color:#b8bb26">&quot;</span><span> ]]; </span><span style="color:#fb4934">then</span><span>
+</span><span>    </span><span style="color:#fb4934">if</span><span> ! pdutil </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">$PD_DEV</span><span style="color:#b8bb26">&quot;</span><span> datadisk; </span><span style="color:#fb4934">then</span><span>
+</span><span>      </span><span style="color:#83a598">echo</span><span> </span><span style="color:#b8bb26">&quot;Failed to enter Data Disk Mode.&quot;</span><span> &gt;&amp;2
+</span><span>      </span><span style="color:#83a598">exit</span><span> 1
+</span><span>    </span><span style="color:#fb4934">fi</span><span>
+</span>
+<span>    </span><span style="color:#fb4934">for</span><span> i </span><span style="color:#fb4934">in</span><span> {1..20}; </span><span style="color:#fb4934">do</span><span>
+</span><span>      </span><span style="color:#fb4934">if</span><span> [[ -d </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">$PD_MOUNT</span><span style="color:#b8bb26">&quot;</span><span> ]]; </span><span style="color:#fb4934">then</span><span>
+</span><span>        </span><span style="color:#83a598">break</span><span>
+</span><span>      </span><span style="color:#fb4934">fi</span><span>
+</span>      sleep 0.5
+<span>    </span><span style="color:#fb4934">done</span><span>
+</span><span>  </span><span style="color:#fb4934">fi</span><span>
+</span><span></span><span style="color:#fb4934">elif</span><span> [[ -d </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">$PD_MOUNT</span><span style="color:#b8bb26">&quot;</span><span> ]]; </span><span style="color:#fb4934">then</span><span>
+</span>
+<span></span><span style="color:#fb4934">else</span><span>
+</span><span>  </span><span style="color:#83a598">echo</span><span> </span><span style="color:#b8bb26">&quot;Playdate not connected.&quot;</span><span> &gt;&amp;2
+</span><span>  </span><span style="color:#83a598">exit</span><span> 1
+</span><span></span><span style="color:#fb4934">fi</span><span>
+</span>
+<span></span><span style="color:#fb4934">if</span><span> [[ ! -d </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">$PD_MOUNT</span><span style="color:#b8bb26">&quot;</span><span> ]]; </span><span style="color:#fb4934">then</span><span>
+</span><span>  </span><span style="color:#83a598">echo</span><span> </span><span style="color:#b8bb26">&quot;Playdate mount did not appear.&quot;</span><span> &gt;&amp;2
+</span><span>  </span><span style="color:#83a598">exit</span><span> 1
+</span><span></span><span style="color:#fb4934">fi</span><span>
+</span>
+rsync -azrt --update --modify-window=1 --prune-empty-dirs --delete \
+  --info=name0 --info=progress2 \
+<span>  </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">${SRC_DIR}</span><span style="color:#b8bb26">/&quot;</span><span> </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">${DST_DIR}</span><span style="color:#b8bb26">/&quot;</span><span>
+</span>
+udiskie-umount --eject /dev/sde1
+sleep 2.0
+<span>pdutil </span><span style="color:#b8bb26">&quot;</span><span style="color:#83a598">$PD_DEV</span><span style="color:#b8bb26">&quot;</span><span> run </span><span style="color:#b8bb26">&quot;Games/</span><span style="color:#83a598">${GAME_NAME}</span><span style="color:#b8bb26">.pdx&quot;</span><span>;</span></code></div></pre>
+<p>This reduces the effort of testing the build on the device by a lot. It only works on Linux, and you will need to change variables to make it work in your setup. If you want a similar script for Mac, <a href="https://ninovanhooff.itch.io/">Nino</a> <a href="https://github.com/ninovanhooff/wheelsprung/blob/main/scripts/quickinstall.sh">has this great script</a>.</p>
+<p>Well, one thing that this particular interaction does is to trigger the gate open/close mechanic on the ramp. For the close to work as we wanted, we needed to split the gate into 3 different entities, each with their own collision, events, and actions. I removed some event system code, and the game stopped crashing when I locked the Playdate but kept crashing after bumping a lot of times with the <code node="[object Object]">Nalgón</code>.</p>
+<p>At this point I made the mistake of stopping checking the <code node="[object Object]">crashlog.txt</code> and assuming I knew what was happening; again, I was paranoid. So my theory was that I probably did something bad and used a bad pointer somewhere that was pointing to a random memory address and slowly corrupting the stack.</p>
+<h1>Sanitize</h1>
+<p>If you are programming in C, there are a couple of tools that can help you catch a footgun at compile and runtime.</p>
+<p>First, I had already turned on a bunch of warnings. These are my normal compiler flags.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-makefile" style="white-space:pre"><span>WARN_FLAGS += -Werror -Wall -Wextra -pedantic-errors
+</span>WARN_FLAGS += -Wstrict-prototypes
+WARN_FLAGS += -Wshadow
+WARN_FLAGS += -Wundef
+WARN_FLAGS += -Wdouble-promotion
+WARN_FLAGS += -Wno-unused-function
+WARN_FLAGS += -Wno-unused-but-set-variable
+WARN_FLAGS += -Wno-unused-variable
+WARN_FLAGS += -Wno-unused-parameter</code></div></pre>
+<p>Some of them come from <a href="https://nullprogram.com/blog/2023/04/29/">this great post</a>. I like this because I was quite inexperienced with C, at least when I started working on this game 2 years ago. But this helps you catch bugs at compile time. The worst bugs, though, are at runtime: <em>use after free</em>, <em>double free,</em> etc. For that, sanitizers are great! Since almost the beginning, I have been using the following:</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-makefile" style="white-space:pre"><span>DEBUG_CFLAGS += -fsanitize-trap -fsanitize=address</span></code></div></pre>
+<p><code node="[object Object]">fsanitize-trap</code> Make it so when I&#x27;m <a href="https://nullprogram.com/blog/2022/06/26/">asserting</a> something with this macro, the debugger stops right at the line where the assert failed.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fe8019">#</span><span style="color:#8ec07c">define</span><span style="color:#fe8019"> dbg_assert(c) </span><span style="color:#8ec07c">if</span><span style="color:#fe8019">(!(c)) __builtin_trap()</span></code></div></pre>
+<p>And the address sanitizer inserts some poison memory to detect memory leaks and out-of-bounds access.</p>
+<p>I use them all the time and have caught a lot of bugs using them. I highly recommend enabling them if you can.</p>
+<p>Another common sanitizer is the <code node="[object Object]">-fsanitize=undefined</code> I didn&#x27;t have it enabled because I didn&#x27;t really understand what was <strong>undefined behavior</strong> and what wasn&#x27;t, and <a href="https://developers.redhat.com/articles/2024/12/11/making-memcpynull-null-0-well-defined#motivation">in some code that worked perfectly fine on both platforms</a>, it triggered the sanitizer. But now, full of paranoia, I thought, surely I&#x27;m doing a scary, undefined behavior that is corrupting my memory.</p>
+<p>So I enabled the sanitizer and slowly read about the undefined behaviors I was doing fixed all of them. Ran my script to build the game, and… It was still crashing.</p>
+<h1>Out of options</h1>
+<p>I will save you the next couple of days, but I did refactor everywhere I suspected something could have gone wrong. Five days later I was still getting the crash. At this point I had stopped paying attention to the crash message, as I had marked it as useless long ago. But JP told me after another test, “Still getting the same message, <strong>Stack Overflow,</strong> on the game task.” I froze. How could I miss this?</p>
+<p>The Playdate has a small stack of <code node="[object Object]">10Kb</code>, my <code node="[object Object]">struct event_context</code> struct is <code node="[object Object]">88 bytes</code>, and my <code node="[object Object]">struct action</code> is 168 bytes. This means that I can pass around on the stack around 110 actions on my event process function, and this is without counting all the local variables, etc. So looking back at what the <code node="[object Object]">Nalgón</code> does, it fires up like 10+ events and actions every time the ball bumps it.</p>
+<p>This shouldn&#x27;t be a big issue, especially if you are <a href="https://gameprogrammingpatterns.com/event-queue.html">processing the events</a> one by one in a queue. Our problem was that any event could trigger a new event, and instead of adding it to a queue, I kept running the actions and triggering more events until eventually I blew the stack.</p>
+<p>Once I knew this, the solution was easy: make sure every time there is an event, instead of running the side effects right away, add it to a queue, and at the end of the frame process, enter a while loop where I&#x27;m processing the events until there are no more events to process.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">while</span><span>(q-&gt;count &gt; </span><span style="color:#d3869b">0</span><span>) {
+</span><span>	</span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">event</span><span style="color:#8ec07c"> *</span><span style="color:#83a598">event</span><span style="color:#8ec07c"> =</span><span> &amp;q-&gt;items[q-&gt;head];
+</span>	event_process(event_ctx, event);
+<span>	q-&gt;head = (q-&gt;head + </span><span style="color:#d3869b">1</span><span>) % q-&gt;cap;
+</span>	q-&gt;count--;
+}</code></div></pre>
+<p>After implementing this new system, the issue was completely fixed!.</p>
+<p>Well, I hope this story will help someone.</p>
+<h1>Extra notes</h1>
+<p>One common crash that I didn&#x27;t cover here is the 10-second watchdog crash. This is a common thing to happen, and it&#x27;s triggered if one of your frames took more than 10 seconds to give back control to the OS. The most common way it happens is while booting the game and loading all the assets, as this gets progressively slower the more full the Playdate hard drive is. So a good rule of thumb is that if your game is taking more than 5 seconds to load, you should start implementing some kind of loading screen. <a href="https://www.youtube.com/watch?v=iGgFoeBv-L8">Squid God has an excellent video on the subject</a>.</p></div>]]></content>
+        <author>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </author>
+        <contributor>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Making a pinball game for Playdate: Part 11, the spinner spring]]></title>
+        <id>https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring</id>
+        <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring"/>
+        <updated>2025-12-08T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[A pinball spinner behaves like a spring if you think about it.]]></summary>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/pulp-fiction.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-diablo.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-spring.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+<p>We are ramping up to the final stages of the game, so I had to cross off one of our long standing pending features: <em>The Pinball spinner</em></p>
+<p>From the beginning of development, when the idea to make a pinball game started, we were excited about the spinner. Jp had to figure out a way to use Blender to generate rotated sprites that looked good (hopefully one day he will have enough time to talk about it here). And we played the physical table of Pulp Fiction, and we fell in love with its spinner.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/pulp-fiction.png" alt="Pulp fiction"/>
+<p>So Jp started working and soon enough had a good spinner sprite for me to implement in to the game.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner.gif" alt="spinner"/>
+<p>Now we just needed a way to make it spin. The first step I needed was to detect if the ball was colliding with the spinner in some way. This was the first time we needed to know if the ball was inside a collision shape but didn&#x27;t affect it as a physics body. So I implemented the sensor system.</p>
+<h2>The Sensors</h2>
+<p>Each sensor component has <a href="https://gameprogrammingpatterns.com/double-buffer.html">two buffers</a> with a list of entity handles. Each frame it queries entities inside its collision shape using the <a href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition">spacial hashing</a> and then compares the new list with the previous list of entities.</p>
+<p>If there is an entity that is not on the previous frame list, it sends the event <code node="[object Object]">body_entered</code>.
+If an entity is missing from the previous frame, it sends the event <code node="[object Object]">body_exited</code>.</p>
+<p>As we only have one ball, at least for the main table, we are probably not going to have multi-ball. The check is really simple; I just go through both arrays and compare them one to one.</p>
+<p>Another problem was, how do we decide which sensors should update each frame? We have over 70 sensors in the main table, some of them with complex polygon collision shapes. So I decided to use the ball to tell which one to update. I query a circle at the position of each of the balls that&#x27;s 4 times the radius of the ball and mark all the overlapping sensors as dirty. Then we go through all the dirty sensors and update them.</p>
+<h2>Back to the spinner</h2>
+<p>Having the sensors set up, the spinner logic became easy. If there is a ball inside the spinner sensor, the spinner angular velocity is equal to the ball velocity. And when it exits, I just apply a damping factor so the spinner would eventually stop.</p>
+<p>Each <code node="[object Object]">0.5f</code> turn we count it as a spin, so we compared the previous angle to the new one, and if it changed enough, we notified a spin.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span>b32 did_spin = </span><span style="color:#d3869b">false</span><span>;
+</span>
+<span></span><span style="color:#fb4934">if</span><span>(spinner-&gt;handle.id != </span><span style="color:#d3869b">0</span><span>) {
+</span>	entity *ball = pinball_get(pinball, spinner-&gt;handle);
+	spinner-&gt;vel = v2_len_sq(ball-&gt;body.vel);
+}
+
+f32 vel = spinner-&gt;vel;
+f32 t   = spinner-&gt;t + (vel * dt);
+<span>i32 t_a = floor_f32(spinner-&gt;t * </span><span style="color:#d3869b">2.0</span><span>);
+</span><span>i32 t_b = floor_f32(t * </span><span style="color:#d3869b">2.0</span><span>);
+</span>
+<span></span><span style="color:#fb4934">if</span><span>(t_a != t_b) {
+</span><span>	did_spin = </span><span style="color:#d3869b">true</span><span>;
+</span>	spinner-&gt;spins++;
+}
+
+spinner-&gt;vel = vel * spinner-&gt;damp;
+spinner-&gt;t   = t;
+
+<span></span><span style="color:#fb4934">return</span><span> did_spin;</span></code></div></pre>
+<p>The only problem with this is that the spinner would stop at some awkward rotation and stay like that until the ball entered again. That&#x27;s not how pinball spinners work! They have a weight at the tips to make sure it always ends up perpendicular to the table. It worked but didn&#x27;t feel as good.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-diablo.gif" alt="spinner-diablo"/>
+<p>This is how the spinner in <a href="https://play.date/games/catchadiablos/">Catchadiablos</a> works, by the way.</p>
+<h2>Springs</h2>
+<p>The first time I was reading about using springs for animation was from <a href="https://www.joshwcomeau.com/animation/a-friendly-introduction-to-spring-physics/">this great article by Josh W. Comeau</a>. The article is full of interactive examples that helped the concept <em>click</em>. Since then I have used it sparingly for some little animations on our games. Another great resource is <a href="https://www.youtube.com/watch?v=YBgCUQVDRkw">this video on a small script for Godot</a> that helps you animate almost anything using springs.</p>
+<p>When I started thinking about our spinner problem, I thought I would need to simulate some kind of pendulum using physics and that my cheap trick of just using the ball velocity was going away. And that&#x27;s why I put if off for a long time, until I got this article on my RSS feed on <a href="https://theorangeduck.com/page/spring-roll-call">springs and all their utilities</a>. It&#x27;s great! I greatly recommend it.</p>
+<p>So I started thinking these springs surely look like the motion a pinball spinner.</p>
+<p>I didn&#x27;t have to change that much; just make sure to record the starting direction of the spinner as it will bounce back and forth until it gets to its resting angle.</p>
+<p>Calculate the <code node="[object Object]">target turn</code> and apply a spring force to get there.</p>
+<p>And stop registering spins after the spinner changes direction for the first time.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span>b32 spinned    = </span><span style="color:#d3869b">false</span><span>;
+</span>f32 angle_prev = spinner-&gt;angle_turns;
+
+<span></span><span style="color:#fb4934">if</span><span>(spinner-&gt;entity_handle.id != </span><span style="color:#d3869b">0</span><span>) {
+</span>	entity *ball     = pinball_get(pinball, spinner-&gt;entity_handle);
+	spinner-&gt;direction      = sgn_f32(ball-&gt;body.vel.y);
+	spinner-&gt;angular_vel    = v2_len_sq(ball-&gt;body.vel);
+<span>	spinner-&gt;register_spins = </span><span style="color:#d3869b">true</span><span>;
+</span>}
+
+f32 angle            = spinner-&gt;angle_turns;
+f32 angular_vel      = spinner-&gt;angular_vel;
+spinner-&gt;angle_turns = angle + (angular_vel * dt);
+
+f32 k                = spinner-&gt;stiffness;
+f32 c                = spinner-&gt;damping;
+<span>f32 target           = round_f32(spinner-&gt;angle_turns * </span><span style="color:#d3869b">2.0f</span><span>) * </span><span style="color:#d3869b">0.5f</span><span>;
+</span>f32 accel            = -k * (spinner-&gt;angle_turns - target) - c * spinner-&gt;angular_vel;
+spinner-&gt;angular_vel = spinner-&gt;angular_vel + accel * dt;
+
+<span>f32 prev_half = floor_f32(angle_prev * </span><span style="color:#d3869b">2.0f</span><span>);
+</span><span>f32 curr_half = floor_f32(spinner-&gt;angle_turns * </span><span style="color:#d3869b">2.0f</span><span>);
+</span>
+<span></span><span style="color:#fb4934">if</span><span>(curr_half != prev_half &amp;&amp; spinner-&gt;register_spins) {
+</span>	f32 delta = spinner-&gt;angle_turns - angle_prev;
+<span>	</span><span style="color:#fb4934">if</span><span>(sgn_f32(delta) == spinner-&gt;direction) {
+</span><span>		spinned = </span><span style="color:#d3869b">true</span><span>;
+</span>		spinner-&gt;spins++;
+<span>	} </span><span style="color:#fb4934">else</span><span> {
+</span><span>		spinner-&gt;register_spins = </span><span style="color:#d3869b">false</span><span>;
+</span>	}
+}
+
+<span></span><span style="color:#fb4934">return</span><span> spinned;</span></code></div></pre>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-11-the-spinner-spring/spinner-spring.gif" alt="spinner spring"/>
+<p>And now it looks great! So yeah, springs, I just think they are <em>neat</em>.</p></div>]]></content>
+        <author>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </author>
+        <contributor>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Making a pinball game for playdate: Part 10, the events and actions]]></title>
+        <id>https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions</id>
+        <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions"/>
+        <updated>2025-11-07T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Events and actions handle most of the logic of our pinball game]]></summary>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/reactive-inspector.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/slingshot.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/bumpers.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/action-inspector.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/editor.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+<p>The main way we handle logic in our game is using a system of events and actions. Some stats that probably will change a little by the end of development.</p>
+<ul>
+<li>48 types of events.</li>
+<li>78 types of actions.</li>
+<li>575 registered entity actions using the <a href="https://www.mapeditor.org/">Tiled</a> editor.</li>
+</ul>
+<h1>How it works</h1>
+<p>Whenever something happens to an entity we call the function <code node="[object Object]">event_sys_notity</code>, for example if we want to play an animation:</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span style="color:#8ec07c">
+</span><span style="color:#8ec07c"></span><span style="color:#83a598">animation_sys_play</span><span style="color:#fabd2f">(struct event_ctx event_ctx, struct entity_handle entity_handle, i32 ani_index)</span><span style="color:#8ec07c">
+</span><span style="color:#8ec07c"></span><span>{
+</span>	f32 timestamp           = event_ctx.frame.timestamp;
+<span>	</span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity_sys</span><span style="color:#8ec07c"> *</span><span style="color:#83a598">entity_sys</span><span style="color:#8ec07c"> =</span><span> event_ctx.entity_sys;
+</span><span>	</span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity</span><span style="color:#8ec07c"> *</span><span style="color:#83a598">entity</span><span style="color:#8ec07c">   =</span><span> entity_get(entity_sys, entity_handle);
+</span><span>	</span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">props</span><span style="color:#8ec07c"> </span><span style="color:#83a598">args</span><span style="color:#8ec07c"> =</span><span> {
+</span>		.props = {
+			{
+				.type = PROP_I32,
+				.i32  = ani_index
+			}
+		}
+	};
+	event_sys_notify(
+		event_ctx,
+		entity_handle,
+		EVENT_ANIMATION_STARTED,
+		args);
+	animator_animation_play(&amp;entity-&gt;animator, ani_index, timestamp);
+}</code></div></pre>
+<p>The event context is a struct that allows us to pass around instances of other systems that are not part of the main game entity system.</p>
+<p>For example, if an entity needs to do it&#x27;s action later in the game, it starts a timer, to do so, it needs a reference to the timer system. But timers are smaller than our general game entities and have different logic for spawning/updating etc. So the event context has a reference to the timers system.</p>
+<p>This allows us to keep the signature of the function small and if we need to add more data that the event system needs we don&#x27;t need to update each call to the <code node="[object Object]">event_sys_notify</code>, but just were we start passing around the context object.</p>
+<h2>Notify</h2>
+<p>The <code node="[object Object]">event_sys_notify</code> functions is called with the <code node="[object Object]">entity_handle</code> that triggered the event, you could say that each entity is an <a href="https://gameprogrammingpatterns.com/observer.html">observer</a> of it&#x27;s own events.</p>
+<h2>Queue the event</h2>
+<p>We also save the event in an <a href="https://gameprogrammingpatterns.com/event-queue.html">event queue</a> that it&#x27;s used at the end of the frame to handle events at a game level instead of a entity level. For example if the multiplier changed, we update the GUI, or spawn a special VFX.</p>
+<h2>Run components actions</h2>
+<p>After that, we check the components that the entity that triggered the event has, and depending on that we do some pre-defined actions.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/reactive-inspector.png" alt="reactive-inspector"/>
+<p>For example if the entity that triggered the event <code node="[object Object]">body collided</code> has one of the <code node="[object Object]">reactive</code> components we can play an animation or offset the sprite for a few seconds or apply an impulse to the entity that collided with it.</p>
+<p>This is how the slingshots and bumpers work!</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/slingshot.gif" alt="slingshot"/>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/bumpers.gif" alt="bumpers"/>
+<h2>Validate on event actions</h2>
+<p>Each entity can have a list of event actions.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/action-inspector.png" alt="action-inspector"/>
+<p><em>Sadly Tiled always organizes properties alphabetically.</em></p>
+<p>After doing all the component pre-defined actions we go through the list of entity actions and check if the <code node="[object Object]">action-event</code> matches. If it does, some events pass as props information about that event itself, so if the event condition type is set we check the condition and if it passes, we run the action.</p>
+<p>Events can pass 3 props to give context on what happened, but we only use the first one to check for action conditions.</p>
+<p>So for example the a <code node="[object Object]">animation_finished</code> event would pass the animation index that finished on the first prop.</p>
+<p>And the <code node="[object Object]">body_entered</code> event would pass the angle at which the body entered as it&#x27;s first prop, and in the second prop the entity handle that entered.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">switch</span><span>(b.type) {
+</span><span>	</span><span style="color:#fb4934">case</span><span> PROP_I32: {
+</span><span>		</span><span style="color:#fb4934">switch</span><span>(condition.type) {
+</span><span>		</span><span style="color:#fb4934">case</span><span> CONDITION_EQ: {
+</span><span>			</span><span style="color:#fb4934">return</span><span> a.i32 == b.i32;
+</span><span>		} </span><span style="color:#fb4934">break</span><span>;
+</span><span>		</span><span style="color:#fb4934">case</span><span> CONDITION_NEQ: {
+</span><span>			</span><span style="color:#fb4934">return</span><span> a.i32 != b.i32;
+</span><span>		} </span><span style="color:#fb4934">break</span><span>;
+</span><span>		</span><span style="color:#fb4934">case</span><span> CONDITION_GT: {
+</span><span>			</span><span style="color:#fb4934">return</span><span> a.i32 &gt; b.i32;
+</span><span>		} </span><span style="color:#fb4934">break</span><span>;
+</span><span>		</span><span style="color:#fb4934">case</span><span> CONDITION_LT: {
+</span><span>			</span><span style="color:#fb4934">return</span><span> a.i32 &lt; b.i32;
+</span><span>		} </span><span style="color:#fb4934">break</span><span>;
+</span><span>		</span><span style="color:#fb4934">case</span><span> CONDITION_GTE: {
+</span><span>			</span><span style="color:#fb4934">return</span><span> a.i32 &gt;= b.i32;
+</span><span>		} </span><span style="color:#fb4934">break</span><span>;
+</span><span>		</span><span style="color:#fb4934">case</span><span> CONDITION_LTE: {
+</span><span>			</span><span style="color:#fb4934">return</span><span> a.i32 &lt;= b.i32;
+</span><span>		} </span><span style="color:#fb4934">break</span><span>;
+</span><span>		</span><span style="color:#fb4934">default</span><span>: {
+</span><span>			dbg_sentinel(</span><span style="color:#b8bb26">&quot;Invalid prop type&quot;</span><span>);
+</span>		};
+		}
+<span>	} </span><span style="color:#fb4934">break</span><span>;
+</span>	...
+}</code></div></pre>
+<p>Each action can have a single argument. The most basic example and probably the most used one is the <code node="[object Object]">play_animation</code> action, the argument is used as the index of the animation that should be played.</p>
+<p><em>I thought eventually we would need to add more conditions or arguments to the editor but we are almost done and it hasn&#x27;t been necessary.</em></p>
+<p>The action cool-down functions as a throttle, each time the action is called we save the timestamp of when it was called and if it&#x27;s called again we ignore it if the cool-down hasn&#x27;t passed.</p>
+<p>This really helps for collision actions, as we use a <a href="https://box2d.org/files/ErinCatto_SequentialImpulses_GDC2006.pdf">sequential impulses</a> physics engine so the same colliding pair can happen along multiple frames. So if we want to play an SFX when a collision happens we can make sure it doesn&#x27;t play again until the SFX finishes by setting a cool-down of the duration of the SFX.</p>
+<p>The action delay was something that took me a while to figure out but we use it all over the place once we had it. Whenever a function is triggered if it has an action delay it starts a new timer that copies all the data from the action and the event, then the timer&#x27;s systems checks if the timer has finished and triggers the action. Each action has a timer handle so that if it&#x27;s triggered again before the timer fires up, it cancels the previous timer and starts a new one.</p>
+<p>We might need to add some way to change the behavior to not always restart the timer but we haven&#x27;t had the need yet.</p>
+<p>The action ref tells which entity should do the action, if the ref is empty, we do the action on the entity that triggered the event. This let&#x27;s us copy/paste actions between entities really easily.</p>
+<p>The action type I guess it&#x27;s self-explanatory.</p>
+<p>The debug checkbox has been super useful, when on it logs the event and entity that caused the action, and the action data. I want to change this field to a generic flags field so that I can add another boolean <code node="[object Object]">disable</code> to comment out actions quickly from the editor.</p>
+<h2>Custom handler</h2>
+<p>Finally any entity can have a custom <code node="[object Object]">on_event</code> function pointer that it&#x27;s not null it gets called and passed all the information. We use this for entities with custom logic that would be to hard to do in the editor.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span> (*on_event)(struct event_ctx event_ctx, struct entity_handle entity_handle, </span><span style="color:#fb4934">enum</span><span> pinball_event_type type, struct pinball_props args);</span></code></div></pre>
+<h1>Lessons learned</h1>
+<p>I really like this system, I&#x27;m surprised how much we have managed to do with it! For example the pinball game in <a href="https://play.date/games/catchadiablos/">Catchadiablos</a> has no custom logic and works with only events and actions. I do think sometimes we have abused it and it can get really hard to debug issues when there are a lot of chaining events.</p>
+<p>The best part about this system is that it allows JP to prototype ideas really quickly. I would say 90% of the game logic is handled this way and every time we would add a new event or action to do one specific idea, it made it easier to do other parts of the game. It also makes it easier to build re-usable blocks of logic and apply them to multiple entities.</p>
+<p>The bad part is that Tiled was not mean to be used like this. If we ever need to do another game with this amount of logic in the editor I think it makes sense to invest some time on doing a custom editor that allow us to tailor it more to our needs.</p>
+<p>The biggest benefit of a good editor is being able to iterate fast, but if you are to afraid to change something because it may break something else you kill the creative process.</p>
+<p>At the end of the day event if it&#x27;s not textual coding, having logic in a visual way is still <del>coding</del> and you need a way to debug/validate/inspect that logic at edit/run time. And if you are doing it in a custom way eventually you will need to build the tools to help you do that.</p>
+<p>In our frustration dealing with big lists of events defined in Tiled with no way to change the way it&#x27;s displayed, we spent a week doing a small prototype of a platforming game using our own engine as the level editor.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-10-the-events-and-actions/editor.gif" alt="editor"/>
+<p>It turned out great! and definitely will try to build the editor inside the game for our next project.</p></div>]]></content>
+        <author>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </author>
+        <contributor>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </contributor>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Making a pinball game for Playdate: Part 09, the ball HUD]]></title>
+        <id>https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-ball-hud</id>
+        <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-ball-hud"/>
+        <updated>2025-07-30T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[How do we show how many chances you have left?]]></summary>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/filled-3.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/filled-1.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/filled-0.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/option-a.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/option-b.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/playdate-20250730-131927-export%201.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/end-result.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+<p>Kind of a silly thing that made me really happy yesterday</p>
+<p>Before we continue this post has spoilers for our game <a href="https://play.date/games/catchadiablos/">Catchadiablos</a>.</p>
+<p>A long time ago I remember there was a thread on twitter talking about lives UI in games and how it tends to be ambiguous.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/filled-3.png" alt="Filled 3"/>
+<p>When you have some sort of HUD that has a filled and unfilled icon for how many tries you have left and you lose, do you expect to have another chance?</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/filled-1.png" alt="Filled 1"/>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/filled-0.png" alt="Filled 0"/>
+<p>The problem is, how do you set the right expectation? And if it&#x27;s ambiguous, should you resolve the tension at the resolution with an <strong>upward beat</strong> or a <strong>downward beat</strong>?</p>
+<p>When we started building the HUD for <em>Devils on the Moon pinball</em>, we talked about this. We knew we wanted to give the players 3 balls to play with. How do we show that in the UI?</p>
+<h1>Option A</h1>
+<p>We show the three balls filled in the UI, and then when you lose one, we remove it? But wouldn&#x27;t that give you the expectation that you had 3 more balls apart from the one that you had at the beginning?</p>
+<p>Later on, when the ambiguity is resolved and you lose the last game, the game ends. If you had the expectation that you still had an extra ball, that&#x27;s a big downward beat.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/option-a.png" alt="Option A"/>
+<h1>Option B</h1>
+<p>We show only two balls, as that&#x27;s the chance you have left? But then we never show the UI with three balls; the UI has the space to show you three balls filled, but we never do! It felt wrong somehow.</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/option-b.png" alt="Option B"/>
+<p>Again, kind of silly.</p>
+<p>After like a day of debate, we ended up with option B, it&#x27;s better to not risk disappointing the player. That&#x27;s how we show it in the <strong>Catchadiablos</strong> pinball</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/playdate-20250730-131927-export%201.gif" alt="Catchadiablos Pinball"/>
+<p>Yesterday, though, we were working on the ball spawning <strong>polish</strong>, adding animations, making sure timings were right, etc. It sounds simple, but we had to change a lot of things, as before we weren&#x27;t destroying the entity and spawning it again; we just used the same ball entity and just reset its position.</p>
+<p>At the end, when we were tweaking the timings, we had an idea: what if we show the 3 balls filled in the UI, and with the spawning animation, we remove the ball from the HUD, signaling that you just spent one ball of the 3 balls that you have available? Best of both worlds!</p>
+<img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-09-the-balls-hud/end-result.gif" alt="End result"/>
+<p>Kind of silly, but really happy with how it turned out.</p>
+<p>I don&#x27;t know what awaits us in our next adventure, but see you there when it happens.</p></div>]]></content>
+        <author>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </author>
+        <contributor>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </contributor>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Making a pinball game for Playdate: Part 08, the entities and their components]]></title>
         <id>https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components</id>
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components"/>
         <updated>2025-05-26T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[How do we organize our game entities and their components.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_before.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_now.png"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to this adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_before.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_now.png"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>I know I said the next post was going to be about the physics debugger, but I&#x27;m getting closer to finishing up a big refactor that had been on my TODO list for a long time. And I wanted to talk about it.</p>
 <p>We are moving from an entity type/archetype to component-based behaviors.</p>
 <h2>Before</h2>
 <p>I had this structure for the game objects/entities of the game:</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity</span><span style="color:#8ec07c"> {</span><span>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity</span><span style="color:#8ec07c"> {</span><span>
 </span><span>	</span><span style="color:#fb4934">enum</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity_type</span><span style="color:#8ec07c"> </span><span style="color:#83a598">type</span><span style="color:#8ec07c">;</span><span>
 </span>	u32 components;
 <span>	</span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">transform</span><span style="color:#8ec07c"> </span><span style="color:#83a598">transform</span><span style="color:#8ec07c">;</span><span>
@@ -40,7 +524,7 @@
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_before.png" alt=""/>
 <p>Then I would iterate over the entities, check which type they were, and perform some logic depending on the type.</p>
 <p>Inside the function, I would assert that the entity had the components needed for that type to work, so something like:</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span>
 </span><span></span><span style="color:#928374;font-style:italic">// game.h</span><span>
 </span><span></span><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">game_upd</span><span style="color:#fabd2f">(struct entity *entities, size count, f32 dt)</span><span>{
 </span><span>	</span><span style="color:#fb4934">for</span><span>(size i = </span><span style="color:#d3869b">0</span><span>; i &lt; count; ++i){
@@ -66,7 +550,7 @@
 <span></span><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">flipper_drw</span><span style="color:#fabd2f">(struct entity *entity)</span><span>;</span></code></div></pre>
 <p>This worked well for a while, but quickly I stopped updating every entity every frame, because some things didn’t need to be updated unless they were on the screen or near a ball.</p>
 <p>So I started caching the types of entities in the world and updating entities more based on their type, instead of going through the whole list every frame.</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">flipper_sys_upd</span><span style="color:#fabd2f">(struct world *world, f32 dt)</span><span>{
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">flipper_sys_upd</span><span style="color:#fabd2f">(struct world *world, f32 dt)</span><span>{
 </span><span>	</span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity</span><span style="color:#8ec07c"> *</span><span style="color:#83a598">entities</span><span style="color:#8ec07c"> =</span><span> world_query_entity_type(world, ENTITY_FLIPPER);
 </span><span>	</span><span style="color:#fb4934">for</span><span>(size i = </span><span style="color:#d3869b">0</span><span>; i &lt; arr_len(entities); ++i){
 </span>		flipper_upd(entities[i], dt);
@@ -74,7 +558,7 @@
 }</code></div></pre>
 <p>The more I did this, the more I realized a lot of the logic was at the component level, not really at the entity type level. So I started moving all the common logic for updating components to their own systems.</p>
 <p>I used the same idea of making a DB of all the entities that had a specific component and using that for caching.</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">sprite_sys_upd</span><span style="color:#fabd2f">(struct world *world, f32 dt)</span><span>{
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">sprite_sys_upd</span><span style="color:#fabd2f">(struct world *world, f32 dt)</span><span>{
 </span><span>	</span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity</span><span style="color:#8ec07c"> *</span><span style="color:#83a598">entities</span><span style="color:#8ec07c"> =</span><span> world_query_component_type(world, COMPONENT_SPRITE);
 </span><span>	</span><span style="color:#fb4934">for</span><span>(size i = </span><span style="color:#d3869b">0</span><span>; i &lt; arr_len(entities); ++i){
 </span>		sprite_upd(&amp;entities[i]-&gt;sprite, dt);
@@ -82,14 +566,14 @@
 }</code></div></pre>
 <p>The more I migrated the entity logic to the components, the more flexible the game code and level editor became.</p>
 <p>I even created a new entity type called <em>Generic Entity</em> that we started using more and more. It would be a blank entity in Tiled by default, and then we could add components to it one by one.</p>
-<p>At some point, I realized we could just get rid of the <code>entity_type</code> variable altogether. I was a little hesitant to change things, because we had a lot of entities already placed in the map, and migrating and checking them one by one seemed like a lot of work.</p>
+<p>At some point, I realized we could just get rid of the <code node="[object Object]">entity_type</code> variable altogether. I was a little hesitant to change things, because we had a lot of entities already placed in the map, and migrating and checking them one by one seemed like a lot of work.</p>
 <p>But then we stopped working on the game for 6 months to work on <strong>Catchadiablos</strong> (You can <a href="https://play.date/games/seasons/two/">Pre-order it now!</a>). When we came back, we had both forgotten 60% of the game’s systems and functionalities. So it seemed like a good time to refactor this architectural design, and re-visit all the game functionality.</p>
 <h1>Now</h1>
 <p>It worked! It forced us to go through each entity, check what it was supposed to do, and ensure that after the refactor, it still behaved as intended.</p>
 <p>If an entity needed a new behavior, I could create a new component and add it as a property to the Tiled entity without having to modify every entity of the same type.</p>
 <p>This also allowed us to have optional components that wouldn’t clutter the Tiled inspector, if an entity didn’t need them, we simply wouldn’t add them.</p>
-<p>And if I need to implement logic for a specific type of entity archetype that requires a group of components to work properly, I can just create a new component and add it to any entity. Even if it&#x27;s just a <code>bool</code>, its main purpose is to allow me to query for that component specifically and update the entity accordingly.</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">flipper_upd</span><span style="color:#fabd2f">(struct entity *entity, f32 dt)</span><span style="color:#8ec07c"> </span><span>{
+<p>And if I need to implement logic for a specific type of entity archetype that requires a group of components to work properly, I can just create a new component and add it to any entity. Even if it&#x27;s just a <code node="[object Object]">bool</code>, its main purpose is to allow me to query for that component specifically and update the entity accordingly.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">void</span><span style="color:#8ec07c"> </span><span style="color:#83a598">flipper_upd</span><span style="color:#fabd2f">(struct entity *entity, f32 dt)</span><span style="color:#8ec07c"> </span><span>{
 </span>	assert(entity-&gt;components &amp; COMPONENT_SPRITE);
 	assert(entity-&gt;components &amp; COMPONENT_RIGID_BODY);
 	assert(entity-&gt;components &amp; COMPONENT_TRANSFORM);
@@ -109,8 +593,8 @@
 <p>And this is how it currently looks in <a href="https://www.mapeditor.org/">Tiled</a>: we can reorder, rename, or remove any of the components and the game will keep working.</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-08-the-entities-and-their-components/tiled_properties_now.png" alt=""/>
 <p>It doesn&#x27;t look like much, but it helped us clean up the <a href="https://www.mapeditor.org/">Tiled</a> properties a lot. To convert from one type of entity to another, you just need to add or remove a component, instead of changing the entity type. Before, we needed to create a new entity type for each combination of components. Whereas now, we can remove and add components freely.</p>
-<p>Another benefit is that now I can store the entity data in a more Data-Oriented way. So instead of having everything stored in the <code>entity</code> struct, we can have an array of components.</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity</span><span style="color:#8ec07c"> {</span><span>
+<p>Another benefit is that now I can store the entity data in a more Data-Oriented way. So instead of having everything stored in the <code node="[object Object]">entity</code> struct, we can have an array of components.</p>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">entity</span><span style="color:#8ec07c"> {</span><span>
 </span>	u32 id;
 	u32 components;
 };
@@ -130,10 +614,12 @@
 <p>This seems obvious in hindsight, especially if you&#x27;re familiar with Unity, where this is the norm. But when starting the project, it was easier to think about all the pieces separately and not try to generalize too much.</p>
 <p>I don&#x27;t know what awaits us in our next adventure, but see you there, when it happens.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -142,7 +628,7 @@
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-%3F%3F-the-secret-project"/>
         <updated>2025-04-22T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[What happened in the last six months?]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-the-secret-project/catchadiablos-key.png"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to this not-December adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-the-secret-project/catchadiablos-key.png"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this not-December adventure, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>So I have <em>good</em> and <em>bad</em> news. The good news is that we are releasing a game on the Playdate&#x27;s second season!</p>
 <p>I present to you: <strong>Catchadiablos</strong>!</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-the-secret-project/catchadiablos-key.png" alt="Catchadiablos"/>
@@ -157,10 +643,12 @@
 <p>The other <em>good</em> news is we are still planing to release <em>Devils on the Moon Pinball</em> before the year ends, you can wish list it now on <a href="https://play.date/games/devils-on-the-moon-pinball/">Catalog</a>. We even made a ridiculous video that showed up in the <a href="https://www.youtube.com/watch?v=wSNBCK5gIcY">Playdate Update #6</a> to announce the game’s catalog page launch.</p>
 <p>Now for real, see you in the next adventure: The physics debugger.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -169,10 +657,10 @@
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger"/>
         <updated>2024-12-10T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[Searching for a debugger on Linux]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/gdb.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/gdb-tui.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/seer.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/gf.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/vscode.png"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/gdb.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/gdb-tui.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/seer.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/gf.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger/vscode.png"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>One of the few good programming classes I had at university was deceptively called C++. I say deceptively because we learned little about the language features, and instead the class focused heavily on the control flow of a program.</p>
 <p>The teacher showed us how to use the Visual Studio debugger and go step by step through the code. Each class, he would teach us a new concept and walk us through it. We would go step by step in the program and showed us how to inspect the state of the program.</p>
-<p>After that class, I practically stopped using a debugger even though I learned a lot using them. I eventually ended up doing <code>print</code> statements and got used to this way of working.</p>
+<p>After that class, I practically stopped using a debugger even though I learned a lot using them. I eventually ended up doing <code node="[object Object]">print</code> statements and got used to this way of working.</p>
 <p>I used a debugger a couple of times but only for really specific issues and the majority of the time it seemed like too much hassle that wasn&#x27;t worth the effort.</p>
 <p>When I started learning C watching the <a href="https://www.youtube.com/watch?v=A2dxjOjWHxQ">Hand Made Hero</a> video series, Casey always ran his program through the debugger. It didn&#x27;t matter if he was searching for a bug or not. He dedicates a couple of hours at the beginning to setting everything up, but by the time he is actually working on his code, running the game through a debugger was as easy as running the game without it.</p>
 <p>I also watched his <a href="https://www.youtube.com/watch?v=r9eQth4Q5jg">video talking about Remedy BG</a>. It certainly looked useful, and as I considered myself a novice in C I needed all the help I could get. This is how my search for a debugger that worked on Linux started.</p>
@@ -203,10 +691,12 @@ Seer was one of my first tries at a GUI debugger on Linux; it sounded promising,
 <p>Any way, It was time to polish the physics of the game and after using this tools I had an idea.</p>
 <p>See you in the next adventure: The physics debugger.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -215,7 +705,7 @@ Seer was one of my first tries at a GUI debugger on Linux; it sounded promising,
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler"/>
         <updated>2024-12-09T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[Learning how to use a profiler]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/pd-sampler.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/spall-ss.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/spall.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/pd-sampler.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/spall-ss.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/spall.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>One thing I was afraid of when I started working on this game was profiling code. By the end of <a href="https://play.date/games/pullfrog/">Pullfrog Deluxe</a> development, I tried using the SDK profiler, but I had a really hard time.</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler/pd-sampler.png" alt="Sampler Playdate"/>
 <p>The call stack in general was big, and it wasn&#x27;t clear for me which things were the ones I had control over.</p>
@@ -236,10 +726,12 @@ Seer was one of my first tries at a GUI debugger on Linux; it sounded promising,
 <p>Well, it seems that all <a href="https://www.youtube.com/watch?v=WJVQLpGHB8g">the people</a> who talked about profiling were right, it&#x27;s really useful! And after years of using print statements to debug, I started to wonder... Is this the time to learn how to actually use a debugger?.</p>
 <p>See you in the next adventure, <a href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-07-the-debugger">The Debugger</a>.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -248,7 +740,7 @@ Seer was one of my first tries at a GUI debugger on Linux; it sounded promising,
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition"/>
         <updated>2024-12-05T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[2 Bits image formats.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/cover.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/Point_quadtree.svg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/diagram.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/01.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/02.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/cover.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/Point_quadtree.svg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/diagram.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/01.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/02.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>If I could only choose one book to recommend from this adventure, that would be <a href="https://realtimecollisiondetection.net/books/rtcd/">Real-Time Collision Detection by Christer Ericson</a>. Collision detection is a subject that has come up a bunch of times in my career, and it&#x27;s something that once you learn can apply to a bunch of things in game dev.</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition/cover.png" alt="Real-Time Collision Detection"/>
 <h2>Narrow collision detection</h2>
@@ -287,10 +779,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>Well, intuition and good practice can only take you so far. I wanted to be sure that if there were any performance issues, I had tools to diagnose them and fix them!</p>
 <p>Will see you in the next adventure: <a href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-06-the-profiler">The Profiler</a>.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -299,7 +793,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format"/>
         <updated>2024-12-04T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[2 Bits image formats.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/interlaced.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/cache-miss.jpg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/chr.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/glitch.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/grid.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/final.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to today’s <a href="https://eli.li/december-adventure">December adventure</a>, where I will write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/interlaced.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/cache-miss.jpg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/chr.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/glitch.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/grid.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/final.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to today’s <a href="https://eli.li/december-adventure">December adventure</a>, where I will write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>One day, as we were scrolling through the Playdate Squad Discord server, <a href="https://bsky.app/profile/strupf.bsky.social">Lukas Wolski</a> the dev behind the excellent game <a href="https://play.date/games/owlets-embrace/">Owlet’s Embrace</a> posted the following picture.</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/interlaced.png" alt="Interlaced"/>
 <blockquote>
@@ -314,7 +808,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>Ok good. What is <a href="https://en.wikipedia.org/wiki/Interlacing_(bitmaps)">interlacing</a> again? You probably have experienced this on the web.</p>
 <p>Sometimes a website image will show row by row of pixels while loading. But other times it would wait until the whole image is loaded. When the image is not interlaced, the browser needs the whole image information to be able to render it. This is because the information about the colors of the pixels and, the transparency is separated. So to show a single pixel, the browser needs to load all the color information and then load all the transparency information.</p>
 <p>When the image is interlaced, meaning all the information to render a row of pixels is close together, the browser can render the pixel as soon as it loads that single pixel information.</p>
-<p>Ok now that I got that. First I needed to figure out how to convert our <code>.png</code> images to something interlaced that I could then read on the Playdate and blit it to the screen. My first attempt was to convert them to the <a href="https://wiki.xxiivv.com/site/chr_format.html">CHR format</a> I knew my friend <a href="https://wiki.xxiivv.com/site/home.html">Devine</a> was using it for his <a href="https://wiki.xxiivv.com/site/nasu.html">Nasu</a> sprite sheet editor</p>
+<p>Ok now that I got that. First I needed to figure out how to convert our <code node="[object Object]">.png</code> images to something interlaced that I could then read on the Playdate and blit it to the screen. My first attempt was to convert them to the <a href="https://wiki.xxiivv.com/site/chr_format.html">CHR format</a> I knew my friend <a href="https://wiki.xxiivv.com/site/home.html">Devine</a> was using it for his <a href="https://wiki.xxiivv.com/site/nasu.html">Nasu</a> sprite sheet editor</p>
 <p>I wrote a custom <a href="https://git.sr.ht/~afk/ase-scripts/tree/main/item/export-to-chr.lua">Aseprite exporter for ICN and CHR</a> and BOOM; we have textures in the screen. This was my first time reading/writing a binary format, so it felt like a massive win.</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format/chr.gif" alt="ICN/CHR"/>
 <p>Now this didn&#x27;t assure me that it would be faster to draw than the Playdate&#x27;s <a href="https://github.com/cranksters/playdate-reverse-engineering/blob/main/formats/pdi.md">PDI</a> format; not only that, but the restriction of having everything in tiles was something that made sense for the Famicom but not for our game.</p>
@@ -329,10 +823,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>We added a bunch of polygons and tried the game, but when we started to see the frame rate drop, I knew what I needed to do.</p>
 <p>See you in the next adventure, <a href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-05-the-spatial-partition">Part 04: The spatial partitioning</a>.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -341,7 +837,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor"/>
         <updated>2024-12-03T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[How did we choose our first level editor for the game?]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/pikuma.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/aseprite.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/codeandweb.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/photo_2024-12-04_00-08-08.jpg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/polygon-editor.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/debug.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome back to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will write about the process of making our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/pikuma.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/aseprite.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/codeandweb.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/photo_2024-12-04_00-08-08.jpg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/polygon-editor.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/debug.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome back to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will write about the process of making our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>When following the <a href="https://pikuma.com/courses/game-physics-engine-programming">Pikuma 2D Physics course</a>, one thing I did quite fast was making a simple polygon editor. I quickly got tired of inputting every vertex by hand.</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/pikuma.gif" alt="Draw polygons with the mouse"/>
 <p>This presented a problem: how are we going to author the pinball table for our game? Not only that, but good pinball games have a lot of curves. Am I going to need a way to create <a href="https://www.youtube.com/watch?v=aVwxzDHniEw">Bézier curves</a>? How do I convert Bézier curves to something useful? In my case, to polygon colliders? Should I start working on a custom level editor?</p>
@@ -354,7 +850,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-03-the-first-level-editor/codeandweb.gif" alt="Code &amp; Web physics editor"/>
 <p>One intermediately obvious benefit of the Code &amp; Web editor was that it took care of subdividing the polygons to make them concave <em>automatically</em>.</p>
 <p>I hacked around a custom exporter that would generate a .h file with an array of polygons and started working from there.</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#928374;font-style:italic">// map.h</span><span>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-c" style="white-space:pre"><span style="color:#928374;font-style:italic">// map.h</span><span>
 </span>
 <span></span><span style="color:#fb4934">struct</span><span style="color:#8ec07c"> </span><span style="color:#83a598">body</span><span style="color:#8ec07c"> </span><span style="color:#83a598">TABLE_BODIES</span><span style="color:#8ec07c">[43] =</span><span> {
 </span>    {
@@ -383,10 +879,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>Now we just needed to find a way to draw textures on the screen, and there was a message on the Playdate Squad discord server that excited us a ton.</p>
 <p>See you in the next adventure, Part 04: <a href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-04-the-image-format">The image format</a>.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -395,7 +893,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics"/>
         <updated>2024-12-02T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[Let's talk about physics.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/Hero%20Shuugou!!%20Pinball%20Party.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-01.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-02.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-03.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will try to write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/Hero%20Shuugou!!%20Pinball%20Party.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/mask-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-01.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-02.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/pikuma-03.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will try to write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>When we decided to make a <em>pinball</em> game, the main challenge I saw was the physics system. I don&#x27;t consider myself to be someone good at math, and physics simulations sound like a scary big math mountain to climb.</p>
 <p>But there was always a small sliver of hope; old <em>Game Boy pinball</em> games didn&#x27;t look like they had a really sophisticated physics simulation, so If we at least managed something like that, we would be fine.</p>
 <img src="https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics/Hero%20Shuugou!!%20Pinball%20Party.png" alt="Hero Shuugou!! Pinball Party"/>
@@ -437,10 +935,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <h3><a href="http://www.richardtonge.com/presentations/Tonge-2012-GDC-solvingRigidBodyContacts.pdf">Solving Rigid Body Contacts</a> by <a href="http://www.richardtonge.com/">Richard Tonge</a></h3>
 <p>At some point I got stuck with a weird behaviour we were having with multiple collisions in a single frame, I may talk a little more about it in a later post, but this presentation saved my ass. And now I&#x27;m forever a fan of <a href="https://en.wikipedia.org/wiki/Antonio_Signorini_(physicist)">Antonio Signorini</a></p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -449,7 +949,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-01-the-language"/>
         <updated>2024-12-01T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[Welcome to this December adventure, where I will try to write about the process of our last game, Devils on the Moon pinball. Today I will talk about our choice of programming language for the game.]]></summary>
-        <content type="html"><![CDATA[<div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will try to write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
+        <content type="html"><![CDATA[<div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Welcome to this <a href="https://eli.li/december-adventure">December adventure</a>, where I will try to write about the process of our latest game, <a href="https://play.date/games/devils-on-the-moon-pinball/">Devils on the Moon pinball</a>.</p>
 <p>If you want to see the game in action, you can watch the <a href="https://youtu.be/wSNBCK5gIcY?si=t_YoBfm6o5_JanjH&amp;t=415">Playdate Fall update</a> where we show a sneak peek of the game.</p>
 <p>After we released <a href="https://play.date/games/pullfrog/">Pullfrog Deluxe</a> I had mixed feelings. On one side, I was super happy with the game that we did, but on the other, I felt stuck. There are some parts of Pullfrog that I felt I could have done better. I have had this feeling before; the problem is that I didn&#x27;t know how.</p>
 <p>I&#x27;m not a person who cares a lot about which programming language he uses; I have some preferences, but mainly because of familiarity. I have used <em>JS</em> for 10 years, almost daily, so whenever I have to make something fast, I tend to pick that. But the last time I programmed in a low-level language like <em>C</em> or <em>C++</em> was at university, more than 10 years ago.</p>
@@ -464,10 +964,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p><strong>Spoiler alert:</strong> I ended up doing the most complicated game mechanics I have done in the last 10 years. And I had a <em>great</em> time doing it.</p>
 <p>See you in the next adventure, <a href="https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-02-the-physics">Part 02: The Physics.</a></p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -476,7 +978,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/lets-finish-this"/>
         <updated>2023-08-14T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[We are back working on Pullfrog! What happened?]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/1-graph.svg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/2-slide.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/3-old-vs-new-clean.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/4-frog-evolution.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/5-old-shop.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/6-new-shop.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/7-old-vs-new-bussy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/8-eyes-collect-destroy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/9-second-chance.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/10-eyes.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>It’s been a long time since we talked about <strong>Pullfrog</strong>. The main reason being that we paused the development to work on another game called <strong>Don Salmon</strong>, you can read more about it on the previous <a href="https://amano.games/devlog/lets-talk-about-don-salmon">devlog</a>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/1-graph.svg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/2-slide.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/3-old-vs-new-clean.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/4-frog-evolution.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/5-old-shop.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/6-new-shop.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/7-old-vs-new-bussy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/8-eyes-collect-destroy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/9-second-chance.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-finish-this/10-eyes.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>It’s been a long time since we talked about <strong>Pullfrog</strong>. The main reason being that we paused the development to work on another game called <strong>Don Salmon</strong>, you can read more about it on the previous <a href="https://amano.games/devlog/lets-talk-about-don-salmon">devlog</a>.</p>
 <p>But now we are back working on <strong>Pullfrog</strong>, with our main goal of <strong>finishing it</strong>, we haven’t yet, but we are close! It’s at the stage where we are comfortable with what the game is and what it isn’t.</p>
 <p>So buckle up because this is going to be a long one.</p>
 <img src="https://media.amano.games/devlog/lets-finish-this/1-graph.svg" alt="graph.svg"/>
@@ -511,10 +1013,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>So yeah! We are <em>almost</em> done, we are excited to see what people think of the game, and happy with the progress we have made in the last couple of months. As of writing this we’ve finished the <strong>first beta build,</strong> there are still a couple of months left of work, but we are getting close!</p>
 <img src="https://media.amano.games/devlog/lets-finish-this/10-eyes.gif" alt="eyes.gif"/></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -523,7 +1027,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/lets-talk-about-don-salmon"/>
         <updated>2023-07-01T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[Don salmon, a new platforming game made in Godot and a small update on Pullfrog]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/01-pepe.jpg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/02-tutorial.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/03-ded.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/04-lego.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/05-prototype.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/06-concept.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/07-combat.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/08-preview.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Some things have been happening that triggered me to write this blog post. One of them is that <a href="https://twitter.com/pepehxc">a good friend of the studio</a> showed me a couple of neat muck-ups for a pixel art point-and-click adventure game, which took me down a rabbit hole of research, and I ended up reading 50 entries of the <a href="https://blog.thimbleweedpark.com/index.html">Thimbleweed Park blog</a> in a day.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/01-pepe.jpg"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/02-tutorial.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/03-ded.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/04-lego.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/05-prototype.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/06-concept.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/07-combat.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/lets-talk-about-don-salmon/08-preview.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Some things have been happening that triggered me to write this blog post. One of them is that <a href="https://twitter.com/pepehxc">a good friend of the studio</a> showed me a couple of neat muck-ups for a pixel art point-and-click adventure game, which took me down a rabbit hole of research, and I ended up reading 50 entries of the <a href="https://blog.thimbleweedpark.com/index.html">Thimbleweed Park blog</a> in a day.</p>
 <img src="https://media.amano.games/devlog/lets-talk-about-don-salmon/01-pepe.jpg" alt="01-pepe"/>
 <p>I also went to GDC for the fifth time! The first time I went to GDC I didn&#x27;t have a good time, mostly because I didn&#x27;t know anyone, my English wasn&#x27;t great, and the projects I was working on at the moment were hard to talk about with a bunch of cool people at the Yerbabuena park.</p>
 <p>Last year, I had a great time, mainly because I had two big things going on for me. The first one was that <a href="https://gdcvault.com/play/1027710/Independent-Games-Summit-Game-Dev">I gave a talk</a>!. This was the first time I went to GDC with a ticket, which was great! The second thing is that I was working on Pullfrog and had one of the few PlayDates, (maybe the only one?) in San Francisco at the time, so everyone I met wanted to try out the game!</p>
@@ -547,10 +1051,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>It&#x27;s been <del>10 months</del> 1 year, and we haven&#x27;t finished, but here is how the game looks right now. We are pretty happy with it; we are still figuring out something on the main mechanics, but that&#x27;s a topic for another log.</p>
 <img src="https://media.amano.games/devlog/lets-talk-about-don-salmon/08-preview.gif" alt="08-preview"/></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -559,7 +1065,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/spooky-eyes-and-level-editors"/>
         <updated>2021-12-11T06:00:00.000Z</updated>
         <summary type="html"><![CDATA[Last year we made the decision to take a break and focus on a spooky game around the spooky season.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/gossip.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/spoopy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/eyes.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/pullfrog.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/ldtk.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/entity.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/world.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/indicator.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Last year we made the decision to take a break and focus on a spooky game around the spooky season.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/gossip.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/spoopy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/eyes.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/pullfrog.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/ldtk.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/entity.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/world.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/spooky-eyes-and-level-editors/indicator.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Last year we made the decision to take a break and focus on a spooky game around the spooky season.</p>
 <p>This year we wanted to try and do a 3D game. We already have a 3D spooky game, <a href="https://afk-mario.itch.io/ghossip-ghosts">Gossip Ghost</a> but we never finished it, and it left us with an urge to try it again later.</p>
 <img src="https://media.amano.games/devlog/spooky-eyes-and-level-editors/gossip.png" alt="iLspod.png"/>
 <p>One thing that I wanted to try is <a href="https://godotengine.org/">Godot</a>, as a Linux with a bad internet user Unity tended to be a little hostile.</p>
@@ -593,10 +1099,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>Meanwhile I leave you with a Gif showing how we tend to debug UI elements.</p>
 <img src="https://media.amano.games/devlog/spooky-eyes-and-level-editors/indicator.gif" alt="https://media.amano.games/devlog/spooky-eyes-and-level-editors/indicator.gif"/></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -605,12 +1113,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/this-kills-the-frog"/>
         <updated>2021-09-02T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[After rewriting the physics system for the third time, it was time to start working on more fun stuff. The frog death system™.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/hand-picked-center%281%29.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/automatic-center%281%29.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/slide.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/ded.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Remember when I said that making a hole inside a big collider was a good idea? It was not. After rewriting the physics system for the third time, it was time to start working on more fun stuff. The frog death system™.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/hand-picked-center%281%29.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/automatic-center%281%29.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/slide.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/this-kills-the-frog/ded.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Remember when I said that making a hole inside a big collider was a good idea? It was not. After rewriting the physics system for the third time, it was time to start working on more fun stuff. The frog death system™.</p>
 <p>Something we wanted to improve from the PICO-8 version of the game, was to make it harder for the player to die. The game can be hard, as you need to mix platforming with puzzle solving abilities.</p>
 <p>On top of that, dying while pulling the pieces towards you was no fun, so we came up with a system to try to save you, moving you out of danger.</p>
 <p>First we figured we only are going to try to save the frog if you are getting squished by a piece that is moving vertically.</p>
 <p>The most important part is to figure out which direction we should move you. Our first approach was to compare the piece center with the player center, and move the player to the closest side to freedom.</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-lua" style="white-space:pre"><span>    </span><span style="color:#928374;font-style:italic">-- Fake code</span><span>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-lua" style="white-space:pre"><span>    </span><span style="color:#928374;font-style:italic">-- Fake code</span><span>
 </span><span>    </span><span style="color:#fb4934">local</span><span> pieceCenter = piece:getCenter()
 </span><span>    </span><span style="color:#fb4934">local</span><span> playerCenter = player:getCenter()
 </span>
@@ -625,7 +1133,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <img src="https://media.amano.games/devlog/this-kills-the-frog/automatic-center%281%29.png" alt="https://media.amano.games/devlog/this-kills-the-frog/automatic-center%281%29.png"/>
 <p>Now we have to figure out how many pixels we want the system to move the player each frame. If we move it too much, it would look like we are teleporting the player. If we move it too little, then it can get stuck for many frames and look like the game broke.</p>
 <p>We decided we didn&#x27;t want the player to die until the very last moment. When the piece is squishing it so much that there is no room to escape.</p>
-<p>We can get this information based on the overlapping rect between the piece and the player. If the <code>height</code> of the rect is less than 10 pixels (the frog collider is 11 pixels tall), we keep trying to break you free.</p>
+<p>We can get this information based on the overlapping rect between the piece and the player. If the <code node="[object Object]">height</code> of the rect is less than 10 pixels (the frog collider is 11 pixels tall), we keep trying to break you free.</p>
 <p>We figured that 1 pixel at a time would look the best most of the time. There are some times when you are on top of a piece that&#x27;s falling and if you pull it towards you, you get stuck sliding between a piece sandwich. So in that specific case, we move you 2 pixels at a time to get you out faster.</p>
 <img src="https://media.amano.games/devlog/this-kills-the-frog/slide.gif" alt="https://media.amano.games/devlog/this-kills-the-frog/slide.gif"/>
 <p>Another thing we realized was that it didn&#x27;t feel good when you died while you were moving in one direction, and our system forced you to move in the opposite direction.</p>
@@ -640,7 +1148,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <img src="https://media.amano.games/devlog/this-kills-the-frog/ded.gif" alt="https://media.amano.games/devlog/this-kills-the-frog/ded.gif"/>
 <p>Here is the code we ended up having, there is a lot of context missing, but helps to understand the system a little better.</p>
 <hr/>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-lua" style="white-space:pre"><span style="color:#fb4934">function</span><span style="color:#8ec07c"> </span><span style="color:#83a598">Player:SquishY</span><span style="color:#fabd2f">(other, x, y, w, h, dy)</span><span>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-lua" style="white-space:pre"><span style="color:#fb4934">function</span><span style="color:#8ec07c"> </span><span style="color:#83a598">Player:SquishY</span><span style="color:#fabd2f">(other, x, y, w, h, dy)</span><span>
 </span><span>    </span><span style="color:#fb4934">local</span><span> px = </span><span style="color:#83a598">self</span><span>.x
 </span><span>    </span><span style="color:#fb4934">local</span><span> ox, oy = </span><span style="color:#83a598">table</span><span>.</span><span style="color:#83a598">unpack</span><span>(other.overrideCenter)
 </span>    ox, oy = other.x + ox, other.y + oy
@@ -692,10 +1200,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 </span><span>    </span><span style="color:#fb4934">end</span><span>
 </span><span></span><span style="color:#fb4934">end</span></code></div></pre></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -704,13 +1214,13 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/starting-a-game"/>
         <updated>2021-08-09T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[A couple of things I would recommend when starting your first game on the Playdate.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/starting-a-game/target-position-bug.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>This is a more polished version of a long message that I wrote in the official <strong>Playdate</strong> Discord server. A couple of things I would recommend when starting your first game on the <strong>Playdate</strong>.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/starting-a-game/target-position-bug.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>This is a more polished version of a long message that I wrote in the official <strong>Playdate</strong> Discord server. A couple of things I would recommend when starting your first game on the <strong>Playdate</strong>.</p>
 <h2>Lazy Devs</h2>
 <p><a href="https://www.youtube.com/playlist?list=PLea8cjCua_P0qjjiG8G5FBgqwpqMU7rBk">Lazy Devs</a> is one of the best teachers for game development out there. I love his tutorials because it shows you the process of doing a game from start to finish with a lot of polish and focus on gameplay. The tutorials are for PICO-8, but it also uses LUA, so a lot of things translate well to <strong>Playdate</strong>.</p>
 <h2>a327ex</h2>
 <p>If you want a big LUA codebase to look at as a reference, <a href="https://github.com/a327ex/BYTEPATH">BYTEPATH</a> and <a href="https://github.com/a327ex/SNKRX">SNKRX</a> are good examples of finished games made in LOVE2D. They are open source so you can check how they handles everything in the games.</p>
 <p>Basic example:</p>
-<p>Coming from <strong>PICO-8</strong> I wasn&#x27;t used to importing external files so I was importing <em>CoreLibs</em> in every single file. At some point I started to wonder if that&#x27;s how everyone was doing it. I looked at <strong><a href="https://twitter.com/a327ex">a327ex</a></strong> code and ended up having an single <code>init.lua</code> file where I do all my imports and set up the game.</p>
+<p>Coming from <strong>PICO-8</strong> I wasn&#x27;t used to importing external files so I was importing <em>CoreLibs</em> in every single file. At some point I started to wonder if that&#x27;s how everyone was doing it. I looked at <strong><a href="https://twitter.com/a327ex">a327ex</a></strong> code and ended up having an single <code node="[object Object]">init.lua</code> file where I do all my imports and set up the game.</p>
 <h2>Using a framework</h2>
 <p>The most valuable thing from a framework in my opinion is to look at their code. So you can check the general structure of the project and figure out if it works for you, or grab the things that do. In general, I would recommend against starting with a framework on top of the Playdate SDK for your first <strong>Playdate</strong> project. You will end up with another layer of things you have to learn.</p>
 <h2>Scene Management</h2>
@@ -721,7 +1231,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>In a more code-centric problem the first version of your scene system probably is not going to be the best. And you probably don&#x27;t know all the things that you will need for it to work the best it can for your game. If you introduce it too early you may find yourself coding in a way to accommodate to your first attempt at your scene management system. So my advice would be start with movement first. Try to finish a game loop and if you need some scenes to make that happen do them in the simplest way possible.</p>
 <h2>LUA and OOP</h2>
 <p>This is personal preference but a lot of the times it is better to start without OOP. It can make your LUA tables bloated in exchange for a small convenience that you may regret later on. I use the basic sprite for everything and do helper functions that accept a reference to the sprite. After a while it becomes clear if I need to abstract it in a class, but a lot of the times it doesn&#x27;t.</p>
-<pre><div class="style_code-wrapper__4Id7f" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-lua" style="white-space:pre"><span style="color:#fb4934">function</span><span style="color:#8ec07c"> </span><span style="color:#83a598">spriteGetMapCoords</span><span style="color:#fabd2f">(sprite)</span><span>
+<pre><div class="style-module__0qOwMW__code-wrapper" node="[object Object]" style="display:block;overflow-x:auto;background:#282828;color:#ebdbb2"><code class="language-lua" style="white-space:pre"><span style="color:#fb4934">function</span><span style="color:#8ec07c"> </span><span style="color:#83a598">spriteGetMapCoords</span><span style="color:#fabd2f">(sprite)</span><span>
 </span><span>    </span><span style="color:#fb4934">local</span><span> x,y = sprite.x, sprite.y
 </span><span>    x = </span><span style="color:#83a598">math</span><span>.</span><span style="color:#83a598">floor</span><span>(x/</span><span style="color:#d3869b">16</span><span>)
 </span><span>    y = </span><span style="color:#83a598">math</span><span>.</span><span style="color:#83a598">floor</span><span>(y/</span><span style="color:#d3869b">16</span><span>)
@@ -751,10 +1261,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>It&#x27;s been a while since we post anything new about <strong>Pullfrog 2Bit</strong> and it&#x27;s mainly because all the new stuff is hard to share as it is has been a lot of refactor to try to have the game running at a better frame rate in the <strong>Playdate</strong>. I leave you with a GIF on the latest bug.</p>
 <img src="https://media.amano.games/devlog/starting-a-game/target-position-bug.gif" alt="https://media.amano.games/devlog/starting-a-game/target-position-bug.gif"/></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -763,7 +1275,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/how-to-correct-a-corner"/>
         <updated>2021-07-05T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[There are many techniques that you can apply so that a platformer game feels good. One of those is corner correction.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/ezgif.com-gif-maker.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/03.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/squish-export.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>There are many techniques that you can apply so that a platformer game <em>feels good</em>. One of those is corner correction.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/ezgif.com-gif-maker.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/03.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/squish-export.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>There are many techniques that you can apply so that a platformer game <em>feels good</em>. One of those is corner correction.</p>
 <img src="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif" alt="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/corner-correct.gif"/>
 <p>As with most of these techniques, the goal is to assist the player in getting to the position where they want to be. Even if there is something in the way that wouldn&#x27;t let them. In this case we are moving the player a few pixels to the sides so that they clear the platform above them.</p>
 <p>In the <a href="https://afk-mario.itch.io/pullfrog">PICO-8 version of Pullfrog</a>, we solved this using multiple colliders. We would check which one of them triggered the collision, based on that, we would apply some logic to move them where we wanted. This worked fine but the problem is that we where checking <strong>all the colliders</strong> every frame. It was hard to maintain, and an expensive operation, dropping frames when there were a lot of pieces in the screen.</p>
@@ -781,10 +1293,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <img src="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif" alt="https://media.amano.games/devlog/how-to-correct-a-corner/how-to-correct-a-corner/piece-correct-export.gif"/>
 <p>Did you noticed how the piece pushed you? this was an added benefit form the new physics system and a big difference from the PICO-8 version of Pullfrog, but we will talk about this is a different post.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -793,7 +1307,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/bouncy-animations"/>
         <updated>2021-06-26T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[Another Equally important decision, is choosing which poses you want to emphasize in order to get that reactive feeling when a character interacts with the world.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/01-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/02-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/03-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/04-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/09-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/05-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/10-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/06-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/11-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/07-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/08-bouncy.png"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>On some occasions people have commented on the character animations of the original Pullfrog. Saying how they look very bouncy, and asking how many frames we were using to get them to look so smooth. This used to throw me off-guard because the answer is one frame, or more like, as few as I can possibly draw.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/01-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/02-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/03-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/04-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/09-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/05-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/10-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/06-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/11-bouncy.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/07-bouncy.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/bouncy-animations/08-bouncy.png"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>On some occasions people have commented on the character animations of the original Pullfrog. Saying how they look very bouncy, and asking how many frames we were using to get them to look so smooth. This used to throw me off-guard because the answer is one frame, or more like, as few as I can possibly draw.</p>
 <img src="https://media.amano.games/devlog/bouncy-animations/01-bouncy.gif" alt="https://media.amano.games/devlog/bouncy-animations/01-bouncy.gif"/>
 <p>This is probably something that’s been talked about a million times, but here’s my take on the subject. To me, character animation is not about how smooth the movement is, or about trying to get in as many frames as possible to really make the character feel alive. It’s quite the opposite actually. I want to convey the action in the <strong>least amount of frames possible</strong> because I’m <em>lazy</em>, animation is a lot of work, and most people don’t really care or notice. Let the player’s mind fill-in the blanks. Well, those aren&#x27;t the only reasons. See, I’ve worked in animation before, so while economizing is important to get work done, I like the challenge of getting an action to come across with very few frames. It feels elegant. It feels like I solved a problem.</p>
 <p>So why DO these animations feel “Smooth” or “Bouncy”?</p>
@@ -822,10 +1336,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>Anyways. Once we start adding new mechanics and movements I’ll post about them too. And maybe talk about some cheating techniques to convey anticipation without hindering reaction times.</p>
 <p>That’s all for now. Thanks For reading!</p></div>]]></content>
         <author>
-            <name/>
+            <name>Jp</name>
+            <uri>https://twitter.com/eljovenpaul</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Jp</name>
+            <uri>https://twitter.com/eljovenpaul</uri>
         </contributor>
     </entry>
     <entry>
@@ -834,7 +1350,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/the-collision-stair-case"/>
         <updated>2021-06-19T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[As stated on the previous post, updating all the pieces all the time was a bad idea. We needed to figure out a way to update only the ones that needed to be updated after another block got destroyed. The quick and dirty solution was to check all the pieces inside a bounding box on top of the piece that got destroyed.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/01-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/04-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/06-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/03-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/05-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/07-statircase.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/02-statircase.gif"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><img src="https://media.amano.games/devlog/the-collision-stair-case/01-statircase.gif" alt="https://media.amano.games/devlog/the-collision-stair-case/01-statircase.gif"/>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/01-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/04-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/06-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/03-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/05-statircase.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/07-statircase.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/the-collision-stair-case/02-statircase.gif"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><img src="https://media.amano.games/devlog/the-collision-stair-case/01-statircase.gif" alt="https://media.amano.games/devlog/the-collision-stair-case/01-statircase.gif"/>
 <p>It all started with this little boy right here. A bug that had been annoying us for a couple of days, and this week was the time to fix it!</p>
 <p>As stated on the previous post, updating all the pieces all the time was a bad idea. We needed to figure out a way to update only the ones that needed to be updated after another block got destroyed. The quick and dirty solution was to check all the pieces inside a bounding box on top of the piece that got destroyed.</p>
 <img src="https://media.amano.games/devlog/the-collision-stair-case/04-statircase.gif" alt="https://media.amano.games/devlog/the-collision-stair-case/04-statircase.gif"/>
@@ -851,10 +1367,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>We also added a grid overlay to the game through the Playdate men, to position things or figure out their coordinates.</p>
 <img src="https://media.amano.games/devlog/the-collision-stair-case/02-statircase.gif" alt="https://media.amano.games/devlog/the-collision-stair-case/02-statircase.gif"/></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
         </contributor>
     </entry>
     <entry>
@@ -863,7 +1381,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/about-amano-collision-conundrum"/>
         <updated>2021-06-14T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[So, a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the PlayDate. We laid down the main mechanic, blocks were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/10-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/09-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/08-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/01-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/11-about-amano.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/07-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/12-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/04-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/06-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/05-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/03-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/02-about-amano.png"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><h2>About Amano</h2>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/10-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/09-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/08-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/01-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/11-about-amano.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/07-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/12-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/04-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/06-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/05-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/03-about-amano.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/about-amano-collision-conundrum/02-about-amano.png"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><h2>About Amano</h2>
 <p><strong><a href="https://twitter.com/eljovenpaul">JP:</a></strong> So, a couple of months back, Mario and I were happily working away on The game, finding out the workflow and working out the kinks of developing for the <a href="https://play.date/">PlayDate</a>. We laid down the main mechanic, block were falling and colliding correctly the character was moving alright but we were doing everything on the simulator, NOT testing on the actual device. so when we decided to take it for a spin…  it crashed.</p>
 <img src="https://media.amano.games/devlog/about-amano-collision-conundrum/10-about-amano.png" alt="https://media.amano.games/devlog/about-amano-collision-conundrum/10-about-amano.png"/>
 <p>Turns out, the way we were handling collisions wasn’t the best. So we got kinda bummed out and stopped working on the game for a bit.</p>
@@ -898,10 +1416,20 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <img src="https://media.amano.games/devlog/about-amano-collision-conundrum/02-about-amano.png" alt="https://media.amano.games/devlog/about-amano-collision-conundrum/02-about-amano.png"/>
 <p>Next up is dealing on how the pieces and the frog behave when you pull them and they collide with the frog. We have some ideas on how to improve this based on what we learned from the PICO-8 version.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </author>
+        <author>
+            <name>Jp</name>
+            <uri>https://twitter.com/eljovenpaul</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Mario</name>
+            <uri>https://merveilles.town/@mario_afk</uri>
+        </contributor>
+        <contributor>
+            <name>Jp</name>
+            <uri>https://twitter.com/eljovenpaul</uri>
         </contributor>
     </entry>
     <entry>
@@ -910,7 +1438,7 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
         <link href="https://amano.games/devlog/pullfrog-postmortem"/>
         <updated>2021-05-29T05:00:00.000Z</updated>
         <summary type="html"><![CDATA[So towards the end of the year, Mario managed to get his hands on a Development console for the handheld "Playdate" and we decided to attempt do make a second version of Pullfrog, this time featuring a playful little crank and seemingly less restrictions except for the apparent ones like the black and white color of the screen. Oh the naivety.]]></summary>
-        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/frogtris-cols-export.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-003.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-004.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/concept.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-008.png"/><div class="style_rich-text-container__tFEap rich-text-container markdown-container"><p>Back in <strong>2020</strong> during the month of may <a href="https://merveilles.town/@mario_afk">Mario</a> and myself started working on a game for <a href="https://www.lexaloffle.com/pico-8.php">PICO-8</a> as part of a monthly game development club. I&#x27;ve always loved playing Tetris and other falling block puzzle games, although Tetris is more of a skill game than a puzzle game such as <a href="https://en.wikipedia.org/wiki/Puzzle_League">Panel De Pon</a>. I&#x27;ve also always loved playing platformers. Moving around a character that has well-polished controls makes it feel like controlling an extension of your body. So I&#x27;d kinda wanted to mash-up these two things for a while.</p>
+        <content type="html"><![CDATA[<link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/frogtris-cols-export.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-003.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-004.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/concept.png"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog.gif"/><link rel="preload" as="image" href="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-008.png"/><div class="style-module__HhMmPW__rich-text-container rich-text-container markdown-container"><p>Back in <strong>2020</strong> during the month of may <a href="https://merveilles.town/@mario_afk">Mario</a> and myself started working on a game for <a href="https://www.lexaloffle.com/pico-8.php">PICO-8</a> as part of a monthly game development club. I&#x27;ve always loved playing Tetris and other falling block puzzle games, although Tetris is more of a skill game than a puzzle game such as <a href="https://en.wikipedia.org/wiki/Puzzle_League">Panel De Pon</a>. I&#x27;ve also always loved playing platformers. Moving around a character that has well-polished controls makes it feel like controlling an extension of your body. So I&#x27;d kinda wanted to mash-up these two things for a while.</p>
 <img src="https://media.amano.games/devlog/pullfrog-postmortem/frogtris-cols-export.png" alt="https://media.amano.games/devlog/pullfrog-postmortem/frogtris-cols-export.png"/>
 <p>I started by trying to lay down the feel of the character movement. I am not a programmer but attempting this really helped me understand how games and code really behave. and so after a while at work I managed to produce this janky-ass thing.</p>
 <img src="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-003.gif" alt="https://media.amano.games/devlog/pullfrog-postmortem/pullfrog-postmortem-003.gif"/>
@@ -935,10 +1463,12 @@ Thanks to the uniformity of the grid, accessing a cell corresponding to a partic
 <p>Slowly making progress as we get to know the <a href="https://play.date">Playdate</a> console more and more. Developing tools and better ways to work. We&#x27;re gonna try to keep this devlog going as we work and hope that whoever reads it can get something out of it. Thanks for reading.</p>
 <p>You can follow us on <a href="https://twitter.com/amanogames_">twitter</a> and stay updated on the development of our games.</p></div>]]></content>
         <author>
-            <name/>
+            <name>Jp</name>
+            <uri>https://twitter.com/eljovenpaul</uri>
         </author>
         <contributor>
-            <name/>
+            <name>Jp</name>
+            <uri>https://twitter.com/eljovenpaul</uri>
         </contributor>
     </entry>
 </feed>

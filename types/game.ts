@@ -1,0 +1,21 @@
+export type Game = {
+  name: string;
+  slug: string;
+  description: string;
+  badge?: string | null;
+  subtitle?: string | null;
+  className?: string | null;
+  trailer?: string | null;
+  itch?: string | null;
+  newgrounds?: string | null;
+  lexaloffle?: string | null;
+  steam?: string | null;
+  catalog?: string | null;
+  presskit?: string | null;
+  wishlist?: string | null;
+  action?: string | null;
+  pitch_deck?: string | null;
+  featured?: boolean;
+  show_links?: boolean;
+  publish?: boolean;
+};

@@ -1,0 +1,239 @@
+import classNames from 'classnames';
+import { Fragment } from 'react';
+
+import { isFormatImage } from 'lib/assets';
+import type { PresskitAssetGroup, PresskitVideo } from 'types/presskit';
+import styles from './styles.module.css';
+
+function formatBytes(bytes?: number | null, decimals = 1) {
+  if (!bytes || bytes === 0) return '0 B';
+
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  const value = bytes / k ** i;
+
+  return `${value.toFixed(decimals)} ${sizes[i]}`;
+}
+
+type Props = {
+  className?: string;
+  videos?: PresskitVideo[];
+  assets?: PresskitAssetGroup[];
+  bundle?: string;
+};
+
+function PresskitAssets({
+  className,
+  videos = [],
+  assets = [],
+  bundle,
+}: Props) {
+  const customClassName = classNames(
+    styles['presskit-assets'],
+    'presskit-assets',
+    '-inverted',
+    className
+  );
+
+  return (
+    <section className={customClassName}>
+      <header>
+        <h1>Assets</h1>
+      </header>
+      {bundle ? (
+        <dl>
+          <dt>Download all</dt>
+          <dd>
+            <a href={bundle}>{bundle}</a>
+          </dd>
+        </dl>
+      ) : null}
+
+      {videos.length > 0 ? (
+        <>
+          <h2>Videos</h2>
+          <dl>
+            {videos.map((item) => {
+              return (
+                <Fragment key={item.name}>
+                  {!item.collapse ? (
+                    <>
+                      <dt>{item.name}</dt>
+                      {item.youtube ? (
+                        <dd className={styles['yt-iframe-wrapper']}>
+                          <iframe
+                            className={styles['yt-iframe']}
+                            title={item.name}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            src={`https://www.youtube.com/embed/${item.youtube}`}
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            frameBorder="0"
+                            allowFullScreen
+                          />
+                        </dd>
+                      ) : null}
+                      {item.downloads && item.downloads.length > 0 ? (
+                        <>
+                          <dt>Download:</dt>
+                          <dd>
+                            <ul>
+                              {item.downloads?.map((download) => {
+                                return (
+                                  <li key={download.url}>
+                                    <a href={download.url}>{download.name}</a> (
+                                    {formatBytes(download.bytes)}{' '}
+                                    <span className={styles['asset-format']}>
+                                      {download.format}
+                                    </span>
+                                    )
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </dd>
+                        </>
+                      ) : null}
+                    </>
+                  ) : (
+                    <dd>
+                      <details>
+                        <summary>{item.name}</summary>
+                        {item.youtube ? (
+                          <div className={styles['yt-iframe-wrapper']}>
+                            <iframe
+                              className={styles['yt-iframe']}
+                              title={item.name}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              src={`https://www.youtube.com/embed/${item.youtube}`}
+                              referrerPolicy="strict-origin-when-cross-origin"
+                              frameBorder="0"
+                              allowFullScreen
+                            />
+                          </div>
+                        ) : null}
+                      </details>
+                    </dd>
+                  )}
+                </Fragment>
+              );
+            })}
+          </dl>
+        </>
+      ) : null}
+      {assets.length > 0 ? (
+        <>
+          {assets.map((section) => {
+            if (section.grid) {
+              return (
+                <section key={section.title}>
+                  <h2>{section.title}</h2>
+                  <ul className={styles['presskit-assets-grid']}>
+                    {section.items.map((item) => {
+                      return (
+                        <li key={item.url}>
+                          <a href={item.url}>
+                            <img
+                              loading="lazy"
+                              src={item.url}
+                              alt={item.name}
+                            />
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              );
+            }
+            return (
+              <section key={section.title}>
+                <h2>{section.title}</h2>
+                <dl>
+                  {section.items.map((item) => {
+                    const isImg = isFormatImage(item.format);
+                    return (
+                      <Fragment key={item.url}>
+                        {!item.collapse ? (
+                          <>
+                            <dt>
+                              <a href={item.url}>{item.name}</a>
+                            </dt>
+                            {isImg ? (
+                              <dd>
+                                <img
+                                  loading="lazy"
+                                  style={
+                                    item.style_width
+                                      ? { maxWidth: item.style_width }
+                                      : undefined
+                                  }
+                                  src={item.url}
+                                  alt={item.name}
+                                />
+                              </dd>
+                            ) : null}
+                            <dd>
+                              {formatBytes(item.bytes)}{' '}
+                              <span className={styles['asset-format']}>
+                                {item.format}
+                              </span>
+                            </dd>
+                            {isImg ? (
+                              <dd>
+                                {item.width} x {item.height}
+                              </dd>
+                            ) : null}
+                          </>
+                        ) : (
+                          <dd>
+                            <details>
+                              <summary>
+                                {item.name} (
+                                <a href={item.url}>
+                                  <span>
+                                    {item.width} x {item.height}{' '}
+                                  </span>
+                                  <span>{formatBytes(item.bytes)} </span>
+                                  <span className={styles['asset-format']}>
+                                    {item.format}
+                                  </span>
+                                </a>
+                                )
+                              </summary>
+                              <figure>
+                                <a href={item.url}>
+                                  {isImg ? (
+                                    <img
+                                      loading="lazy"
+                                      style={
+                                        item.style_width
+                                          ? { maxWidth: item.style_width }
+                                          : undefined
+                                      }
+                                      src={item.url}
+                                      alt={item.name}
+                                    />
+                                  ) : (
+                                    <span>{item.url}</span>
+                                  )}
+                                </a>
+                              </figure>
+                            </details>
+                          </dd>
+                        )}
+                      </Fragment>
+                    );
+                  })}
+                </dl>
+              </section>
+            );
+          })}
+        </>
+      ) : null}
+    </section>
+  );
+}
+
+export default PresskitAssets;
