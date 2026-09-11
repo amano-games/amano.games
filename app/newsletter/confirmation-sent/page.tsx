@@ -1,11 +1,19 @@
 import Header from 'components/header';
 import Footer from 'components/footer';
-import Seo from 'components/seo';
+import { createMetadata } from 'lib/metadata';
 
-function NewsletterConfirmation() {
+import './styles.css';
+
+export const dynamic = 'force-static';
+
+export const metadata = createMetadata({
+  title: 'Amano Newsletter',
+  path: '/newsletter/confirmation-sent',
+});
+
+export default function NewsletterConfirmation() {
   return (
     <>
-      <Seo title="Amano Newsletter" />
       <Header />
       <main className="p-newsletter-subscribed -inverted">
         <div className="p-newsletter-subscribed-wrapper wrapper">
@@ -22,5 +30,3 @@ function NewsletterConfirmation() {
     </>
   );
 }
-
-export default NewsletterConfirmation;

@@ -5,6 +5,7 @@ import Box from 'components/box';
 import Markdown from 'components/markdown';
 import PostAuthors from 'components/post-authors';
 import type { Author } from 'types/post';
+import './styles.css';
 
 const options: Intl.DateTimeFormatOptions = {
   weekday: 'long',

@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import classNames from 'classnames';
+import './styles.css';
 
 type Props = {
   className?: string;

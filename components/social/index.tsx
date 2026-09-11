@@ -8,6 +8,7 @@ import Itch from 'svg/itch.svg';
 import Mail from 'svg/mail.svg';
 import Fediverse from 'svg/fediverse.svg';
 import Bsky from 'svg/bsky.svg';
+import './styles.css';
 
 type SocialItem = {
   label: string;

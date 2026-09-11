@@ -1,9 +1,12 @@
+'use client';
+
 import { useEffect, type ReactNode } from 'react';
 import classNames from 'classnames';
 import { useInView } from 'react-intersection-observer';
 import { useWindowSize } from '@reach/window-size';
 
 import NavLink from 'components/nav-link';
+import './styles.css';
 
 type Props = {
   href: string;

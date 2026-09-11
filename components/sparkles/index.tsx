@@ -1,3 +1,5 @@
+'use client';
+
 import React, { type HTMLAttributes, type ReactNode } from 'react';
 
 import { random, range } from 'utils/animation';
@@ -5,6 +7,7 @@ import useRandomInterval from 'hooks/use-random-interval';
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 
 import Sparkle from './sparkle';
+import './styles.css';
 
 const DEFAULT_COLOR = 'currentColor';
 

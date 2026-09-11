@@ -1,0 +1,23 @@
+{
+  "subject": "acct:amano@mastodon.gamedev.place",
+  "aliases": [
+    "https://mastodon.gamedev.place/@amano",
+    "https://mastodon.gamedev.place/users/amano"
+  ],
+  "links": [
+    {
+      "rel": "http://webfinger.net/rel/profile-page",
+      "type": "text/html",
+      "href": "https://mastodon.gamedev.place/@amano"
+    },
+    {
+      "rel": "self",
+      "type": "application/activity+json",
+      "href": "https://mastodon.gamedev.place/users/amano"
+    },
+    {
+      "rel": "http://ostatus.org/schema/1.0/subscribe",
+      "template": "https://mastodon.social/authorize_interaction?uri={uri}"
+    }
+  ]
+}

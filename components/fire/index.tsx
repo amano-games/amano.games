@@ -1,3 +1,5 @@
+'use client';
+
 import type { ComponentProps } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';

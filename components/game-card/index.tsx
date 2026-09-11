@@ -11,6 +11,7 @@ import Pico from 'svg/pico.svg';
 import PlayIcon from 'svg/play-icon.svg';
 import Catalog from 'svg/playdate.svg';
 import Steam from 'svg/steam.svg';
+import './styles.css';
 
 type LinkItem = {
   label: string;

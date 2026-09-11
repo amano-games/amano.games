@@ -9,6 +9,7 @@ import Twitter from 'svg/twitter.svg';
 import Instagram from 'svg/insta.svg';
 import Web from 'svg/web.svg';
 import Fediverse from 'svg/fediverse.svg';
+import './styles.css';
 
 type Props = ManitaData & {
   className?: string;

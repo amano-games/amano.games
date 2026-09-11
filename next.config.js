@@ -1,11 +1,18 @@
 /* eslint filenames/match-regex: 0 */
 
+const CONTENT_TYPE_WEBFINGER = 'application/jrd+json';
+
 export default {
-  async rewrites() {
+  async headers() {
     return [
       {
         source: '/.well-known/webfinger',
-        destination: '/api/.well-known/webfinger',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: CONTENT_TYPE_WEBFINGER,
+          },
+        ],
       },
     ];
   },

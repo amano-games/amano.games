@@ -1,6 +1,7 @@
 import Route from 'components/route';
 import Eye from 'components/eye';
 import Link from 'next/link';
+import './styles.css';
 
 const routes = [
   {

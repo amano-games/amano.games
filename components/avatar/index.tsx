@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 
 import Mask from 'svg/mask.svg';
+import './styles.css';
 
 type Props = {
   className?: string;

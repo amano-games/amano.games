@@ -3,6 +3,7 @@ import Markdown from 'components/markdown';
 import type { Manita as ManitaData } from 'types/manita';
 
 import Fingers from 'svg/fingers2.svg';
+import './styles.css';
 
 type Props = {
   manitas: ManitaData[];

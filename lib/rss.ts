@@ -1,9 +1,10 @@
 import { Feed } from 'feed';
 import fs from 'fs';
-
-import ReactDOMServer from 'react-dom/server';
-
-import Markdown from 'components/markdown';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkGfm from 'remark-gfm';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
 
 import { url, defaultTitle, defaultDescription } from 'lib/site';
 import type { Post } from 'types/post';
@@ -21,6 +22,17 @@ type RssPost = Pick<
   Post,
   'slug' | 'title' | 'excerpt' | 'content' | 'authors' | 'date'
 >;
+
+async function markdownToHtml(markdown: string) {
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .process(markdown);
+
+  return String(file);
+}
 
 export async function generateRssFeed(posts: RssPost[]) {
   if (process.env.NODE_ENV === 'development') {
@@ -46,32 +58,37 @@ export async function generateRssFeed(posts: RssPost[]) {
     author: authorAmano,
   });
 
-  posts.forEach((post) => {
-    const slugEncoded = encodeURIComponent(post.slug);
-    const postUrl = `${baseUrl}/devlog/${slugEncoded}`;
-    const content = ReactDOMServer.renderToStaticMarkup(
-      <Markdown>{post.content}</Markdown>
-    );
-    feed.addItem({
-      title: post.title,
-      id: postUrl,
-      link: postUrl,
-      description: post.excerpt,
-      content,
-      author: post.authors.map((item) => {
-        return {
-          name: item.name,
-          link: item.url,
-        };
-      }),
-      contributor: post.authors.map((item) => {
-        return {
-          name: item.name,
-          link: item.url,
-        };
-      }),
-      date: new Date(post.date),
-    });
+  const items = await Promise.all(
+    posts.map(async (post) => {
+      const slugEncoded = encodeURIComponent(post.slug);
+      const postUrl = `${baseUrl}/devlog/${slugEncoded}`;
+      const content = await markdownToHtml(post.content ?? '');
+
+      return {
+        title: post.title,
+        id: postUrl,
+        link: postUrl,
+        description: post.excerpt,
+        content,
+        author: post.authors.map((item) => {
+          return {
+            name: item.name,
+            link: item.url,
+          };
+        }),
+        contributor: post.authors.map((item) => {
+          return {
+            name: item.name,
+            link: item.url,
+          };
+        }),
+        date: new Date(post.date),
+      };
+    })
+  );
+
+  items.forEach((item) => {
+    feed.addItem(item);
   });
 
   fs.mkdirSync('./public/rss', { recursive: true });

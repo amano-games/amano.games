@@ -10,6 +10,7 @@ import {
   mastodon as defaultMastodon,
 } from 'lib/site';
 import type { PresskitPlatform, PresskitRelease } from 'types/presskit';
+import './styles.css';
 
 type Props = {
   title: string;

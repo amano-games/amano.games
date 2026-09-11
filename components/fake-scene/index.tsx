@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 
 import Logo from 'svg/logo.svg';
+import './styles.css';
 
 type Props = {
   className?: string;

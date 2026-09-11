@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 import Box from 'components/box';
@@ -6,6 +8,7 @@ import Comment from 'components/comment';
 import type { CommentData } from 'components/comment';
 
 import { getComments } from './functions';
+import './styles.css';
 
 const noCommentsYet = `No comments yet :<`;
 

@@ -1,3 +1,5 @@
+'use client';
+
 import * as THREE from 'three';
 import { useFrame, type ThreeElements } from '@react-three/fiber';
 import { useTimeoutFn } from 'react-use';

@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import Social from 'components/social';
 import Fingers from 'svg/fingers1.svg';
+import './styles.css';
 
 const year = new Date().getFullYear();
 

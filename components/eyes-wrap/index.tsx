@@ -1,3 +1,5 @@
+'use client';
+
 import React, { type HTMLAttributes, type ReactNode } from 'react';
 import classNames from 'classnames';
 
@@ -5,6 +7,7 @@ import { random, shuffleArray } from 'utils/animation';
 import Eye from 'components/eye';
 
 import layouts from './layouts';
+import './styles.css';
 
 function generateEye(x: number, y: number) {
   const width = random(60, 100);

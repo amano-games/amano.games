@@ -1,48 +1,35 @@
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import type { GetStaticProps } from 'next';
 
-import Seo from 'components/seo';
 import Header from 'components/header';
 import Footer from 'components/footer';
 import Social from 'components/social';
-
-import FakeScene from 'components/fake-scene';
-import Scene from 'components/scene';
-
+import HomeHero from 'components/home-hero';
 import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
 import Contact from 'components/contact';
 import NewsletterSignupForm from 'components/newsletter-signup-form';
 
 import { getManitas, getGames, getAboutUs } from 'utils/notion';
-import type { Game } from 'types/game';
-import type { Manita } from 'types/manita';
+import { createMetadata } from 'lib/metadata';
 
-import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
-import { detectWebGLContext } from 'utils/animation';
+import './styles.css';
 
-type Props = {
-  manitas: Manita[];
-  games: Game[];
-  aboutUs: string[];
-};
+export const dynamic = 'force-static';
 
-export default function Home({ manitas, games, aboutUs }: Props) {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const [canRender, setCanRender] = useState(false);
+export const metadata = createMetadata({ path: '/' });
 
-  useEffect(() => {
-    const webglEnabled = detectWebGLContext();
-    setCanRender(!prefersReducedMotion && webglEnabled);
-  }, [prefersReducedMotion]);
+export default async function Home() {
+  const [manitas, games, aboutUs] = await Promise.all([
+    getManitas(),
+    getGames(),
+    getAboutUs(),
+  ]);
 
   return (
     <>
-      <Seo />
       <Header />
       <div className="p-home-hero-wrapper" id="home">
-        {canRender ? <Scene /> : <FakeScene />}
+        <HomeHero />
         <div className="p-home-info-wrapper">
           <div className="p-home-info">
             <p>Two friends</p>
@@ -78,15 +65,3 @@ export default function Home({ manitas, games, aboutUs }: Props) {
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const [manitas, games, aboutUs] = await Promise.all([
-    getManitas(),
-    getGames(),
-    getAboutUs(),
-  ]);
-
-  return {
-    props: { manitas, games, aboutUs },
-  };
-};

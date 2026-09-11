@@ -4,6 +4,7 @@ import PostPreview from 'components/post-preview';
 
 import { twitter } from 'lib/site';
 import type { Post } from 'types/post';
+import './styles.css';
 
 const info = `You can subscribe via [RSS](/rss/feed.xml) or follow us [@${twitter}
           ](https://twitter.com/${twitter})`;

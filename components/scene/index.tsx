@@ -1,9 +1,12 @@
+'use client';
+
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import FakeScene from 'components/fake-scene';
 import Logo3D from 'components/logo-3d';
+import './styles.css';
 
 function SceneFallback() {
   return <FakeScene />;

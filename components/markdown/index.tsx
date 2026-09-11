@@ -7,6 +7,7 @@ import remarkGfm from 'remark-gfm';
 import { isValidElement } from 'react';
 
 import RichText from 'components/rich-text';
+import './styles.css';
 
 const SPOILER_PREFIX = 'spoiler: ';
 

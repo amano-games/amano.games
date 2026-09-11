@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
   type CSSProperties,
   type HTMLAttributes,
@@ -11,6 +13,7 @@ import useDimensions from 'react-use-dimensions';
 import { random, range } from 'utils/animation';
 
 import Eye from 'components/eye';
+import './styles.css';
 
 type EyeItem = {
   id: string;

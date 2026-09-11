@@ -7,6 +7,7 @@ import Footer from 'components/footer';
 
 import Hand from 'svg/hand.svg';
 import Text from 'svg/text.svg';
+import './styles.css';
 
 type Props = {
   children?: ReactNode;

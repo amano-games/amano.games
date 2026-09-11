@@ -1,24 +1,19 @@
 import type { HTMLAttributes } from 'react';
-import { useRouter } from 'next/router';
 
-import EyesWrap from 'components/eyes-wrap';
-import EyesWrapAdmin from 'components/eyes-wrap-admin';
 import GameCard from 'components/game-card';
 import Fire from 'components/fire';
 import type { Game } from 'types/game';
+
+import GameGalleryWrap from './wrap';
+import './styles.css';
 
 type Props = {
   games: Game[];
 } & HTMLAttributes<HTMLDivElement>;
 
 function GameGallery({ games, ...rest }: Props) {
-  const router = useRouter();
-  const { edit } = router.query;
-
-  const Wrap = edit ? EyesWrapAdmin : EyesWrap;
-
   return (
-    <Wrap className="c-game-gallery -inverted" {...rest}>
+    <GameGalleryWrap {...rest}>
       <div className="wrapper">
         <header className="c-game-gallery-header">
           <h1>Our Games</h1>
@@ -33,7 +28,7 @@ function GameGallery({ games, ...rest }: Props) {
             })}
         </div>
       </div>
-    </Wrap>
+    </GameGalleryWrap>
   );
 }
 

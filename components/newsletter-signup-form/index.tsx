@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import './styles.css';
 
 type Props = {
   className?: string;
@@ -23,7 +24,7 @@ function NewsletterSignupForm({ className }: Props) {
           id="3d2ed"
           type="checkbox"
           name="l"
-          checked
+          defaultChecked
           value="3d2ed56a-309b-4c36-9c88-1c903b0f7d92"
           hidden
         />

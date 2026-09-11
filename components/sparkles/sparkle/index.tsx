@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import './styles.css';
 
 type Props = {
   size: number;

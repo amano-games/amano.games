@@ -2,6 +2,7 @@ import Sparkles from 'components/sparkles';
 import Social from 'components/social';
 
 import { email } from 'lib/site';
+import './styles.css';
 
 function Contact() {
   return (

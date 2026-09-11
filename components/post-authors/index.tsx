@@ -1,4 +1,5 @@
 import type { Author } from 'types/post';
+import './styles.css';
 
 const listFormatter = new Intl.ListFormat('en', {
   style: 'long',

@@ -49,6 +49,7 @@
     "remark-rehype": "^11.1.2",
     "slugify": "^1.6.6",
     "three": "^0.177.0",
+    "unified": "^11.0.5",
     "use-sound": "^5.0.0"
   },
   "devDependencies": {

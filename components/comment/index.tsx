@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 import type { ReactNode } from 'react';
 import classNames from 'classnames';
+import './styles.css';
 
 function getTitle({
   accountHandle,

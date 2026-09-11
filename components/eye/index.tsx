@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, type ButtonHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -9,6 +11,7 @@ import EyeIcon from 'svg/eye.svg';
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 
 import animation from './eye.json';
+import './styles.css';
 
 const sfx = '/sfx/plop.mp3';
 

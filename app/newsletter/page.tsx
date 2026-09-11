@@ -1,11 +1,19 @@
 import Header from 'components/header';
 import Footer from 'components/footer';
-import Seo from 'components/seo';
+import { createMetadata } from 'lib/metadata';
 
-function Newsletter() {
+import './styles.css';
+
+export const dynamic = 'force-static';
+
+export const metadata = createMetadata({
+  title: 'Amano Newsletter',
+  path: '/newsletter',
+});
+
+export default function Newsletter() {
   return (
     <>
-      <Seo title="Amano Newsletter" />
       <Header />
       <main className="p-newsletter -inverted" id="newsletter">
         <div className="p-newsletter-wrapper wrapper">
@@ -34,7 +42,7 @@ function Newsletter() {
               id="3d2ed"
               type="checkbox"
               name="l"
-              checked
+              defaultChecked
               value="3d2ed56a-309b-4c36-9c88-1c903b0f7d92"
               hidden
             />
@@ -87,5 +95,3 @@ function Newsletter() {
     </>
   );
 }
-
-export default Newsletter;
