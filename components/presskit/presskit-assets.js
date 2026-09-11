@@ -46,41 +46,64 @@ function PresskitAssets({ className, videos = [], assets = [], bundle }) {
             {videos.map((item) => {
               return (
                 <Fragment key={item.name}>
-                  <dt>{item.name}</dt>
-                  {item.youtube ? (
-                    <dd className={styles['yt-iframe-wrapper']}>
-                      <iframe
-                        className={styles['yt-iframe']}
-                        title={item.name}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        src={`https://www.youtube.com/embed/${item.youtube}`}
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        frameborder="0"
-                        allowfullscreen
-                      />
-                    </dd>
-                  ) : null}
-                  {item.downloads?.length > 0 ? (
+                  {!item.collapse ? (
                     <>
-                      <dt>Download:</dt>
-                      <dd>
-                        <ul>
-                          {item.downloads?.map((download) => {
-                            return (
-                              <li key={download.url}>
-                                <a href={download.url}>{download.name}</a> (
-                                {formatBytes(download.bytes)}{' '}
-                                <span className={styles['asset-format']}>
-                                  {download.format}
-                                </span>
-                                )
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </dd>
+                      <dt>{item.name}</dt>
+                      {item.youtube ? (
+                        <dd className={styles['yt-iframe-wrapper']}>
+                          <iframe
+                            className={styles['yt-iframe']}
+                            title={item.name}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            src={`https://www.youtube.com/embed/${item.youtube}`}
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            frameborder="0"
+                            allowfullscreen
+                          />
+                        </dd>
+                      ) : null}
+                      {item.downloads?.length > 0 ? (
+                        <>
+                          <dt>Download:</dt>
+                          <dd>
+                            <ul>
+                              {item.downloads?.map((download) => {
+                                return (
+                                  <li key={download.url}>
+                                    <a href={download.url}>{download.name}</a> (
+                                    {formatBytes(download.bytes)}{' '}
+                                    <span className={styles['asset-format']}>
+                                      {download.format}
+                                    </span>
+                                    )
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </dd>
+                        </>
+                      ) : null}
                     </>
-                  ) : null}
+                  ) : (
+                    <dd>
+                      <details>
+                        <summary>{item.name}</summary>
+                        {item.youtube ? (
+                          <div className={styles['yt-iframe-wrapper']}>
+                            <iframe
+                              className={styles['yt-iframe']}
+                              title={item.name}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              src={`https://www.youtube.com/embed/${item.youtube}`}
+                              referrerpolicy="strict-origin-when-cross-origin"
+                              frameborder="0"
+                              allowfullscreen
+                            />
+                          </div>
+                        ) : null}
+                      </details>
+                    </dd>
+                  )}
                 </Fragment>
               );
             })}

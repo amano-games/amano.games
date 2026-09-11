@@ -75,6 +75,7 @@ PresskitPage.propTypes = {
     videos: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
+        collpase: PropTypes.boolean,
         youtube: PropTypes.string,
         downloads: PropTypes.arrayOf(
           PropTypes.shape({
@@ -184,7 +185,7 @@ export async function getStaticProps(context) {
       const enrichedVideos = await Promise.all(
         videos.map(async (video) => {
           const enrichedDownloads = await Promise.all(
-            video.downloads.map(async (asset) => {
+            (video.downloads || []).map(async (asset) => {
               try {
                 const meta = await getAssetMeta(asset.url);
                 return {

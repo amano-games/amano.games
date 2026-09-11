@@ -22,8 +22,10 @@ videos:
       - name: 1080p
         url: https://media.amano.games/presskit/devils-on-the-moon-pinball/DotM-Trailer-mp4.mp4
   - name: Steam Trailer
+    collapse: true
     youtube: 3k0wUzeA71Y
   - name: Dev commentary
+    collapse: true
     youtube: bvxhHURZc8M
 
 assets:
