@@ -1,25 +1,25 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const { defineConfig, globalIgnores } = require('eslint/config');
+import { defineConfig, globalIgnores } from 'eslint/config';
 
-const globals = require('globals');
-const prettier = require('eslint-plugin-prettier');
-const filenames = require('eslint-plugin-filenames');
-const reactHooks = require('eslint-plugin-react-hooks');
-const tseslint = require('typescript-eslint');
+import globals from 'globals';
+import prettier from 'eslint-plugin-prettier';
+import filenames from 'eslint-plugin-filenames';
+import reactHooks from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
 
-const { fixupPluginRules } = require('@eslint/compat');
+import { fixupPluginRules } from '@eslint/compat';
 
-const js = require('@eslint/js');
+import js from '@eslint/js';
 
-const { FlatCompat } = require('@eslint/eslintrc');
+import { FlatCompat } from '@eslint/eslintrc';
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: import.meta.dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
 });
 
-module.exports = defineConfig([
+export default defineConfig([
   globalIgnores([
     '**/node_modules/',
     '.git/',

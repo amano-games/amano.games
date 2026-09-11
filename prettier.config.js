@@ -1,5 +1,5 @@
 /* eslint filenames/match-regex: 0 */
-module.exports = {
+export default {
   singleQuote: true,
   trailingComma: 'es5',
 };
