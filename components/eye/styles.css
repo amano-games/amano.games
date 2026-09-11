@@ -4,4 +4,31 @@
   border: none;
   background: transparent;
   padding: 0;
+  display: grid;
+  overflow: hidden;
+}
+
+.c-eye-sizer,
+.c-eye-player {
+  grid-area: 1 / 1;
+}
+
+.c-eye-sizer {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.c-eye-player,
+.c-eye-player canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Cover the SVG, do not remove it from layout. */
+.c-eye:has(.c-eye-player) .c-eye-sizer {
+  opacity: 0;
 }

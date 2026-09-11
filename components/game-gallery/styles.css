@@ -16,6 +16,12 @@
   height: auto;
 }
 
+.c-game-gallery-fire canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .c-game-gallery-grid {
   width: 100%;
   display: grid;

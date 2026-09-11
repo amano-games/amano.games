@@ -82,18 +82,19 @@ function Eye({
         onClick();
       }}
     >
+      <EyeIcon className="c-eye-sizer" aria-hidden={jsEnabled} />
       {jsEnabled ? (
         <DotLottieReact
           {...options}
+          className="c-eye-player"
           data={animation}
           segment={anim}
+          layout={{ fit: 'cover', align: [0.5, 0.5] }}
           dotLottieRefCallback={dotLottieRefCallback}
           loop={false}
           autoplay={!prefersReducedMotion}
         />
-      ) : (
-        <EyeIcon />
-      )}
+      ) : null}
     </button>
   );
 }

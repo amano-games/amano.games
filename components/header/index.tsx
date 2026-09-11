@@ -25,7 +25,7 @@ function Header() {
   return (
     <header id="header" className="c-header -inverted">
       <div className="c-header-wrapper wrapper">
-        <Link href="/#">
+        <Link className="c-header-home" href="/#">
           <Eye className="c-header-eye" />
         </Link>
         <nav className="c-header-navigation">
