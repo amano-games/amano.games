@@ -10,7 +10,6 @@ import DevlogOtherPosts from 'components/devlog-other-posts';
 import DevlogComments from 'components/devlog-comments';
 
 import './styles.css';
-import NewsletterSignup from 'components/newsletter-signup';
 
 export const dynamic = 'force-static';
 
@@ -44,7 +43,6 @@ export default async function Devlog() {
         <PostView {...first} />
       </div>
 
-      <NewsletterSignup className="p-devlog-newsletter" />
       {first.mastodon ? <DevlogComments {...first.mastodon} /> : null}
       <DevlogOtherPosts allPosts={allPosts} currentSlug={first.slug} />
     </>

@@ -1,4 +1,9 @@
-import { Client, isFullBlock, isFullPage } from '@notionhq/client';
+import {
+  Client,
+  isFullBlock,
+  isFullDatabase,
+  isFullPage,
+} from '@notionhq/client';
 import slugify from 'slugify';
 
 import { richTextToMarkdown } from 'lib/notion/utils';
@@ -23,10 +28,32 @@ export function getClient() {
   return notion;
 }
 
-export async function getTableItems(databaseId: string) {
-  const notion = getClient();
-  const data = await notion.databases.query({
+type TableClient = {
+  databases: {
+    retrieve: Client['databases']['retrieve'];
+  };
+  dataSources: {
+    query: Client['dataSources']['query'];
+  };
+};
+
+export async function getTableItems(
+  databaseId: string,
+  notion: TableClient = getClient()
+) {
+  const database = await notion.databases.retrieve({
     database_id: databaseId,
+  });
+  const dataSourceId = isFullDatabase(database)
+    ? database.data_sources[0]?.id
+    : undefined;
+
+  if (dataSourceId == null) {
+    throw new Error(`No data source for database ${databaseId}`);
+  }
+
+  const data = await notion.dataSources.query({
+    data_source_id: dataSourceId,
   });
 
   const pages = data.results.filter(isFullPage);
