@@ -1,0 +1,73 @@
+.p-devlog-archive {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-02);
+}
+
+.p-devlog-archive-header {
+  text-align: center;
+  width: 100%;
+}
+
+.p-devlog-archive-header-title {
+  text-align: center;
+  max-width: none;
+  width: 100%;
+}
+
+.p-devlog-archive-list {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-01);
+  padding: 0;
+}
+
+.p-devlog-archive-list-item {
+  max-width: none;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-01);
+}
+
+.p-devlog-archive-list-item > a {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: var(--spacing-01);
+}
+
+.p-devlog-archive-list-item > a:hover {
+  color: var(--yellow);
+}
+
+.p-devlog-archive-list-item time {
+  font-family: var(--font-mono);
+}
+
+.p-devlog-archive-post-tags {
+  color: var(--gray);
+  max-width: 640px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-01);
+}
+
+@media screen and (max-width: 500px) {
+  .p-devlog-archive-list {
+    gap: var(--spacing-02);
+  }
+  .p-devlog-archive-list-item {
+    flex-flow: column;
+    align-items: flex-start;
+  }
+
+  .p-devlog-archive-list-item > a {
+    flex-flow: column;
+    align-items: flex-start;
+  }
+}

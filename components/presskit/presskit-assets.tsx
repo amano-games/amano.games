@@ -3,7 +3,6 @@ import { Fragment } from 'react';
 
 import { isFormatImage } from 'lib/assets';
 import type { PresskitAssetGroup, PresskitVideo } from 'types/presskit';
-import styles from './styles.module.css';
 
 function formatBytes(bytes?: number | null, decimals = 1) {
   if (!bytes || bytes === 0) return '0 B';
@@ -31,8 +30,7 @@ function PresskitAssets({
   bundle,
 }: Props) {
   const customClassName = classNames(
-    styles['presskit-assets'],
-    'presskit-assets',
+    'c-presskit-assets',
     '-inverted',
     className
   );
@@ -62,9 +60,9 @@ function PresskitAssets({
                     <>
                       <dt>{item.name}</dt>
                       {item.youtube ? (
-                        <dd className={styles['yt-iframe-wrapper']}>
+                        <dd className="c-presskit-assets-yt-iframe-wrapper">
                           <iframe
-                            className={styles['yt-iframe']}
+                            className="c-presskit-assets-yt-iframe"
                             title={item.name}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             src={`https://www.youtube.com/embed/${item.youtube}`}
@@ -84,7 +82,7 @@ function PresskitAssets({
                                   <li key={download.url}>
                                     <a href={download.url}>{download.name}</a> (
                                     {formatBytes(download.bytes)}{' '}
-                                    <span className={styles['asset-format']}>
+                                    <span className="c-presskit-assets-asset-format">
                                       {download.format}
                                     </span>
                                     )
@@ -101,9 +99,9 @@ function PresskitAssets({
                       <details>
                         <summary>{item.name}</summary>
                         {item.youtube ? (
-                          <div className={styles['yt-iframe-wrapper']}>
+                          <div className="c-presskit-assets-yt-iframe-wrapper">
                             <iframe
-                              className={styles['yt-iframe']}
+                              className="c-presskit-assets-yt-iframe"
                               title={item.name}
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                               src={`https://www.youtube.com/embed/${item.youtube}`}
@@ -129,7 +127,7 @@ function PresskitAssets({
               return (
                 <section key={section.title}>
                   <h2>{section.title}</h2>
-                  <ul className={styles['presskit-assets-grid']}>
+                  <ul className="c-presskit-assets-grid">
                     {section.items.map((item) => {
                       return (
                         <li key={item.url}>
@@ -176,7 +174,7 @@ function PresskitAssets({
                             ) : null}
                             <dd>
                               {formatBytes(item.bytes)}{' '}
-                              <span className={styles['asset-format']}>
+                              <span className="c-presskit-assets-asset-format">
                                 {item.format}
                               </span>
                             </dd>
@@ -196,7 +194,7 @@ function PresskitAssets({
                                     {item.width} x {item.height}{' '}
                                   </span>
                                   <span>{formatBytes(item.bytes)} </span>
-                                  <span className={styles['asset-format']}>
+                                  <span className="c-presskit-assets-asset-format">
                                     {item.format}
                                   </span>
                                 </a>

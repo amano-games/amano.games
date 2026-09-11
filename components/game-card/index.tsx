@@ -12,8 +12,6 @@ import PlayIcon from 'svg/play-icon.svg';
 import Catalog from 'svg/playdate.svg';
 import Steam from 'svg/steam.svg';
 
-import style from './style.module.css';
-
 type LinkItem = {
   label: string;
   url: string | null | undefined;
@@ -86,7 +84,7 @@ function GameCard({
     {
       label: 'catalog',
       url: catalog,
-      icon: <Catalog className={style['catalog-badge']} />,
+      icon: <Catalog className="c-game-card-catalog-badge" />,
     },
   ].filter((item) => item.url != null);
   const shouldShowLinks = getShouldShowLinks({
@@ -97,33 +95,27 @@ function GameCard({
     wishlist,
   });
 
-  const customClassName = classNames(
-    style['game-card'],
-    'game-card',
-    className
-  );
+  const customClassName = classNames('c-game-card', className);
 
   const header = (
-    <header className={style['game-header']}>
-      <h2 className={style['game-title']}>{name}</h2>
-      {subtitle ? <h3 className={style['game-subtitle']}>{subtitle}</h3> : null}
+    <header className="c-game-card-header">
+      <h2 className="c-game-card-title">{name}</h2>
+      {subtitle ? <h3 className="c-game-card-subtitle">{subtitle}</h3> : null}
     </header>
   );
 
   return (
     <Box className={customClassName} data-featured={featured}>
       {!featured ? header : null}
-      <div className={style['game-content']}>
-        <div className={style['game-info']}>
-          <div className={style['game-media']}>
-            {badge ? (
-              <span className={style['game-badge']}>{badge}</span>
-            ) : null}
+      <div className="c-game-card-content">
+        <div className="c-game-card-info">
+          <div className="c-game-card-media">
+            {badge ? <span className="c-game-card-badge">{badge}</span> : null}
 
             <img src={`/games/${slug}.png`} alt={name} />
             {trailer ? (
               <a
-                className={`${style['game-trailer-wrapper']}`}
+                className="c-game-card-trailer-wrapper"
                 href={trailer}
                 rel="noopener noreferrer"
                 target="_blank"
@@ -132,12 +124,12 @@ function GameCard({
               </a>
             ) : null}
           </div>
-          <div className={style['game-content-wrapper']}>
+          <div className="c-game-card-content-wrapper">
             {featured ? header : null}
             {shouldShowLinks ? (
-              <div className={style['game-actions']}>
-                <span className={style['game-call-to-action']}>{action}</span>
-                <div className={style['game-actions-links']}>
+              <div className="c-game-card-actions">
+                <span className="c-game-card-call-to-action">{action}</span>
+                <div className="c-game-card-actions-links">
                   {links.map((link) => {
                     return (
                       <a
@@ -151,14 +143,14 @@ function GameCard({
                     );
                   })}
                   {presskit ? (
-                    <a className={style['game-presskit']} href={presskit}>
+                    <a className="c-game-card-presskit" href={presskit}>
                       Presskit
                     </a>
                   ) : null}
                 </div>
               </div>
             ) : null}
-            <Markdown className={style['game-description']}>
+            <Markdown className="c-game-card-description">
               {description}
             </Markdown>
           </div>

@@ -7,8 +7,6 @@ import GameCard from 'components/game-card';
 import Fire from 'components/fire';
 import type { Game } from 'types/game';
 
-import style from './style.module.css';
-
 type Props = {
   games: Game[];
 } & HTMLAttributes<HTMLDivElement>;
@@ -20,13 +18,13 @@ function GameGallery({ games, ...rest }: Props) {
   const Wrap = edit ? EyesWrapAdmin : EyesWrap;
 
   return (
-    <Wrap className={`${style['game-gallery']} -inverted`} {...rest}>
+    <Wrap className="c-game-gallery -inverted" {...rest}>
       <div className="wrapper">
-        <header className={style['game-gallery-header']}>
+        <header className="c-game-gallery-header">
           <h1>Our Games</h1>
-          <Fire className={style['game-gallery-fire']} />
+          <Fire className="c-game-gallery-fire" />
         </header>
-        <div className={style['game-gallery-grid']}>
+        <div className="c-game-gallery-grid">
           {games
             .filter((game) => game.publish === true)
             .sort((a, b) => Number(b.featured) - Number(a.featured))

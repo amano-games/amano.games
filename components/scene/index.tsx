@@ -5,8 +5,6 @@ import { ErrorBoundary } from 'react-error-boundary';
 import FakeScene from 'components/fake-scene';
 import Logo3D from 'components/logo-3d';
 
-import styles from './style.module.css';
-
 function SceneFallback() {
   return <FakeScene />;
 }
@@ -14,7 +12,7 @@ function SceneFallback() {
 function Scene() {
   return (
     <ErrorBoundary FallbackComponent={SceneFallback}>
-      <div className={`${styles['scene-wrapper']}`}>
+      <div className="c-scene">
         <Canvas flat>
           <Suspense fallback={null}>
             <Logo3D position={[0, -2.5, 0]} />

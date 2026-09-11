@@ -1,0 +1,60 @@
+.p-game-changelog {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--black);
+}
+
+.p-game-changelog-header {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--yellow);
+}
+
+.p-game-changelog-header h1,
+.p-game-changelog-header h3 {
+  max-width: none;
+  text-align: center;
+}
+
+.p-game-changelog-header-wrapper {
+  padding: var(--spacing-04) 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-game-changelog-content {
+  padding: var(--spacing-04) 1.5rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-04);
+}
+
+.p-game-changelog-cover {
+  width: 100%;
+  max-width: 800px;
+  border-radius: var(--spacing-02);
+}
+
+.p-game-changelog-text {
+  width: 100%;
+}
+
+.p-game-changelog-text h1,
+.p-game-changelog-text h3,
+.p-game-changelog-text h2 {
+  max-width: none;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}

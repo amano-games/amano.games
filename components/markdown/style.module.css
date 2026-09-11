@@ -1,8 +1,0 @@
-.code-wrapper {
-  border-radius: var(--spacing-01);
-  padding: var(--spacing-01) var(--spacing-02);
-}
-
-.spoiler summary {
-  cursor: pointer;
-}

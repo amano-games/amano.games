@@ -1,0 +1,34 @@
+.p-presskit-wrapper {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-04);
+  padding-top: var(--spacing-04);
+  padding-bottom: var(--spacing-04);
+}
+
+.p-presskit-header {
+  background: var(--yellow);
+  padding-top: var(--spacing-04);
+  padding-bottom: var(--spacing-04);
+}
+
+.p-presskit-header-wrapper {
+  width: 100%;
+  max-width: max-content;
+  margin: auto;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-02);
+}
+
+.p-presskit-cover {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+}

@@ -4,7 +4,6 @@ import PostPreview from 'components/post-preview';
 
 import { twitter } from 'lib/site';
 import type { Post } from 'types/post';
-import style from './style.module.css';
 
 const info = `You can subscribe via [RSS](/rss/feed.xml) or follow us [@${twitter}
           ](https://twitter.com/${twitter})`;
@@ -19,23 +18,25 @@ function DevlogOtherPosts({ allPosts = [], currentSlug }: Props) {
     (post) => post.slug !== currentSlug && post.publish
   );
   return (
-    <div className={`${style['devlog-keep-reading-wrapper']} wrapper`}>
-      <div className={`${style['devlog-keep-reading']}`}>
-        <header className={`${style['devlog-keep-reading-header']}`}>
-          <h1 className={style['devlog-keep-reading-title']}>Other Posts</h1>
+    <div className="c-devlog-other-posts-keep-reading-wrapper wrapper">
+      <div className="c-devlog-other-posts-keep-reading">
+        <header className="c-devlog-other-posts-keep-reading-header">
+          <h1 className="c-devlog-other-posts-keep-reading-title">
+            Other Posts
+          </h1>
           <Link
-            className={style['devlog-keep-reading-archive']}
+            className="c-devlog-other-posts-keep-reading-archive"
             href="/devlog/archive"
           >
             Archive
           </Link>
         </header>
-        <Markdown className={`${style['devlog-keep-reading-info']} -inverted`}>
+        <Markdown className="c-devlog-other-posts-keep-reading-info -inverted">
           {info}
         </Markdown>
       </div>
 
-      <div className={`${style['devlog-posts-grid']} wrapper`}>
+      <div className="c-devlog-other-posts-grid wrapper">
         {other.map((item) => {
           return <PostPreview {...item} key={item.slug} />;
         })}

@@ -1,0 +1,55 @@
+.c-route {
+  display: block;
+  height: 100%;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-route > span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding-right: var(--spacing-02);
+  padding-left: var(--spacing-02);
+}
+
+.c-route::marker {
+  display: none;
+}
+
+.c-route::before {
+  display: flex;
+  content: '';
+  height: var(--spacing-01);
+  width: 100%;
+  transform: scaleY(0);
+  transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: var(--white);
+  transform-origin: 0% 0%;
+}
+
+.c-route:hover,
+.c-route[data-active='true'],
+.c-route[data-in-view='true'] {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+.c-route:hover a {
+  color: var(--black);
+}
+
+.c-route:hover::before,
+.c-route[data-active='true']::before,
+.c-route[data-in-view='true']::before {
+  height: var(--spacing-02);
+  transform: scaleY(1);
+}
+
+@media screen and (max-width: 450px) {
+  .c-route > span {
+    padding-right: var(--spacing-h);
+    padding-left: var(--spacing-h);
+  }
+}

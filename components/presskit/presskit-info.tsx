@@ -11,8 +11,6 @@ import {
 } from 'lib/site';
 import type { PresskitPlatform, PresskitRelease } from 'types/presskit';
 
-import styles from './styles.module.css';
-
 type Props = {
   title: string;
   aboutDev: string;
@@ -50,12 +48,7 @@ function PresskitInfo({
   twitter = defaultTwitter,
   youtube = defaultYoutube,
 }: Props) {
-  const customClassName = classNames(
-    styles['presskit-info'],
-    'presskit-info',
-    '-inverted',
-    className
-  );
+  const customClassName = classNames('c-presskit-info', '-inverted', className);
   const mastodonData = parseMastodonHandle(mastodon);
 
   return (
@@ -110,12 +103,12 @@ function PresskitInfo({
         <dd>{tagline}</dd>
 
         <dt>Description</dt>
-        <dd className={styles['presskit-content']}>
+        <dd className="c-presskit-info-content">
           <Markdown>{content}</Markdown>
         </dd>
 
         <dt>About Amano</dt>
-        <dd className={styles['presskit-content']}>
+        <dd className="c-presskit-info-content">
           <Markdown>{aboutDev}</Markdown>
         </dd>
 

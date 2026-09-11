@@ -10,8 +10,6 @@ import Instagram from 'svg/insta.svg';
 import Web from 'svg/web.svg';
 import Fediverse from 'svg/fediverse.svg';
 
-import style from './style.module.css';
-
 type Props = ManitaData & {
   className?: string;
   flipped?: boolean;
@@ -30,8 +28,8 @@ function Manita({
   className,
   flipped = false,
 }: Props) {
-  const customClassName = classNames(style.manita, 'manita', className, {
-    [style['-flipped']]: flipped,
+  const customClassName = classNames('c-manita', className, {
+    'c-manita-flipped': flipped,
   });
 
   const links = [
@@ -74,20 +72,18 @@ function Manita({
   return (
     <article className={customClassName}>
       <Avatar
-        className={style['manita-media']}
+        className="c-manita-media"
         flipped={flipped}
         src={avatar}
         alt={title}
       />
-      <div className={style['manita-info']}>
-        <header className={style['manita-header']}>
+      <div className="c-manita-info">
+        <header className="c-manita-header">
           <h2>{title}</h2>
           <h3>{subtitle}</h3>
         </header>
-        <Markdown className={style['manita-description']}>
-          {description}
-        </Markdown>
-        <ul className={style['manita-links']}>
+        <Markdown className="c-manita-description">{description}</Markdown>
+        <ul className="c-manita-links">
           {links.map((link) => {
             return (
               <li key={link.url}>

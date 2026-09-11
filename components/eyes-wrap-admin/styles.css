@@ -1,0 +1,51 @@
+.c-eyes-wrap-admin {
+  position: relative;
+  overflow: hidden;
+}
+
+.c-eyes-wrap-admin-add-eye {
+  position: fixed;
+  bottom: var(--spacing-02);
+  right: var(--spacing-02);
+  z-index: 100;
+  display: flex;
+  flex-flow: row;
+  gap: var(--spacing-02);
+}
+
+.c-eyes-wrap-admin-add-eye a,
+.c-eyes-wrap-admin-add-eye button {
+  color: var(--black);
+  background: var(--yellow);
+  font: sans-serif;
+  border: 2px solid var(--black);
+  padding: var(--spacing-01) var(--spacing-02);
+  border-radius: var(--spacing-02);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.c-eyes-wrap-admin-add-eye a:hover,
+.c-eyes-wrap-admin-add-eye button:hover {
+  border-color: var(--yellow);
+}
+
+.c-eyes-wrap-admin-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 80;
+}
+
+@media screen and (max-width: 900px) {
+  .c-eyes-wrap-admin-container {
+    display: none;
+  }
+}

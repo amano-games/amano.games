@@ -1,0 +1,68 @@
+.c-rich-text {
+  --flow-space: var(--size-500);
+
+  font-family: var(--font-serif);
+  line-height: 2em;
+  max-width: 640px;
+}
+
+.c-rich-text > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+.c-rich-text blockquote > * + * {
+  margin-top: var(--flow-space, 1em);
+}
+
+.c-rich-text img {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  margin-top: var(--spacing-06);
+  margin-bottom: var(--spacing-06);
+}
+
+.c-rich-text ol {
+  list-style-type: decimal;
+  padding-inline-start: var(--spacing-06);
+}
+
+.c-rich-text ul li {
+  display: flex;
+  flex-flow: row;
+}
+
+.c-rich-text hr {
+  --border-color: var(--white);
+
+  width: 100%;
+  height: 1px;
+  background-color: transparent;
+  border: 1px dashed var(--border-color);
+}
+
+@media (min-width: 45em) {
+  .c-rich-text h1 {
+    font-size: var(--size-800);
+  }
+
+  .c-rich-text h2 {
+    font-size: var(--size-600);
+  }
+
+  .c-rich-text p,
+  .c-rich-text ol,
+  .c-rich-text ul {
+    font-size: var(--size-500);
+  }
+
+  .c-rich-text figcaption {
+    font-size: var(--size-400);
+  }
+
+  .c-rich-text blockquote p {
+    font-size: var(--size-500);
+    max-width: 40ch;
+    max-width: 560px;
+  }
+}

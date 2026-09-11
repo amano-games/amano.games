@@ -10,8 +10,6 @@ import Header from 'components/header';
 import Box from 'components/box';
 import Markdown from 'components/markdown';
 
-import styles from './game-details.module.css';
-
 type Props = {
   game: Game;
 };
@@ -27,7 +25,7 @@ function Wishlist({ game }: Props) {
     <>
       <Seo />
       <Header />
-      <section className={styles['game-details-wrapper']}>
+      <section className="p-game-details">
         <header>
           <h1>{game.name} Wishlist</h1>
         </header>

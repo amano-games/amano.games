@@ -9,8 +9,6 @@ import { LayoutDevlog } from 'components/layouts';
 import Seo from 'components/seo';
 import Box from 'components/box';
 
-import style from './style.module.css';
-
 const options: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: '2-digit',
@@ -37,18 +35,18 @@ function Archive({ allPosts = [] }: Props) {
   return (
     <LayoutDevlog>
       <Seo title="AMANO Devlog" image={`${url}/devlog-preview.png`} />
-      <div className={`${style['devlog-archive']} wrapper -inverted`}>
-        <header className={`${style['devlog-archive-header']}`}>
-          <h1 className={`${style['devlog-archive-header-title']}`}>Archive</h1>
+      <div className="p-devlog-archive wrapper -inverted">
+        <header className="p-devlog-archive-header">
+          <h1 className="p-devlog-archive-header-title">Archive</h1>
         </header>
         <Box inverted>
           {[...Object.entries(list)].reverse().map(([key, value]) => {
             return (
               <section key={key}>
-                <header className={`${style['devlog-archive-section-header']}`}>
+                <header className="p-devlog-archive-section-header">
                   <h3>{key}</h3>
                 </header>
-                <ol className={`${style['devlog-archive-list']}`}>
+                <ol className="p-devlog-archive-list">
                   {value.map((item) => {
                     const datePosted = new Date(item.date);
                     const dateParsed = datePosted.toLocaleDateString(
@@ -60,14 +58,14 @@ function Archive({ allPosts = [] }: Props) {
                     return (
                       <li
                         key={item.slug}
-                        className={`${style['devlog-archive-list-item']}`}
+                        className="p-devlog-archive-list-item"
                       >
                         <Link
                           href={`/devlog/${slugEncoded}`}
-                          className={`${style['devlog-archive-list-item-inner']}`}
+                          className="p-devlog-archive-list-item-inner"
                         >
                           <span
-                            className={`${style['post-date']}`}
+                            className="p-devlog-archive-post-date"
                             data-hide="mobile"
                           >
                             <time>{dateParsed}</time>
@@ -76,7 +74,7 @@ function Archive({ allPosts = [] }: Props) {
                         </Link>
                         {tagsArr.length > 0 ? (
                           <div
-                            className={style['post-tags']}
+                            className="p-devlog-archive-post-tags"
                             data-hide="mobile"
                           >
                             {tagsArr.map((tag) => {

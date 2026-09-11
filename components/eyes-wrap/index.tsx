@@ -6,8 +6,6 @@ import Eye from 'components/eye';
 
 import layouts from './layouts';
 
-import styles from './style.module.css';
-
 function generateEye(x: number, y: number) {
   const width = random(60, 100);
   const height = random(60, 100);
@@ -37,11 +35,7 @@ type Props = {
 
 function EyesWrap({ className, children = null, ...rest }: Props) {
   const [loaded, setLoaded] = React.useState(false);
-  const customClassName = classNames(
-    styles['eyes-wrap'],
-    'eyes-wrap',
-    className
-  );
+  const customClassName = classNames('c-eyes-wrap', className);
   const layout = shuffleArray(layouts)[0];
 
   const eyes = layout.map(({ x, y }) => generateEye(x, y));
@@ -51,7 +45,7 @@ function EyesWrap({ className, children = null, ...rest }: Props) {
 
   return (
     <div className={customClassName} {...rest}>
-      <div className={styles['eyes-container']}>
+      <div className="c-eyes-wrap-container">
         {loaded
           ? eyes.map((item) => (
               <Eye key={item.id} style={loaded ? item.style : undefined} />

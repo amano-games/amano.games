@@ -10,8 +10,6 @@ import Header from 'components/header';
 import Box from 'components/box';
 import Markdown from 'components/markdown';
 
-import styles from './game-details.module.css';
-
 type Props = {
   game: Game;
 };
@@ -25,7 +23,7 @@ function GameDetails({ game }: Props) {
         image={`${url}/${game.slug}.png`}
       />
       <Header />
-      <section className={styles['game-details-wrapper']}>
+      <section className="p-game-details">
         <img src={`/games/${game.slug}.png`} alt={game.name} />
         <header>
           <h1>{game.name}</h1>

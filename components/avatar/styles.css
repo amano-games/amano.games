@@ -1,0 +1,21 @@
+.c-avatar {
+  display: block;
+  position: relative;
+}
+
+.c-avatar-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-10%, 3%);
+  color: var(--white);
+}
+
+.c-avatar-flipped .c-avatar-background {
+  transform: translate(10%, 3%);
+}
+
+.c-avatar-image {
+  z-index: 2;
+  clip-path: url('#svgClip');
+}

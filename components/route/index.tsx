@@ -5,8 +5,6 @@ import { useWindowSize } from '@reach/window-size';
 
 import NavLink from 'components/nav-link';
 
-import style from './style.module.css';
-
 type Props = {
   href: string;
   refId?: string;
@@ -27,7 +25,7 @@ function Route({ className, children, href, refId }: Props) {
     }
   }, [refId]);
 
-  const customClassName = classNames(style.route, 'route', className);
+  const customClassName = classNames('c-route', className);
 
   return (
     <NavLink href={href} className={customClassName} data-in-view={inView}>

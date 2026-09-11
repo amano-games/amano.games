@@ -2,8 +2,6 @@
 import type { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import style from './style.module.css';
-
 function getTitle({
   accountHandle,
   isOp,
@@ -48,7 +46,7 @@ function Comment({
   accountUrl,
   createdAt,
 }: CommentData) {
-  const customClassName = classNames(style.comment, 'c-comment', className);
+  const customClassName = classNames('c-comment', className);
   const title = getTitle({ accountHandle, isOp });
 
   return (
@@ -59,13 +57,13 @@ function Comment({
       className={customClassName}
     >
       <a
-        className={style['comment-avatar-wrapper']}
+        className="c-comment-avatar-wrapper"
         href={accountUrl}
         title={title}
         rel="external nofollow noopener noreferrer"
         target="_blank"
       >
-        <picture className={style['comment-avatar-picture']}>
+        <picture className="c-comment-avatar-picture">
           <source
             media="(prefers-reduced-motion: no-preference)"
             srcSet={avatarSrc}
@@ -73,13 +71,13 @@ function Comment({
           <img alt={avatarAlt} src={avatarStaticSrc} />
         </picture>
       </a>
-      <header className={style['comment-header']}>
-        <h4 className={style['comment-title']}>
-          {isOp ? <b className={style['comment-op-badge']}>[OP] </b> : null}
+      <header className="c-comment-header">
+        <h4 className="c-comment-title">
+          {isOp ? <b className="c-comment-op-badge">[OP] </b> : null}
           {displayName}
         </h4>
         <a
-          className={style['comment-badge']}
+          className="c-comment-badge"
           rel="external nofollow noopener noreferrer"
           target="_blank"
           title={accountHandle}
@@ -90,7 +88,7 @@ function Comment({
       </header>
       <time
         dateTime={createdAt}
-        className={`${style['comment-timestamp']}`}
+        className="c-comment-timestamp"
         data-hide="desktop"
       >
         <a
@@ -107,7 +105,7 @@ function Comment({
       </time>
       <time
         dateTime={createdAt}
-        className={`${style['comment-timestamp']}`}
+        className="c-comment-timestamp"
         data-hide="mobile"
       >
         <a
@@ -123,7 +121,7 @@ function Comment({
         </a>
       </time>
       <main
-        className={style['comment-content']}
+        className="c-comment-content"
         dangerouslySetInnerHTML={{ __html: content }}
       />
     </article>

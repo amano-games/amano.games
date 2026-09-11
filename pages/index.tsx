@@ -22,8 +22,6 @@ import type { Manita } from 'types/manita';
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 import { detectWebGLContext } from 'utils/animation';
 
-import styles from './style.module.css';
-
 type Props = {
   manitas: Manita[];
   games: Game[];
@@ -43,10 +41,10 @@ export default function Home({ manitas, games, aboutUs }: Props) {
     <>
       <Seo />
       <Header />
-      <div className={styles['hero-wrapper']} id="home">
+      <div className="p-home-hero-wrapper" id="home">
         {canRender ? <Scene /> : <FakeScene />}
-        <div className={styles['home-info-wrapper']}>
-          <div className={styles['home-info']}>
+        <div className="p-home-info-wrapper">
+          <div className="p-home-info">
             <p>Two friends</p>
             <p>
               Making <Link href="/#games">games</Link>
@@ -54,10 +52,10 @@ export default function Home({ manitas, games, aboutUs }: Props) {
             <p>By Hand</p>
           </div>
 
-          <Social className={styles['home-social']} />
-          <div className={styles['home-newsletter-wrapper']}>
-            <NewsletterSignupForm className={styles['home-newsletter-form']} />
-            <div className={styles['home-newsletter-info']}>
+          <Social className="p-home-social" />
+          <div className="p-home-newsletter-wrapper">
+            <NewsletterSignupForm className="p-home-newsletter-form" />
+            <div className="p-home-newsletter-info">
               <p>
                 Subscribe to our <Link href="/newsletter">newsletter</Link> and
                 get one email whenever we do something important, which tends to
@@ -67,11 +65,11 @@ export default function Home({ manitas, games, aboutUs }: Props) {
           </div>
         </div>
       </div>
-      <main className={styles['home-wrapper']}>
+      <main className="p-home-wrapper">
         <GameGallery
           id="games"
           games={games}
-          className={`${styles['home-section']} ${styles['games-section']} -inverted`}
+          className="p-home-section p-home-games-section -inverted"
         />
         <AboutUs manitas={manitas} aboutUs={aboutUs[0]} />
         <Contact />

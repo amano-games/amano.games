@@ -1,23 +1,18 @@
 import classNames from 'classnames';
 
-import style from './style.module.css';
-
 type Props = {
   className?: string;
 };
 
 function NewsletterSignupForm({ className }: Props) {
-  const customClassName = classNames(
-    style['newsletter-signup-form'],
-    className
-  );
+  const customClassName = classNames('c-newsletter-signup-form', className);
   return (
     <form
       className={customClassName}
       method="post"
       action="https://news.amano.games/subscription/form"
     >
-      <div className={style['fields-wrapper']}>
+      <div className="c-newsletter-signup-form-fields-wrapper">
         <input type="hidden" name="nonce" />
         <input
           type="hidden"

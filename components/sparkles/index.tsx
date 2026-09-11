@@ -6,8 +6,6 @@ import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 
 import Sparkle from './sparkle';
 
-import styles from './style.module.css';
-
 const DEFAULT_COLOR = 'currentColor';
 
 type SparkleItem = {
@@ -72,7 +70,7 @@ function Sparkles({
   );
 
   return (
-    <span {...delegated} className={styles.sparkles}>
+    <span {...delegated} className="c-sparkles">
       {loaded
         ? sparkles.map((sparkle) => (
             <Sparkle
@@ -83,7 +81,7 @@ function Sparkles({
             />
           ))
         : null}
-      <strong className={styles['child-wrapper']}>{children}</strong>
+      <strong className="c-sparkles-child-wrapper">{children}</strong>
     </span>
   );
 }

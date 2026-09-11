@@ -1,0 +1,102 @@
+.c-manita {
+  display: flex;
+  flex-flow: row;
+}
+
+.c-manita:not(:last-child) {
+  margin-bottom: var(--spacing-04);
+}
+
+.c-manita-flipped {
+  flex-flow: row-reverse;
+}
+
+.c-manita > *:not(:last-child) {
+  margin-right: var(--spacing-04);
+}
+
+.c-manita-flipped > *:not(:last-child) {
+  margin-right: 0;
+  margin-left: var(--spacing-04);
+}
+
+.c-manita-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-02);
+  flex-flow: row;
+  margin-bottom: var(--spacing-01);
+}
+
+.c-manita-flipped .c-manita-header {
+  justify-content: flex-end;
+}
+
+.c-manita-header h3 {
+  color: var(--white);
+}
+
+.c-manita-media {
+  width: 80%;
+  max-width: 300px;
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.c-manita-info {
+  display: flex;
+  flex-flow: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.c-manita-description {
+  text-align: center;
+  margin-bottom: var(--spacing-02);
+}
+
+.c-manita-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-01);
+  width: 100%;
+}
+
+.c-manita-links svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+@media screen and (max-width: 900px) {
+  .c-manita,
+  .c-manita-flipped {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .c-manita:not(:last-child) {
+    margin-bottom: var(--spacing-06);
+  }
+
+  .c-manita > *:not(:last-child),
+  .c-manita-flipped > *:not(:last-child) {
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: var(--spacing-01);
+  }
+
+  .c-manita-header,
+  .c-manita-flipped .c-manita-header {
+    flex-flow: column;
+    justify-content: flex-start;
+    gap: 0;
+  }
+}

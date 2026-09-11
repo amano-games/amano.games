@@ -10,8 +10,6 @@ import Seo from 'components/seo';
 import Header from 'components/header';
 import Markdown from 'components/markdown';
 
-import styles from './game-changelog.module.css';
-
 function toMetaDescription(section: string) {
   return section
     .replace(/[#_*`>-]/g, '')
@@ -38,21 +36,21 @@ function GameDetails({ game, changelog }: Props) {
         image={`${url}/games/${game.slug}.png`}
       />
       <Header />
-      <section className={styles['game-changelog-wrapper']}>
-        <header className={styles['game-changelog-header']}>
-          <div className={`${styles['game-changelog-header-wrapper']} wrapper`}>
+      <section className="p-game-changelog">
+        <header className="p-game-changelog-header">
+          <div className="p-game-changelog-header-wrapper wrapper">
             <h1>{game.name}</h1>
             <h3>Changelog</h3>
           </div>
         </header>
-        <div className={`${styles['game-changelog-content']} wrapper`}>
+        <div className="p-game-changelog-content wrapper">
           <img
-            className={`${styles['game-changelog-cover']}`}
+            className="p-game-changelog-cover"
             src={`/games/${game.slug}.png`}
             alt={game.name}
           />
           {changelogText ? (
-            <Markdown className={`${styles['game-changelog-text']} -inverted`}>
+            <Markdown className="p-game-changelog-text -inverted">
               {changelogText}
             </Markdown>
           ) : null}

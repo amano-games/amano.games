@@ -1,0 +1,240 @@
+.c-game-card {
+  --border-color: var(--gray);
+
+  background: var(--black);
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-02);
+}
+
+.c-game-card[data-featured='true'] {
+  grid-column: 1 / -1;
+}
+
+.c-game-card-header {
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-02);
+}
+
+.c-game-card-subtitle {
+  font-size: 1.4em;
+  color: var(--gray);
+}
+
+.c-game-card-content {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-02);
+}
+
+.c-game-card-info {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-02);
+}
+
+.c-game-card[data-featured='true'] .c-game-card-info {
+  flex-flow: row;
+}
+
+.c-game-card-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--spacing-02);
+  aspect-ratio: 1024/ 720;
+}
+
+.c-game-card-media img {
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.c-game-card-badge {
+  background: var(--yellow);
+  color: var(--black);
+  padding: var(--spacing-h) var(--spacing-04);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 1.6em;
+  border-radius: 0 0 var(--spacing-01) 0;
+}
+
+.c-game-card-trailer-wrapper {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: var(--spacing-01);
+  right: var(--spacing-01);
+  background: var(--white);
+  color: var(--black);
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  font-size: 1.6em;
+}
+
+.c-game-card-trailer-wrapper:hover {
+  background: var(--yellow);
+}
+
+.c-game-card-content-wrapper {
+  flex: 1 0 auto;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-02);
+}
+
+.c-game-card[data-featured='true'] .c-game-card-content-wrapper {
+  flex: 1 0 50%;
+}
+
+.c-game-card-actions {
+  width: 100%;
+  display: flex;
+  font-size: 1.2em;
+  list-style: none;
+  flex-flow: row;
+  gap: var(--spacing-02);
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.c-game-card-actions svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+svg.c-game-card-catalog-badge {
+  width: auto;
+  height: calc(40px);
+}
+
+.c-game-card-call-to-action {
+  margin: auto 0;
+  margin-right: var(--spacing-02);
+  white-space: nowrap;
+  background: var(--yellow);
+  color: var(--black);
+  padding: var(--spacing-q) var(--spacing-02);
+  border-radius: var(--spacing-01) 0 0 var(--spacing-01);
+  position: relative;
+}
+
+.c-game-card-actions-links .c-game-card-presskit {
+  white-space: nowrap;
+  background: var(--white);
+  color: var(--black);
+  padding: var(--spacing-q) var(--spacing-02);
+  border-radius: var(--spacing-01);
+  text-decoration: none;
+}
+
+.c-game-card-actions-links .c-game-card-presskit:hover {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+.c-game-card-call-to-action::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(100%, -50%);
+  height: 100%;
+  width: auto;
+  aspect-ratio: 1 / 2;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  background: var(--yellow);
+}
+
+.c-game-card-actions-links {
+  display: flex;
+  list-style: none;
+  flex-flow: row wrap;
+  gap: var(--spacing-01);
+  padding: 0;
+  margin: 0;
+}
+
+.c-game-card-description {
+  border-top: 2px dashed var(--border-color);
+  padding-top: var(--spacing-02);
+  text-align: center;
+}
+
+.c-game-card-description a,
+a.c-game-card-action {
+  color: var(--yellow);
+}
+
+.c-game-card-actions-links a {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+}
+
+.c-game-card-actions-links a:hover {
+  color: var(--yellow);
+}
+
+@media screen and (max-width: 600px) {
+  .c-game-card-badge {
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+    display: block;
+    text-align: center;
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .c-game-card-header {
+    flex-flow: column;
+  }
+
+  .c-game-card-description {
+    width: 100%;
+    max-width: none;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .c-game-card[data-featured='true'] .c-game-card-info {
+    flex-flow: column;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .c-game-card[data-featured='true'] .c-game-card-content {
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-06);
+  }
+  .c-game-card[data-featured='true'] .c-game-card-info {
+    flex: 1 1 40%;
+  }
+  .c-game-card[data-featured='true'] .c-game-card-description {
+    border-top: 0;
+    padding-top: 0;
+    height: auto;
+  }
+}

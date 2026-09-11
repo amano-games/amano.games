@@ -2,8 +2,6 @@ import Route from 'components/route';
 import Eye from 'components/eye';
 import Link from 'next/link';
 
-import style from './style.module.css';
-
 const routes = [
   {
     path: '/#games',
@@ -24,23 +22,23 @@ const routes = [
 
 function Header() {
   return (
-    <header id="header" className={`${style.header} -inverted`}>
-      <div className={`${style['header-wrapper']} wrapper`}>
+    <header id="header" className="c-header -inverted">
+      <div className="c-header-wrapper wrapper">
         <Link href="/#">
-          <Eye className={style['header-eye']} />
+          <Eye className="c-header-eye" />
         </Link>
-        <nav className={style['header-navigation']}>
-          <ul className={style.routes}>
+        <nav className="c-header-navigation">
+          <ul className="c-header-routes">
             {routes.map(({ path, label, refId }) => {
               return (
-                <li key={path} className={style['route-wrapper']}>
+                <li key={path} className="c-header-route-wrapper">
                   <Route href={path} refId={refId}>
                     {label}
                   </Route>
                 </li>
               );
             })}
-            <li className={style['route-wrapper']} data-hide="mobile">
+            <li className="c-header-route-wrapper" data-hide="mobile">
               <Route href="/devlog">Devlog</Route>
             </li>
           </ul>

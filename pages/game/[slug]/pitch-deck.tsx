@@ -10,8 +10,6 @@ import Header from 'components/header';
 import Box from 'components/box';
 import Markdown from 'components/markdown';
 
-import styles from './game-details.module.css';
-
 type Props = {
   game: Game;
 };
@@ -28,7 +26,7 @@ function PitchDeck({ game }: Props) {
     <>
       <Seo />
       <Header />
-      <section className={styles['game-details-wrapper']}>
+      <section className="p-game-details">
         <header>
           <h1>{game.name} PitchDeck</h1>
         </header>

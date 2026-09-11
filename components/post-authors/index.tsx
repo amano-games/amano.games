@@ -1,7 +1,5 @@
 import type { Author } from 'types/post';
 
-import style from './style.module.css';
-
 const listFormatter = new Intl.ListFormat('en', {
   style: 'long',
   type: 'conjunction',
@@ -14,7 +12,7 @@ type Props = {
 function PostAuthors({ authors = [] }: Props) {
   const flat = authors.map((item) => `${item.name};${item.url}`);
   return (
-    <span className={style['post-author']}>
+    <span className="c-post-authors">
       By:{' '}
       {listFormatter.formatToParts(flat).map((item) => {
         if (item.type === 'element') {

@@ -8,7 +8,6 @@ import EyeIcon from 'svg/eye.svg';
 
 import usePrefersReducedMotion from 'hooks/use-prefers-reduced-motion';
 
-import styles from './style.module.css';
 import animation from './eye.json';
 
 const sfx = '/sfx/plop.mp3';
@@ -33,7 +32,7 @@ function Eye({
   const [jsEnabled, setJsEnabled] = useState(false);
   const [play] = useSound(sfx);
   const [anim, setAnim] = useState(closeSegments);
-  const customClassName = classNames(styles.eye, 'eye', className);
+  const customClassName = classNames('c-eye', className);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
 

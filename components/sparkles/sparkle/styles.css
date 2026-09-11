@@ -1,0 +1,38 @@
+@keyframes comeInOut {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.c-sparkle-wrapper {
+  position: absolute;
+  display: block;
+}
+
+.c-sparkle-svg {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .c-sparkle-wrapper {
+    animation: comeInOut 700ms forwards;
+  }
+  .c-sparkle-svg {
+    animation: spin 1000ms linear;
+  }
+}

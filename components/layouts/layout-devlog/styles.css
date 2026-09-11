@@ -1,0 +1,55 @@
+.c-layout-devlog-header {
+  background: var(--yellow);
+  padding-top: var(--spacing-04);
+  padding-bottom: var(--spacing-04);
+}
+
+.c-layout-devlog-header h1 {
+  font-size: 3.5em;
+  margin-bottom: 8px;
+}
+
+.c-layout-devlog-header-wrapper {
+  width: 100%;
+  max-width: max-content;
+  margin: auto;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-02);
+}
+
+.c-layout-devlog-logo {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-layout-devlog-hand {
+  height: 100px;
+  width: auto;
+  display: block;
+  margin-right: var(--spacing-02);
+}
+
+.c-layout-devlog-text {
+  height: 50px;
+  width: auto;
+  display: block;
+}
+
+.c-layout-devlog-posts {
+  padding-top: var(--spacing-10);
+  padding-bottom: var(--spacing-10);
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-06);
+}
+
+@media screen and (max-width: 900px) {
+  .c-layout-devlog-header-wrapper {
+    flex-flow: column;
+  }
+}

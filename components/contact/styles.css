@@ -1,0 +1,47 @@
+.c-contact {
+  font-size: 3em;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.c-contact-wrapper {
+  padding-top: var(--spacing-10);
+  padding-bottom: var(--spacing-10);
+}
+
+.c-contact-message-wrapper {
+  margin-bottom: var(--spacing-04);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-contact-message {
+  color: var(--yellow);
+}
+
+.c-contact a {
+  color: var(--white);
+}
+
+.c-contact a:hover {
+  color: var(--yellow);
+}
+
+@media screen and (max-width: 600px) {
+  .c-contact {
+    font-size: 1.8em;
+  }
+
+  @media screen and (max-width: 500px) {
+    .c-contact {
+      min-height: 90vh;
+    }
+  }
+}

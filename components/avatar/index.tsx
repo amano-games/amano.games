@@ -2,8 +2,6 @@ import classNames from 'classnames';
 
 import Mask from 'svg/mask.svg';
 
-import style from './style.module.css';
-
 type Props = {
   className?: string;
   src: string;
@@ -12,13 +10,13 @@ type Props = {
 };
 
 function Avatar({ className, flipped = false, src, alt }: Props) {
-  const customClassName = classNames(style.avatar, 'avatar', className, {
-    [style['-flipped']]: flipped,
+  const customClassName = classNames('c-avatar', className, {
+    'c-avatar-flipped': flipped,
   });
   return (
     <div className={customClassName}>
-      <Mask className={style['avatar-background']} />
-      <img src={src} alt={alt} className={style['avatar-image']} />
+      <Mask className="c-avatar-background" />
+      <img src={src} alt={alt} className="c-avatar-image" />
       <svg width="0" height="0">
         <defs>
           <clipPath id="svgClip" clipPathUnits="objectBoundingBox">

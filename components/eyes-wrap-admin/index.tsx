@@ -12,8 +12,6 @@ import { random, range } from 'utils/animation';
 
 import Eye from 'components/eye';
 
-import styles from './style.module.css';
-
 type EyeItem = {
   id: string;
   x: number;
@@ -54,11 +52,7 @@ function EyesWrapAdmin({
   ...rest
 }: Props) {
   const [ref, { width, height }] = useDimensions();
-  const customClassName = classNames(
-    styles['eyes-wrap'],
-    'eyes-wrap',
-    className
-  );
+  const customClassName = classNames('c-eyes-wrap-admin', className);
 
   const [eyes, setEyes] = React.useState(range(count).map(() => generateEye()));
 
@@ -91,7 +85,7 @@ function EyesWrapAdmin({
 
   return (
     <div className={customClassName} {...rest} ref={ref}>
-      <div className={styles['add-eye']}>
+      <div className="c-eyes-wrap-admin-add-eye">
         <button type="button" onClick={addEye}>
           Add
         </button>
@@ -116,7 +110,7 @@ function EyesWrapAdmin({
           }
         />
       </div>
-      <div className={styles['eyes-container']}>
+      <div className="c-eyes-wrap-admin-container">
         {eyes.map((item) => (
           <Draggable
             key={item.id}

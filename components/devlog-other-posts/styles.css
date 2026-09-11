@@ -1,0 +1,61 @@
+.c-devlog-other-posts-keep-reading-wrapper {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-02);
+}
+
+.c-devlog-other-posts-keep-reading {
+  margin: auto;
+  text-align: center;
+}
+
+.c-devlog-other-posts-keep-reading-info {
+  margin: auto;
+}
+
+.c-devlog-other-posts-keep-reading-header {
+  display: flex;
+  flex-flow: row;
+  gap: var(--spacing-01);
+  align-items: center;
+  justify-content: center;
+}
+
+.c-devlog-other-posts-keep-reading-title {
+  max-width: none;
+  color: var(--yellow);
+  margin-bottom: var(--spacing-01);
+}
+
+.c-devlog-other-posts-keep-reading-archive {
+  cursor: pointer;
+  border: 0;
+  font-weight: bold;
+  text-decoration: none;
+  max-width: max-content;
+  text-align: center;
+  color: var(--black);
+  background-color: var(--yellow);
+  border-radius: var(--spacing-04);
+  padding: var(--spacing-01) var(--spacing-02);
+  transition: background-color 0.2s ease;
+}
+
+.c-devlog-other-posts-keep-reading-archive:hover {
+  background-color: var(--white);
+}
+
+.c-devlog-other-posts-grid {
+  display: grid;
+  grid-gap: var(--spacing-04);
+  grid-template-columns: repeat(auto-fill, minmax(415px, 1fr));
+}
+
+@media screen and (max-width: 500px) {
+  .c-devlog-other-posts-grid {
+    grid-template-columns: 1fr;
+  }
+  .c-devlog-other-posts-keep-reading-header {
+    flex-flow: column;
+  }
+}

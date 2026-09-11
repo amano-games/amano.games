@@ -11,8 +11,6 @@ import { LayoutDevlog } from 'components/layouts';
 import DevlogOtherPosts from 'components/devlog-other-posts';
 import DevlogComments from 'components/devlog-comments';
 
-import style from './style.module.css';
-
 type Props = {
   post: Post;
   allPosts: Post[];
@@ -27,7 +25,7 @@ function SinglePost({ post, allPosts = [] }: Props) {
         description={post.excerpt}
         authors={post.authors}
       />
-      <div className={`${style['single-post-wrapper']} wrapper`}>
+      <div className="p-devlog-post wrapper">
         <PostView {...post} />
       </div>
       {post.mastodon ? <DevlogComments {...post.mastodon} /> : null}

@@ -11,8 +11,6 @@ import Seo from 'components/seo';
 import DevlogOtherPosts from 'components/devlog-other-posts';
 import DevlogComments from 'components/devlog-comments';
 
-import style from './style.module.css';
-
 type Props = {
   allPosts: Post[];
 };
@@ -22,7 +20,7 @@ function Devlog({ allPosts = [] }: Props) {
   return (
     <LayoutDevlog>
       <Seo title="AMANO Devlog" image={`${url}/devlog-preview.png`} />
-      <div className={`${style['devlog-single-post']} wrapper`}>
+      <div className="p-devlog wrapper">
         <PostView {...first} />
       </div>
 

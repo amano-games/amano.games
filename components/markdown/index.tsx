@@ -8,8 +8,6 @@ import { isValidElement } from 'react';
 
 import RichText from 'components/rich-text';
 
-import style from './style.module.css';
-
 const SPOILER_PREFIX = 'spoiler: ';
 
 type MarkdownChildProps = {
@@ -55,7 +53,7 @@ function renderSpoiler({
   if (isSpoiler) {
     const child = String(children)?.slice(SPOILER_PREFIX.length);
     return (
-      <details className={style.spoiler} aria-label="Spoiler">
+      <details className="c-markdown-spoiler" aria-label="Spoiler">
         <summary>Spoiler</summary>
         {child}
       </details>
@@ -76,7 +74,7 @@ function renderCode({
   const match = /language-(\w+)/.exec(className || '');
   return match ? (
     <SyntaxHighlighter
-      className={style['code-wrapper']}
+      className="c-markdown-code-wrapper"
       customStyle={{
         padding: undefined,
       }}
@@ -100,11 +98,7 @@ type Props = {
 };
 
 function Markdown({ children = null, className }: Props) {
-  const customClassName = classNames(
-    style['markdown-container'],
-    'markdown-container',
-    className
-  );
+  const customClassName = classNames('c-markdown', className);
 
   return (
     <RichText className={customClassName}>

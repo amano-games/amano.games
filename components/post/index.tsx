@@ -6,8 +6,6 @@ import Markdown from 'components/markdown';
 import PostAuthors from 'components/post-authors';
 import type { Author } from 'types/post';
 
-import style from './style.module.css';
-
 const options: Intl.DateTimeFormatOptions = {
   weekday: 'long',
   year: 'numeric',
@@ -36,15 +34,9 @@ function Post({
   authors = [],
   tags = '',
 }: Props) {
-  const customClassName = classNames(
-    style.post,
-    'post',
-    '-inverted',
-    className,
-    {
-      [style['-featured']]: featured,
-    }
-  );
+  const customClassName = classNames('c-post', '-inverted', className, {
+    'c-post-featured': featured,
+  });
 
   const datePosted = new Date(date);
   const dateParsed = datePosted.toLocaleDateString(undefined, options);
@@ -53,21 +45,21 @@ function Post({
 
   return (
     <article className={customClassName}>
-      <header className={style['post-header']}>
-        <h1 className={style['post-title']}>
+      <header className="c-post-header">
+        <h1 className="c-post-title">
           <Link href={`/devlog/${slugEncoded}`}>{title}</Link>
         </h1>
       </header>
-      <Markdown className={style['post-content']}>{content}</Markdown>
-      <footer className={style['post-footer']}>
-        <div className={style['post-info']}>
-          <span className={style['post-date']}>
+      <Markdown className="c-post-content">{content}</Markdown>
+      <footer className="c-post-footer">
+        <div className="c-post-info">
+          <span className="c-post-date">
             <time>{dateParsed}</time>
           </span>
           <PostAuthors authors={authors} />
         </div>
         {tagsArr.length > 0 ? (
-          <Box className={style['post-tags']}>
+          <Box className="c-post-tags">
             {tagsArr.map((tag) => {
               return <span key={tag}>#{tag}</span>;
             })}

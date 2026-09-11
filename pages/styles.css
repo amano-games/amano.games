@@ -1,0 +1,71 @@
+.p-home-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-home-hero-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--yellow);
+}
+
+.p-home-section {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.p-home-games-section {
+  padding-top: var(--spacing-08);
+  padding-bottom: var(--spacing-08);
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-home-info-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-02);
+}
+
+.p-home-newsletter-wrapper {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--spacing-01);
+}
+
+.p-home-newsletter-form {
+  max-width: 22rem;
+}
+
+.p-home-newsletter-info {
+  font-size: 0.875rem;
+  max-width: 25rem;
+  text-align: center;
+}
+
+.p-home-info {
+  font-size: 1.2em;
+  padding-left: var(--spacing-06);
+  padding-right: var(--spacing-06);
+  text-align: center;
+}
+
+.p-home-logo {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin-bottom: var(--spacing-02);
+}

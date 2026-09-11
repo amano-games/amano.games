@@ -3,8 +3,6 @@ import Link from 'next/link';
 import Social from 'components/social';
 import Fingers from 'svg/fingers1.svg';
 
-import style from './style.module.css';
-
 const year = new Date().getFullYear();
 
 type Props = {
@@ -13,24 +11,21 @@ type Props = {
 
 function Footer({ showSocial = true }: Props) {
   return (
-    <footer id="footer" className={`${style.footer}`}>
-      <div className={`${style['footer-wrapper']} wrapper`}>
-        <Fingers className={style['footer-hand']} />
-        <div className={style['footer-info-wrapper']}>
-          <div className={style['footer-info']}>
-            <p className={style['footer-copy']}>
+    <footer id="footer" className="c-footer">
+      <div className="c-footer-wrapper wrapper">
+        <Fingers className="c-footer-hand" />
+        <div className="c-footer-info-wrapper">
+          <div className="c-footer-info">
+            <p className="c-footer-copy">
               © <time>{year}</time> by Amano
             </p>
-            <Link
-              href="/newsletter"
-              className={style['footer-newsletter-link']}
-            >
+            <Link href="/newsletter" className="c-footer-newsletter-link">
               Newsletter
             </Link>
-            <Link href="/devlog" className={style['footer-devlog']}>
+            <Link href="/devlog" className="c-footer-devlog">
               Devlog
             </Link>
-            {showSocial ? <Social className={style['footer-social']} /> : null}
+            {showSocial ? <Social className="c-footer-social" /> : null}
           </div>
         </div>
       </div>

@@ -2,16 +2,14 @@ import Header from 'components/header';
 import Footer from 'components/footer';
 import Seo from 'components/seo';
 
-import styles from './style.module.css';
-
 function Newsletter() {
   return (
     <>
       <Seo title="Amano Newsletter" />
       <Header />
-      <main className={`${styles['p-newsletter']} -inverted`} id="newsletter">
-        <div className={`${styles['p-newsletter-wrapper']} wrapper`}>
-          <div className={styles['p-newsletter-info']}>
+      <main className="p-newsletter -inverted" id="newsletter">
+        <div className="p-newsletter-wrapper wrapper">
+          <div className="p-newsletter-info">
             <h1>Newsletter</h1>
             <p>
               We send one email whenever we do something important, which tends
@@ -19,7 +17,7 @@ function Newsletter() {
             </p>
           </div>
           <form
-            className={styles['newsletter-form']}
+            className="p-newsletter-form"
             method="post"
             action="https://news.amano.games/subscription/form"
           >
@@ -70,9 +68,7 @@ function Newsletter() {
               Subscribe
             </button>
           </form>
-          <div
-            className={`${styles['p-newsletter-info']} ${styles['p-newsletter-info-secondary']}`}
-          >
+          <div className="p-newsletter-info p-newsletter-info-secondary">
             <p>
               You can view past issues{' '}
               <a

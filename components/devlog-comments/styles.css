@@ -1,0 +1,40 @@
+.c-devlog-comments {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-04);
+  margin: auto;
+  position: relative;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.c-devlog-comments-title {
+  text-align: left;
+}
+
+.c-devlog-comments-list {
+  display: flex;
+  flex-flow: column;
+  gap: var(--spacing-04);
+}
+
+.c-devlog-comments-action {
+  cursor: pointer;
+  border: 0;
+  margin: auto;
+  font-weight: bold;
+  text-decoration: none;
+  max-width: max-content;
+  text-align: center;
+  color: var(--black);
+  background-color: var(--yellow);
+  border-radius: var(--spacing-04);
+  padding: var(--spacing-01) var(--spacing-02);
+  transition: background-color 0.2s ease;
+}
+
+.c-devlog-comments-action:hover {
+  background-color: var(--white);
+}

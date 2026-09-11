@@ -9,8 +9,6 @@ import Mail from 'svg/mail.svg';
 import Fediverse from 'svg/fediverse.svg';
 import Bsky from 'svg/bsky.svg';
 
-import style from './style.module.css';
-
 type SocialItem = {
   label: string;
   href: string;
@@ -24,9 +22,9 @@ type Props = {
 };
 
 function Social({ className, size = 'm', filter = () => true }: Props) {
-  const customClassName = classNames(style.social, 'social', className, [
-    style[`-${size}`],
-  ]);
+  const customClassName = classNames('c-social', className, {
+    'c-social-l': size === 'l',
+  });
   const mastodonData = parseMastodonHandle(mastodon);
   const social: SocialItem[] = [
     {

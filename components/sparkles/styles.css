@@ -1,0 +1,10 @@
+.c-sparkles {
+  display: inline-block;
+  position: relative;
+}
+
+.c-sparkles-child-wrapper {
+  position: relative;
+  z-index: 1;
+  font-weight: bold;
+}

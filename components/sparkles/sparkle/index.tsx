@@ -1,7 +1,5 @@
 import type { CSSProperties } from 'react';
 
-import styles from './style.module.css';
-
 type Props = {
   size: number;
   color: string;
@@ -10,9 +8,9 @@ type Props = {
 
 function Sparkle({ size, color, style }: Props) {
   return (
-    <span style={style} className={styles['sparkle-wrapper']}>
+    <span style={style} className="c-sparkle-wrapper">
       <svg
-        className={styles['sparkle-svg']}
+        className="c-sparkle-svg"
         width={size}
         height={size}
         viewBox="0 0 64 100.2"

@@ -16,8 +16,6 @@ import Header from 'components/header';
 import { PresskitAssets, PresskitInfo } from 'components/presskit';
 import Footer from 'components/footer';
 
-import styles from './presskit.module.css';
-
 type Props = {
   presskit: Presskit;
   game: Game;
@@ -29,18 +27,18 @@ function PresskitPage({ presskit, game, aboutUs }: Props) {
     <>
       <Seo title={`Presskit ${game.name}`} />
       <Header />
-      <header className={styles['presskit-header']}>
-        <div className={`${styles['presskit-header-wrapper']} wrapper`}>
+      <header className="p-presskit-header">
+        <div className="p-presskit-header-wrapper wrapper">
           {presskit.cover ? (
             <img
-              className={`${styles['presskit-cover']}`}
+              className="p-presskit-cover"
               src={presskit.cover.url}
               alt={game.name}
             />
           ) : null}
         </div>
       </header>
-      <div className={`${styles['presskit-wrapper']} wrapper`}>
+      <div className="p-presskit-wrapper wrapper">
         <PresskitInfo {...presskit} title={game.name} aboutDev={aboutUs[0]} />
         <PresskitAssets
           videos={presskit.videos}
