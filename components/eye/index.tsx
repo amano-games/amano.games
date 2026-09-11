@@ -89,7 +89,6 @@ function Eye({
           className="c-eye-player"
           data={animation}
           segment={anim}
-          layout={{ fit: 'cover', align: [0.5, 0.5] }}
           dotLottieRefCallback={dotLottieRefCallback}
           loop={false}
           autoplay={!prefersReducedMotion}
