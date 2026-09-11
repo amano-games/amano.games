@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { postsAllGet } from 'lib/api';
@@ -21,7 +22,7 @@ const dateFormat = new Intl.DateTimeFormat('en-UK', {
 
 export const dynamic = 'force-static';
 
-export const metadata = createMetadata({
+export const metadata: Metadata = createMetadata({
   title: 'AMANO Devlog',
   image: `${url}/devlog-preview.png`,
   path: '/devlog/archive',

@@ -39,23 +39,6 @@
   gap: var(--spacing-02);
 }
 
-.p-home-newsletter-wrapper {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  gap: var(--spacing-01);
-}
-
-.p-home-newsletter-form {
-  max-width: 22rem;
-}
-
-.p-home-newsletter-info {
-  font-size: 0.875rem;
-  max-width: 25rem;
-  text-align: center;
-}
-
 .p-home-info {
   font-size: 1.2em;
   padding-left: var(--spacing-06);

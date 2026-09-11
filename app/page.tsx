@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import Header from 'components/header';
@@ -7,7 +8,7 @@ import HomeHero from 'components/home-hero';
 import GameGallery from 'components/game-gallery';
 import AboutUs from 'components/about-us';
 import Contact from 'components/contact';
-import NewsletterSignupForm from 'components/newsletter-signup-form';
+import NewsletterSignup from 'components/newsletter-signup';
 
 import { getManitas, getGames, getAboutUs } from 'utils/notion';
 import { createMetadata } from 'lib/metadata';
@@ -16,7 +17,7 @@ import './styles.css';
 
 export const dynamic = 'force-static';
 
-export const metadata = createMetadata({ path: '/' });
+export const metadata: Metadata = createMetadata({ path: '/' });
 
 export default async function Home() {
   const [manitas, games, aboutUs] = await Promise.all([
@@ -40,16 +41,7 @@ export default async function Home() {
           </div>
 
           <Social className="p-home-social" />
-          <div className="p-home-newsletter-wrapper">
-            <NewsletterSignupForm className="p-home-newsletter-form" />
-            <div className="p-home-newsletter-info">
-              <p>
-                Subscribe to our <Link href="/newsletter">newsletter</Link> and
-                get one email whenever we do something important, which tends to
-                happend at most twice a year.
-              </p>
-            </div>
-          </div>
+          <NewsletterSignup className="p-home-newsletter" />
         </div>
       </div>
       <main className="p-home-wrapper">

@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import Header from 'components/header';
 import Footer from 'components/footer';
 import { createMetadata } from 'lib/metadata';
@@ -6,7 +8,7 @@ import './styles.css';
 
 export const dynamic = 'force-static';
 
-export const metadata = createMetadata({
+export const metadata: Metadata = createMetadata({
   title: 'Amano Newsletter',
   path: '/newsletter',
 });

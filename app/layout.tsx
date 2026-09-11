@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
 import 'modern-css-reset';
 
 import 'styles/variables.css';
@@ -7,7 +8,7 @@ import { createMetadata, defaultViewport } from 'lib/metadata';
 
 export const dynamic = 'force-static';
 
-export const metadata = createMetadata({ path: '/' });
+export const metadata: Metadata = createMetadata({ path: '/' });
 
 export const viewport = defaultViewport;
 

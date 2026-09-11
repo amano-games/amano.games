@@ -1,0 +1,16 @@
+.c-newsletter-signup {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: var(--spacing-01);
+}
+
+.c-newsletter-signup .c-newsletter-signup-form {
+  max-width: 22rem;
+}
+
+.c-newsletter-signup .c-newsletter-signup-info {
+  font-size: 0.875rem;
+  max-width: 25rem;
+  text-align: center;
+}
