@@ -4,8 +4,11 @@ import { useEffect, type ReactNode } from 'react';
 import classNames from 'classnames';
 import { useInView } from 'react-intersection-observer';
 import { useWindowSize } from '@reach/window-size';
+import { usePathname } from 'next/navigation';
 
 import NavLink from 'components/nav-link';
+import pathActive from 'components/nav-link/path-active';
+import Navigation from './navigation';
 import './styles.css';
 
 type Props = {
@@ -13,9 +16,17 @@ type Props = {
   refId?: string;
   className?: string;
   children: ReactNode;
+  navigation?: Navigation;
 };
 
-function Route({ className, children, href, refId }: Props) {
+function Route({
+  className,
+  children,
+  href,
+  refId,
+  navigation = Navigation.Client,
+}: Props) {
+  const pathname = usePathname();
   const { width } = useWindowSize();
   const { ref, inView } = useInView({
     threshold: width > 900 ? 0.4 : undefined,
@@ -29,12 +40,25 @@ function Route({ className, children, href, refId }: Props) {
   }, [refId]);
 
   const customClassName = classNames('c-route', className);
+  const label = <span>{children}</span>;
 
-  return (
-    <NavLink href={href} className={customClassName} data-in-view={inView}>
-      <span>{children}</span>
-    </NavLink>
-  );
+  const link =
+    navigation === Navigation.Document ? (
+      // Native <a>: Next.js Link no-ops when the URL is already this href.
+      <a
+        href={href}
+        className={customClassName}
+        data-active={pathActive(pathname, href)}
+      >
+        {label}
+      </a>
+    ) : (
+      <NavLink href={href} className={customClassName} data-in-view={inView}>
+        {label}
+      </NavLink>
+    );
+
+  return link;
 }
 
 export default Route;

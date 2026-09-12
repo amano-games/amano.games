@@ -1,4 +1,5 @@
 import Route from 'components/route';
+import Navigation from 'components/route/navigation';
 import Eye from 'components/eye';
 import Link from 'next/link';
 import './styles.css';
@@ -25,7 +26,7 @@ function Header() {
   return (
     <header id="header" className="c-header -inverted">
       <div className="c-header-wrapper wrapper">
-        <Link className="c-header-home" href="/#">
+        <Link className="c-header-home" href="/">
           <Eye className="c-header-eye" />
         </Link>
         <nav className="c-header-navigation">
@@ -40,7 +41,9 @@ function Header() {
               );
             })}
             <li className="c-header-route-wrapper" data-hide="mobile">
-              <Route href="/devlog">Devlog</Route>
+              <Route href="/devlog" navigation={Navigation.Document}>
+                Devlog
+              </Route>
             </li>
           </ul>
         </nav>

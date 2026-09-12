@@ -10,7 +10,12 @@ function NavLink({ children = null, className, ...rest }: Props) {
   const pathname = usePathname();
 
   return (
-    <Link {...rest} className={className} data-active={pathname === rest.href}>
+    <Link
+      {...rest}
+      className={className}
+      data-active={pathname === rest.href}
+      scroll
+    >
       {children}
     </Link>
   );
