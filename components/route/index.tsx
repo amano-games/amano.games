@@ -44,7 +44,6 @@ function Route({
 
   const link =
     navigation === Navigation.Document ? (
-      // Native <a>: Next.js Link no-ops when the URL is already this href.
       <a
         href={href}
         className={customClassName}
