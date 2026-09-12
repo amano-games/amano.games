@@ -7,6 +7,7 @@
 .c-footer-wrapper {
   display: flex;
   flex-flow: row;
+  gap: var(--spacing-02);
   align-items: center;
   justify-content: space-between;
   position: relative;
@@ -18,13 +19,13 @@
   width: 40%;
   max-width: 500px;
   align-self: flex-end;
-  margin-right: var(--spacing-02);
 }
 
 .c-footer-info-wrapper {
   display: flex;
   flex-flow: column;
   gap: var(--spacing-01);
+  padding-bottom: var(--spacing-02);
 }
 
 .c-footer-info {
