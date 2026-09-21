@@ -8,7 +8,6 @@ import Footer from 'components/footer';
 import Hand from 'svg/hand.svg';
 import Text from 'svg/text.svg';
 import './styles.css';
-import NewsletterSignup from 'components/newsletter-signup';
 
 type Props = {
   children?: ReactNode;
@@ -30,7 +29,6 @@ function LayoutDevlog({ children = null }: Props) {
             </Link>
           </h1>
         </div>
-        <NewsletterSignup className="p-devlog-newsletter" />
       </header>
       <EyesWrap>
         <main className="c-layout-devlog-posts">{children}</main>
