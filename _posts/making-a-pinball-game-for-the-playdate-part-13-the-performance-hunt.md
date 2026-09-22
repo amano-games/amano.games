@@ -133,7 +133,7 @@ void prof_start_internal(char * name, int idx){
 
 Another characteristic of a good sampling profiler is that it needs to have as little overhead as possible. If your measuring code takes longer than the code you are measuring, it's worthless. And if adding many areas makes your project unusable then it's also worthless.
 
-On **Computer, Enhance!** Casey shows how to use
+On **Computer, Enhance!** Casey [shows how to use RDTSC (Read timestamp counter)](https://www.youtube.com/watch?v=pZ0MF1q_LUE) instruction to mesure time.
 
 I quickly realized that it's also helpful specially on the Playdate to be able to turn on/off sections of my profiled areas, so I do something like this.
 
