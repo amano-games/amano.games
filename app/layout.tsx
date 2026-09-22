@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import 'modern-css-reset';
 
 import 'styles/variables.css';
 import 'styles/globals.css';
