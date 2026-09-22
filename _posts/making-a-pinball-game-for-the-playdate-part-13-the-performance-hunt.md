@@ -47,7 +47,7 @@ How it works is you generate a bit array that can hold a bit per entity pair, so
 
 Simple and effective. Well as the game grew and we created more entities we ended up with around 450, this means that our bit array needed to be `450 * 449 / 2 = 101025 bits` create and clear this array every frame and we are clearing ~56KiB of memory every frame. I skipped the last part on that books chapter but the warning was there!
 
-> Even for a modest number of objects, this operation now quickly becomes very expensive.
+> _Even for a modest number of objects, this operation now quickly becomes very expensive._
 
 There are other options to do this like keeping a timestamp on each body and each time we do a query making sure the timestamp equals the query timestamp but after thinking about it for a bit, in our game we only have colliding pairs between balls and bodies and we have a single ball. Sure I would like to be able to add multi ball to our game or any other table but then again it would be 3 balls at most, so I decided to just keep a small linear array and scan it every time we need to check if those pairs are already present.
 
@@ -89,7 +89,7 @@ When we where getting ready for the release of the game and wanted to improve th
 
 So based on my previous experiments I decided to start the [Computer, Enhance!](https://www.computerenhance.com/) course.
 
-> It’s designed to bring you up to speed on how modern CPUs work, how to estimate the expected speed of performance-critical code, and the basic optimization techniques every programmer should know.
+> _It’s designed to bring you up to speed on how modern CPUs work, how to estimate the expected speed of performance-critical code, and the basic optimization techniques every programmer should know._
 
 I highly recommend it!
 
@@ -133,7 +133,11 @@ void prof_start_internal(char * name, int idx){
 
 Another characteristic of a good sampling profiler is that it needs to have as little overhead as possible. If your measuring code takes longer than the code you are measuring, it's worthless. And if adding many areas makes your project unusable then it's also worthless.
 
-On **Computer, Enhance!** Casey [shows how to use RDTSC (Read timestamp counter)](https://www.youtube.com/watch?v=pZ0MF1q_LUE) instruction to mesure time.
+On **Computer, Enhance!** Casey [shows how to use RDTSC (Read timestamp counter)](https://www.youtube.com/watch?v=pZ0MF1q_LUE) instruction to measure time. It's a CPU instruction that returns a super precise and cheap timestamp that we can use to mesure performance. Casey describes it as:
+
+> _RDTSC is very useful because it's available everywhere, you can always count on RDTSC to be something that a processor supports if its an x86 processor at all._
+
+Well bad news for us because the Playdate is not a x86 processor it is an ARM processor, it does have however a similar instruction `DWT->CYCCNT` that the Playdate uses under the hood for `getElapsedTime()` but in userland we don't have access to this registry so we are stuck with `getElapsedTime()`, which [has a couple of downsides](https://devforum.play.date/t/similar-api-to-queryperformancecounter/25072). So if you are someone from Panic reading this, **please** consider adding support for it.
 
 I quickly realized that it's also helpful specially on the Playdate to be able to turn on/off sections of my profiled areas, so I do something like this.
 
