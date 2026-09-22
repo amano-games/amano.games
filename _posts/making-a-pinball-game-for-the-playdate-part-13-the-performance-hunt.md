@@ -23,8 +23,6 @@ mastodon:
   postId: ''
 ---
 
-# The performance hunt
-
 If you have developed a game on the Playdate you might have got to the point where you start having performance issues.
 
 This also tends to happen at the worst possible time, when you are trying to finish your game and adding all the content that you had planned. And if you have been doing this game for I don't know [two years](https://amano.games/devlog/making-a-pinball-game-for-the-playdate-part-01-the-language) It will be really hard to figure out what to optimize.
@@ -139,6 +137,8 @@ On **Computer, Enhance!** Casey [shows how to use RDTSC (Read timestamp counter)
 
 Well bad news for us because the Playdate is not a x86 processor it is an ARM processor, it does have however a similar instruction `DWT->CYCCNT` that the Playdate uses under the hood for `getElapsedTime()` but in userland we don't have access to this registry so we are stuck with `getElapsedTime()`, which [has a couple of downsides](https://devforum.play.date/t/similar-api-to-queryperformancecounter/25072). So if you are someone from Panic reading this, **please** consider adding support for it.
 
+---
+
 I quickly realized that it's also helpful specially on the Playdate to be able to turn on/off sections of my profiled areas, so I do something like this.
 
 ```c
@@ -160,8 +160,6 @@ I quickly realized that it's also helpful specially on the Playdate to be able t
 ```
 
 So if I'm focusing on optimizing the HUD code I can just turn off the physics areas.
-
----
 
 But one thing that Casey notes is that a good instrumentation profiler is one that you can turn on or off easil
 
