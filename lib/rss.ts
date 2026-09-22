@@ -6,16 +6,22 @@ import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 
-import { url, defaultTitle, defaultDescription } from 'lib/site';
+import {
+  url,
+  defaultTitle,
+  defaultDescription,
+  twitter,
+  email,
+} from 'lib/site';
 import type { Post } from 'types/post';
 
 const baseUrl = url;
 const date = new Date();
 
-const authorAmano = {
+export const authorAmano = {
   name: 'Amano',
-  email: 'hola@amano.games',
-  link: 'twitter.com/amanogames_',
+  email,
+  link: `https://twitter.com/${twitter}`,
 };
 
 type RssPost = Pick<
