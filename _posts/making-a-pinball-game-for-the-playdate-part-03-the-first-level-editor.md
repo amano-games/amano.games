@@ -1,6 +1,11 @@
 ---
 title: 'Making a pinball game for Playdate: Part 03, the first level editor'
-tags: playdate,pinball,c,devils-on-the-moon,tiled
+tags:
+  - playdate
+  - pinball
+  - c
+  - devils-on-the-moon
+  - tiled
 excerpt: 'How did we choose our first level editor for the game?'
 publish: true
 date: 2024/12/03

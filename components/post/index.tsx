@@ -20,7 +20,7 @@ type Props = {
   date: string;
   content?: string;
   authors?: Author[];
-  tags?: string;
+  tags?: string[];
   className?: string;
   featured?: boolean;
 };
@@ -33,7 +33,7 @@ function Post({
   content = '',
   date,
   authors = [],
-  tags = '',
+  tags = [],
 }: Props) {
   const customClassName = classNames('c-post', '-inverted', className, {
     'c-post-featured': featured,
@@ -41,7 +41,6 @@ function Post({
 
   const datePosted = new Date(date);
   const dateParsed = datePosted.toLocaleDateString(undefined, options);
-  const tagsArr = tags.split(',');
   const slugEncoded = encodeURIComponent(slug);
 
   return (
@@ -59,9 +58,9 @@ function Post({
           </span>
           <PostAuthors authors={authors} />
         </div>
-        {tagsArr.length > 0 ? (
+        {tags.length > 0 ? (
           <Box className="c-post-tags">
-            {tagsArr.map((tag) => {
+            {tags.map((tag) => {
               return <span key={tag}>#{tag}</span>;
             })}
           </Box>

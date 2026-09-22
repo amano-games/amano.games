@@ -19,7 +19,7 @@ type Props = {
   date: string;
   authors?: Author[];
   cover?: PostCover;
-  tags?: string;
+  tags?: string[];
   className?: string;
   featured?: boolean;
   excerpt?: string;
@@ -32,7 +32,7 @@ function PostPreview({
   className,
   date,
   authors = [],
-  tags = '',
+  tags = [],
   cover,
   excerpt,
 }: Props) {
@@ -42,7 +42,6 @@ function PostPreview({
 
   const datePosted = new Date(date);
   const dateParsed = datePosted.toLocaleDateString(undefined, options);
-  const tagsArr = tags.split(',');
   const slugEncoded = encodeURIComponent(slug);
 
   return (
@@ -67,9 +66,9 @@ function PostPreview({
         <Markdown className="c-post-preview-excerpt">{excerpt}</Markdown>
       ) : null}
       <footer className="c-post-preview-footer">
-        {tagsArr.length > 0 ? (
+        {tags.length > 0 ? (
           <div className="c-post-preview-tags">
-            {tagsArr.map((tag) => {
+            {tags.map((tag) => {
               return <span key={tag}>#{tag}</span>;
             })}
           </div>

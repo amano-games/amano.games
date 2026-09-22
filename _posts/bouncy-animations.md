@@ -1,7 +1,11 @@
 ---
 title: 'On "Bouncy" Animation'
 excerpt: 'Another Equally important decision, is choosing which poses you want to emphasize in order to get that reactive feeling when a character interacts with the world.'
-tags: PICO-8,animation,art,pullfrog
+tags:
+  - PICO-8
+  - animation
+  - art
+  - pullfrog
 date: 2021/06/26
 publish: true
 authors:

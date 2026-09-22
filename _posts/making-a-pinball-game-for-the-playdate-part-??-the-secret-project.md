@@ -1,6 +1,10 @@
 ---
 title: 'Making a pinball game for Playdate: Part ??, the secret project'
-tags: playdate,devils-on-the-moon,catchadiablos,season-two
+tags:
+  - playdate
+  - devils-on-the-moon
+  - catchadiablos
+  - season-two
 excerpt: 'What happened in the last six months?'
 publish: true
 date: 2025/04/22

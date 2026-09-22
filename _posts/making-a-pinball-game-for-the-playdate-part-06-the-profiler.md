@@ -1,6 +1,11 @@
 ---
 title: 'Making a pinball game for Playdate: Part 06, the profiler'
-tags: playdate,pinball,c,devils-on-the-moon,performance
+tags:
+  - playdate
+  - pinball
+  - c
+  - devils-on-the-moon
+  - performance
 excerpt: 'Learning how to use a profiler'
 publish: true
 date: 2024/12/09

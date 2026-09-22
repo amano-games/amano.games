@@ -1,6 +1,10 @@
 ---
 title: 'Making a pinball game for Playdate: Part 08, the entities and their components'
-tags: playdate,devils-on-the-moon,tiled,pinball
+tags:
+  - playdate
+  - devils-on-the-moon
+  - tiled
+  - pinball
 excerpt: 'How do we organize our game entities and their components.'
 publish: true
 date: 2025/05/26

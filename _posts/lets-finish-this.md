@@ -1,7 +1,10 @@
 ---
 title: 'Let’s finish this'
 excerpt: 'We are back working on Pullfrog! What happened?'
-tags: pullfrog,playdate,design
+tags:
+  - pullfrog
+  - playdate
+  - design
 date: 2023/08/14
 publish: true
 authors:

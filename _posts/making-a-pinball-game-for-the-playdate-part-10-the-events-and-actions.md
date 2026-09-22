@@ -1,6 +1,10 @@
 ---
 title: 'Making a pinball game for playdate: Part 10, the events and actions'
-tags: playdate,devils-on-the-moon,pinball,gamedesign
+tags:
+  - playdate
+  - devils-on-the-moon
+  - pinball
+  - gamedesign
 excerpt: 'Events and actions handle most of the logic of our pinball game'
 publish: true
 date: 2025/11/07
@@ -163,7 +167,7 @@ The bad part is that Tiled was not mean to be used like this. If we ever need to
 
 The biggest benefit of a good editor is being able to iterate fast, but if you are to afraid to change something because it may break something else you kill the creative process.
 
-At the end of the day event if it's not textual coding, having logic in a visual way is still ~coding~ and you need a way to debug/validate/inspect that logic at edit/run time. And if you are doing it in a custom way eventually you will need to build the tools to help you do that.
+At the end of the day event if it's not textual coding, having logic in a visual way is still ~~coding~~ and you need a way to debug/validate/inspect that logic at edit/run time. And if you are doing it in a custom way eventually you will need to build the tools to help you do that.
 
 In our frustration dealing with big lists of events defined in Tiled with no way to change the way it's displayed, we spent a week doing a small prototype of a platforming game using our own engine as the level editor.
 

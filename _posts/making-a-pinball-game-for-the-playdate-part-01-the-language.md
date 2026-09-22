@@ -1,6 +1,10 @@
 ---
 title: 'Making a pinball game for Playdate: Part 01, the language'
-tags: playdate,pinball,c,devils-on-the-moon
+tags:
+  - playdate
+  - pinball
+  - c
+  - devils-on-the-moon
 excerpt: 'Welcome to this December adventure, where I will try to write about the process of our last game, Devils on the Moon pinball. Today I will talk about our choice of programming language for the game.'
 publish: true
 date: 2024/12/01

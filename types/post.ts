@@ -22,7 +22,7 @@ export type Post = {
   authors: Author[];
   content?: string;
   excerpt?: string;
-  tags?: string;
+  tags?: string[];
   cover?: PostCover;
   featured?: boolean;
   publish?: boolean;

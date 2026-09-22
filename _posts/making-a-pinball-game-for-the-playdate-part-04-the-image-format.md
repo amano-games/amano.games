@@ -1,6 +1,11 @@
 ---
 title: 'Making a pinball game for Playdate: Part 04, the image format'
-tags: playdate,pinball,c,devils-on-the-moon,file-format
+tags:
+  - playdate
+  - pinball
+  - c
+  - devils-on-the-moon
+  - file-format
 excerpt: '2 Bits image formats.'
 publish: true
 date: 2024/12/04

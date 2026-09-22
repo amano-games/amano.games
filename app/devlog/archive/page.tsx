@@ -69,7 +69,7 @@ export default async function Archive() {
                     undefined,
                     options
                   );
-                  const tagsArr = item.tags?.split(',') ?? [];
+                  const tags = item.tags ?? [];
                   const slugEncoded = encodeURIComponent(item.slug);
                   return (
                     <li key={item.slug} className="p-devlog-archive-list-item">
@@ -85,12 +85,12 @@ export default async function Archive() {
                         </span>
                         <span>{item.title}</span>
                       </Link>
-                      {tagsArr.length > 0 ? (
+                      {tags.length > 0 ? (
                         <div
                           className="p-devlog-archive-post-tags"
                           data-hide="mobile"
                         >
-                          {tagsArr.map((tag) => {
+                          {tags.map((tag) => {
                             return <span key={tag}>#{tag}</span>;
                           })}
                         </div>

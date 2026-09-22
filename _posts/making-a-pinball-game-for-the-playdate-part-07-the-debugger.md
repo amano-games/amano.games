@@ -1,6 +1,10 @@
 ---
 title: 'Making a pinball game for Playdate: Part 07, the debugger'
-tags: playdate,pinball,c,devils-on-the-moon
+tags:
+  - playdate
+  - pinball
+  - c
+  - devils-on-the-moon
 excerpt: 'Searching for a debugger on Linux'
 publish: true
 date: 2024/12/10
