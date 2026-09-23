@@ -39,11 +39,11 @@ For us for example we saw that the `mem_set` function was running way more times
 
 ![sampler.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-hunt/sampler.png)
 
-Our physics system runs 4 times on every frame. One thing you need to do in a physics system is to collect colliding pairs. You do your broad collision detection and mark which entities are colliding with who. One thing you want to avoid is checking the same pair multiple times so you need some bookkeeping that is cheaper than your broad collision detection. One way of doing it is using a bit flags. You can read a more in depth explanation on Real time collision detection on the section _Avoid retesting_.
+Our physics system runs 4 times on every frame. One thing you need to do in a physics system is to collect colliding pairs. You do your broad collision detection and mark which entities are colliding with who. One thing you want to avoid is checking the same pair multiple times so you need some bookkeeping that is cheaper than your broad collision detection. One way of doing it is using a bit flags. You can read a more in depth explanation on the book [Real time collision](https://realtimecollisiondetection.net/books/rtcd/) detection in the section _Avoid retesting_.
 
 How it works is you generate a bit array that can hold a bit per entity pair, so when you get a pair of entities you want to check first you check if their pair bit is set, and if it is you can skip doing the full test, if not you do the full test and then set the bit.
 
-Simple and effective. Well as the game grew and we created more entities we ended up with around 450, this means that our bit array needed to be `450 * 449 / 2 = 101025 bits` create and clear this array every frame and we are clearing ~56KiB of memory every frame. I skipped the last part on that books chapter but the warning was there!
+Simple and effective. Well as the game grew and we created more entities we ended up with around 450, this means that our bit array needed to be `450 * 449 / 2 = 101025 bits` create and clear this array every frame and we are clearing **~56KiB** of memory every frame. I skipped the last part on that books chapter but the warning was there!
 
 > _Even for a modest number of objects, this operation now quickly becomes very expensive._
 
@@ -67,7 +67,7 @@ The instrumentation profiler seems more feasible because I can manually edit my 
 
 There are a couple of profilers I knew about and wanted to try. Even if I only managed to profile on desktop to start, the cost of doing it is so low even if it gives my any small insight it will be worth it.
 
-First I started reading the docs for the Tracy profiler but quickly realized that to be able to use the instrumentation API I needed to compile the project using C++, and I didn't want to get in to that rat hole.
+First I started reading the docs for the [Tracy](https://tracy.nereid.pl/) profiler but quickly realized that to be able to use the instrumentation API I needed to compile the project using C++, and I didn't want to get in to that rat hole.
 
 I found the wonderful [Spall](https://gravitymoth.com/spall/spall-web.html) profiler which had a single header implementation with a simple API that I could provide my own memory and functions for reading and writing files.
 
@@ -135,11 +135,9 @@ On **Computer, Enhance!** Casey [shows how to use RDTSC (Read timestamp counter)
 
 > _RDTSC is very useful because it's available everywhere, you can always count on RDTSC to be something that a processor supports if its an x86 processor at all._
 
-Well bad news for us because the Playdate is not a x86 processor it is an ARM processor, it does have however a similar instruction `DWT->CYCCNT` that the Playdate uses under the hood for `getElapsedTime()` but in userland we don't have access to this registry so we are stuck with `getElapsedTime()`, which [has a couple of downsides](https://devforum.play.date/t/similar-api-to-queryperformancecounter/25072). So if you are someone from Panic reading this, **please** consider adding support for it.
+Well bad news for us because the Playdate is not a x86 processor it is an ARM processor, it does have however a similar instruction `DWT->CYCCNT` that the Playdate uses under the hood for `getElapsedTime()` but in userland we don't have access to this registry so we are stuck with `getElapsedTime()`, which [has a couple of downsides](https://devforum.play.date/t/similar-api-to-queryperformancecounter/25072). So if you are someone from Panic reading this, **please** consider adding support for it!.
 
----
-
-I quickly realized that it's also helpful specially on the Playdate to be able to turn on/off sections of my profiled areas, so I do something like this.
+I quickly realized that it's also helpful to be able to turn on/off sections of my profiled areas, so I do something like this.
 
 ```c
 #if defined(PROF_HUD)
@@ -159,8 +157,78 @@ I quickly realized that it's also helpful specially on the Playdate to be able t
 #endif
 ```
 
-So if I'm focusing on optimizing the HUD code I can just turn off the physics areas.
+So if I'm focusing on optimizing the HUD code I can just turn off all the other areas.
 
-But one thing that Casey notes is that a good instrumentation profiler is one that you can turn on or off easil
+One thing you might have noticed is that the ` prof_start_internal` function has a second param, the index of the zone where its supposed to save the information, there are a couple of ways of doing this but the easiest specially for us that we are writing single threaded code.
+
+What we need is a unique ID that increases every time we use it. Turns out that C has the [`__COUNTER__`](https://open-std.org/jtc1/sc22/wg21/docs/papers/2026/p3384r1.html) macro that works perfectly for that.
+
+```c
+#define prof_start(name) prof_start_internal(name, __COUNTER__)
+```
+
+So we have an easy way to record how long it takes to run some code, an easy way to add new zones and a way to disable them quickly.
+
+The next problem you might encounter is that a program works like a stack and normally you want to measure the time it takes a function to run and have a way to distinguish the time it takes it's children to run.
+
+This difference is called exclusive/inclusive timing, exclusive is only the time it took a function to run minus the measured children. And inclusive is the time it took the function counting also it's children.
+
+![inclusive-vs-exclusive.svg](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-hunt/inclusive-vs-exclusive.svg)
+
+This get's quite complicated if you are trying to mesure recursive code. But Casey shows a neat trick to handle all this problems.
+
+We need an array of _frames_ that is the size of our deepest callstack.
+
+```c
+#define MAX_ZONES 250
+#define MAX_FRAMES 64
+
+struct frame {
+	int zone_idx;
+	int parent_idx;
+	int start;
+	int prev_inclusive;
+}
+
+struct profiler {
+	struct zone zones[MAX_ZONES];
+	struct frame frames[MAX_FRAMES];
+}
+```
+
+Then when we start recording a zone we save the anchor's inclusive total and record who the it's parent is.
+
+```c
+// prof_start
+profiler.frames[prof.frame_count++] = (struct prof_frame){
+	.zone_idx = idx,
+	.parent_idx = profiler.parent_idx,
+	.prev_inclusive = zone.inclusive,
+	.start = getElapsedTime(),
+};
+profiler.parent_idx = idx;
+```
+
+And when the close the zone
+
+```c
+// prof_end
+struct frame *frame = &profiler.frames[--prof->frame_count];
+int elapsed         = getElapsedTime() - frame.start;
+profiler.parent_idx = frame.parent_idx;
+
+parent_zone.exclusive -= elapsed;
+zone.exclusive += elapsed;
+zone.inclusive = frame.prev_inclusive + elapsed;
+++zone.hit_count;
+```
+
+So we subtract the children time to the parent exclusive time handling nesting and recursive code. If you want a better explanation on how this work's give [Computer, Enhance!](https://www.computerenhance.com/) a try.
+
+The neat thing about doing this myself is that I have complete control over how things work. If I know I'm not going to record more than 250 zones in my game I can just declare that as the array capacity. I can even save some memory by using 16 bits for the indexes. Compressing information to the bits that I actually need.
+
+By the end of development we where using almost all the 16 MB of RAM available on the device. So much so that Playdates that left our game open and then put their device to sleep crashed after a while. [A later OS patch fixed this](https://sdk.play.date/changelog/#_3_0_5)
+
+---
 
 on both revs of the Playdate. If you don't know there are two hardware revisions of the Playdate, A and B, A used the original CPU but after the first batch of Playdates sold out, the original CPU went out of stock and Panic had to change to a really similar CPU but slightly different. Turns out that depending on what you are doing games on Rev B can run significantly faster than Rev A.
