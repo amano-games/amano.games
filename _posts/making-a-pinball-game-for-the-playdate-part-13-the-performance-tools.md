@@ -1,5 +1,5 @@
 ---
-s3_path: devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-hunt
+s3_path: devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-tools
 title: 'Making a pinball game for Playdate: Part 13, the performance hunt'
 tags:
   - pinball
@@ -37,7 +37,7 @@ There are a couple of tools you can use. You can use the sampler which tells you
 
 For us for example we saw that the `mem_set` function was running way more times than what I expected.
 
-![sampler.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-hunt/sampler.png)
+![sampler.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-tools/sampler.png)
 
 Our physics system runs 4 times on every frame. One thing you need to do in a physics system is to collect colliding pairs. You do your broad collision detection and mark which entities are colliding with who. One thing you want to avoid is checking the same pair multiple times so you need some bookkeeping that is cheaper than your broad collision detection. One way of doing it is using a bit flags. You can read a more in depth explanation on the book [Real time collision](https://realtimecollisiondetection.net/books/rtcd/) detection in the section _Avoid retesting_.
 
@@ -53,7 +53,7 @@ No more memory clearing and we gain a fair bit of perfomance there.
 
 The problem is we know the game runs faster, we have a simple FPS counter and you can see the graph on the resource view of the Playdate SDK but it's hard to measure how fast. Or even worse if somehow something else became slower because of your change.
 
-![device-info.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-hunt/device-info.png)
+![device-info.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-tools/device-info.png)
 
 # The profiler
 
@@ -73,7 +73,7 @@ I found the wonderful [Spall](https://gravitymoth.com/spall/spall-web.html) prof
 
 This looked promising!
 
-![spall.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-hunt/spall.png)
+![spall.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-tools/spall.png)
 
 When I did this for the firs time, the project didn't have that many things going around so it wasn't that hard to start adding zones everywhere, I also made the mistake of trying to measure a lot of small function, I wanted to replicate the overview that a instrumentation profiler could give thinking that the hard part was adding the instrumentation code but I could just spend a couple of hours doing it.
 
@@ -173,7 +173,7 @@ The next problem you might encounter is that a program works like a stack and no
 
 This difference is called exclusive/inclusive timing, exclusive is only the time it took a function to run minus the measured children. And inclusive is the time it took the function counting also it's children.
 
-![inclusive-vs-exclusive.svg](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-hunt/inclusive-vs-exclusive.svg)
+![inclusive-vs-exclusive.svg](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-tools/inclusive-vs-exclusive.svg)
 
 This get's quite complicated if you are trying to mesure recursive code. But Casey shows a neat trick to handle all this problems.
 
@@ -229,6 +229,12 @@ The neat thing about doing this myself is that I have complete control over how 
 
 By the end of development we where using almost all the 16 MB of RAM available on the device. So much so that Playdates that left our game open and then put their device to sleep crashed after a while. [A later OS patch fixed this](https://sdk.play.date/changelog/#_3_0_5)
 
----
+Well we have a way to mesure any area of our code in a really simple way, how useful is this really?
 
-on both revs of the Playdate. If you don't know there are two hardware revisions of the Playdate, A and B, A used the original CPU but after the first batch of Playdates sold out, the original CPU went out of stock and Panic had to change to a really similar CPU but slightly different. Turns out that depending on what you are doing games on Rev B can run significantly faster than Rev A.
+On the Computer Enhance this works because they are measuring parsing a JSON file a single time. The program boots up, parses a JSON file, mesures the time it takes each section to run, records how many times each function was called and with that you can have a pretty good idea on how long it takes to run your program and which parts are slow.
+
+For our case, is not that helpful. It gives us a single value for a function that in our case can run at least **200** times a second, and it varies a lot depending on what was the state of our game at any given time. Not only that but if we try to draw this value to the screen it changes so much that it's imposible to read.
+
+On one of the last videos about making a profiler Casey mentions that this is not well suited for games, but that in the [August 2004 Game Developer Magazine](https://archive.gamehistory.org/item/253f9dd6-1460-4cf1-afd9-1a316acb6d68) issue [Sean Barrett](https://nothings.org/) published the implementation of an **Interactive profiler** called [IProf](https://silverspaceship.com/src/iprof/)
+
+![iprof-original.png](https://media.amano.games/devlog/making-a-pinball-game-for-the-playdate-part-13-the-performance-tools/iprof-original.png)
