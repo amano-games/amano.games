@@ -23,7 +23,8 @@ export default function NewsletterConfirmation() {
             <h1>Almost there...</h1>
             <p>
               We’ve sent you an email. Open it and tap{' '}
-              <strong>confirm subscription</strong> to complete sign-up.
+              <strong>confirm subscription</strong> to complete sign-up. Make
+              sure to check your <strong>spam</strong> folder!
             </p>
           </div>
         </div>
