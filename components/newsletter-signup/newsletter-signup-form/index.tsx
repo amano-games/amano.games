@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import NewsletterCaptcha from 'components/newsletter-captcha';
 import './styles.css';
 
 type Props = {
@@ -40,17 +41,7 @@ function NewsletterSignupForm({ className }: Props) {
           Subscribe
         </button>
       </div>
-      <altcha-widget
-        hideLogo
-        hideFooter
-        challengeurl="https://news.amano.games/api/public/captcha/altcha"
-      />
-      <script
-        type="module"
-        src="https://news.amano.games/public/static/altcha.umd.js"
-        async
-        defer
-      />
+      <NewsletterCaptcha />
     </form>
   );
 }

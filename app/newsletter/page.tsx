@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import Header from 'components/header';
 import Footer from 'components/footer';
+import NewsletterCaptcha from 'components/newsletter-captcha';
 import { createMetadata } from 'lib/metadata';
 
 import './styles.css';
@@ -62,17 +63,8 @@ export default function Newsletter() {
               <span>Name (optional):</span>
               <input id="name" name="name" type="text" placeholder="Mario C." />
             </label>
-            <altcha-widget
-              hideLogo
-              hideFooter
-              challengeurl="https://news.amano.games/api/public/captcha/altcha"
-            />
-            <script
-              type="module"
-              src="https://news.amano.games/public/static/altcha.umd.js"
-              async
-              defer
-            />
+
+            <NewsletterCaptcha />
 
             <button value="Subscribe " type="submit">
               Subscribe
